@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using SST.Application.Common.Interfaces;
+using SST.Persistence;
 
 namespace SST.WebUI
 {
@@ -50,11 +51,13 @@ namespace SST.WebUI
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            //var connectionString = configuration.GetConnectionString("DefaultConnection");
-            //services.AddDbContext<DBContext>(options => options.UseSqlServer(connectionString));
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<SSTDbContext>(options => options.UseSqlServer(connectionString));
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
+
+            builder.RegisterType<SSTDbContext>().As<ISSTDbContext>().SingleInstance();
 
             //builder.RegisterModule<DependencyModule>();
 
