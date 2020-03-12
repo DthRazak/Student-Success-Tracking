@@ -59,13 +59,13 @@ namespace SST.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserRef")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserRef")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserRef] IS NOT NULL");
 
                     b.ToTable("Lectors");
                 });
@@ -97,8 +97,10 @@ namespace SST.Persistence.Migrations
 
             modelBuilder.Entity("SST.Domain.Entities.Student", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -113,13 +115,13 @@ namespace SST.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserRef")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserRef")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserRef] IS NOT NULL");
 
                     b.ToTable("Students");
                 });
@@ -131,9 +133,8 @@ namespace SST.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("StudentRef")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("StudentRef")
+                        .HasColumnType("int");
 
                     b.Property<int>("SubjectRef")
                         .HasColumnType("int");
@@ -198,9 +199,7 @@ namespace SST.Persistence.Migrations
                 {
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Lector")
-                        .HasForeignKey("SST.Domain.Entities.Lector", "UserRef")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SST.Domain.Entities.Lector", "UserRef");
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Request", b =>
@@ -216,9 +215,7 @@ namespace SST.Persistence.Migrations
                 {
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Student")
-                        .HasForeignKey("SST.Domain.Entities.Student", "UserRef")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SST.Domain.Entities.Student", "UserRef");
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.StudentSubject", b =>

@@ -4,7 +4,7 @@ namespace SST.Domain.Entities
 {
     public class Student
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string FirstName { get; set; }
 

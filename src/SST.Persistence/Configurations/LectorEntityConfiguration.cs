@@ -24,8 +24,7 @@ namespace SST.Persistence.Configurations
                 .IsRequired();
 
             builder
-                .Property(x => x.UserRef)
-                .IsRequired();
+                .Property(x => x.UserRef);
 
             builder
                 .HasOne(x => x.User)

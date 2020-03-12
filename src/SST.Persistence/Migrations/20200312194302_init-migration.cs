@@ -29,7 +29,7 @@ namespace SST.Persistence.Migrations
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     AcademicStatus = table.Column<string>(nullable: false),
-                    UserRef = table.Column<string>(nullable: false)
+                    UserRef = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,7 +39,7 @@ namespace SST.Persistence.Migrations
                         column: x => x.UserRef,
                         principalTable: "Users",
                         principalColumn: "Email",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,11 +67,12 @@ namespace SST.Persistence.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Group = table.Column<string>(nullable: false),
-                    UserRef = table.Column<string>(nullable: false)
+                    UserRef = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,7 +82,7 @@ namespace SST.Persistence.Migrations
                         column: x => x.UserRef,
                         principalTable: "Users",
                         principalColumn: "Email",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,7 +111,7 @@ namespace SST.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentRef = table.Column<string>(nullable: false),
+                    StudentRef = table.Column<int>(nullable: false),
                     SubjectRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -157,7 +158,8 @@ namespace SST.Persistence.Migrations
                 name: "IX_Lectors_UserRef",
                 table: "Lectors",
                 column: "UserRef",
-                unique: true);
+                unique: true,
+                filter: "[UserRef] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requests_UserRef",
@@ -169,7 +171,8 @@ namespace SST.Persistence.Migrations
                 name: "IX_Students_UserRef",
                 table: "Students",
                 column: "UserRef",
-                unique: true);
+                unique: true,
+                filter: "[UserRef] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentSubjects_StudentRef",
