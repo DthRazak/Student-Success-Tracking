@@ -22,12 +22,14 @@ namespace SST.Persistence.Configurations
             builder
                 .HasOne(x => x.Subject)
                 .WithMany(x => x.StudentSubjects)
-                .HasForeignKey(x => x.SubjectRef);
+                .HasForeignKey(x => x.SubjectRef)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(x => x.Student)
                 .WithMany(x => x.StudentSubjects)
-                .HasForeignKey(x => x.StudentRef);
+                .HasForeignKey(x => x.StudentRef)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(x => x.Grades)
