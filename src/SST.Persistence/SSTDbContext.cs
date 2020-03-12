@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
+using SST.Persistence.Configurations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +29,13 @@ namespace SST.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // TODO : apply configurations
+            modelBuilder.ApplyConfiguration(new GradeEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new LectorEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new RequestEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentSubjectEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new SubjectEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

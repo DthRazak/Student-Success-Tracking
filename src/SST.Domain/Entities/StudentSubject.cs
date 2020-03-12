@@ -6,7 +6,7 @@ namespace SST.Domain.Entities
     {
         public int Id { get; set; }
 
-        public int StudentRef { get; set; }
+        public string StudentRef { get; set; }
 
         public int SubjectRef { get; set; }
 
