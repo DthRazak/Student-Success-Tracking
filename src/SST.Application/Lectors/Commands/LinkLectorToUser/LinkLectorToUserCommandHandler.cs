@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Lectors.Commands.LinkLectorToUser
 {
-    class LinkLectorToUserCommandHandler
+    public class LinkLectorToUserCommandHandler
     {
         private readonly ISSTDbContext _context;
 

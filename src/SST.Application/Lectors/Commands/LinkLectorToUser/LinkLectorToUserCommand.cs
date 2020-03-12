@@ -2,7 +2,7 @@
 
 namespace SST.Application.Lectors.Commands.LinkLectorToUser
 {
-    class LinkLectorToUserCommand : IRequest
+    public class LinkLectorToUserCommand : IRequest
     {
         public string FirstName { get; set; }
 

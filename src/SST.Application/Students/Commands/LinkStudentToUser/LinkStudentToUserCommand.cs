@@ -2,7 +2,7 @@
 
 namespace SST.Application.Students.Commands.LinkStudentToUser
 {
-    class LinkStudentToUserCommand : IRequest
+    public class LinkStudentToUserCommand : IRequest
     {
         public string FirstName { get; set; }
 

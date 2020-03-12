@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Requests.Commands.CreateRequest
 {
-    class CreateRequestCommandHandler : IRequestHandler<CreateRequestCommand, int>
+    public class CreateRequestCommandHandler : IRequestHandler<CreateRequestCommand, int>
     {
         private readonly ISSTDbContext _context;
 

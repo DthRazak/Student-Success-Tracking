@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Users.Commands.CreateUser
 {
-    class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
     {
         private readonly ISSTDbContext _context;
 

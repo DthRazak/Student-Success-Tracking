@@ -2,7 +2,7 @@
 
 namespace SST.Application.Users.Commands.CreateUser
 {
-    class CreateUserCommand : IRequest<string>
+    public class CreateUserCommand : IRequest<string>
     {
         public string Email { get; set; }
 
