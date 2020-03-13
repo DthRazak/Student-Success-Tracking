@@ -1,3 +1,4 @@
+@model SST.WebUI.ViewModels.SignupModel
 @{
     ViewData["Title"] = "Singup Page";
 }
@@ -10,23 +11,15 @@
         <input type="text" name="ConfirmPassword" /><br />
 
         <select id="GroupSelect" name="Group">
-            <option value="ПМІ-32">ПМІ-32</option>
-            <option value="ПМІ-33">ПМІ-33</option>
+            @foreach (var group in Model.GroupsList.Groups)
+            {
+                <option value="@group">@group</option>
+            }
         </select>
 
         <select id="fullNameSelect" name="FullName">
-            <option value="Мільчановський Волмимир">Мільчановський Волмимир</option>
-            <option value="Пистун Віталій">Пистун Віталій</option>
-            <option value="Шуяк Марта">Шуяк Марта</option>
-            <option value="Пилипович Оксана">Пилипович Оксана</option>
-            <option value="Гурська Надія">Гурська Надія</option>
         </select>
 
         <input type="submit" value="SIGNUP" />
     </form>
 
-<script>
-    $( "#GroupSelect" ).change(function() {
-      
-    });
-</script>

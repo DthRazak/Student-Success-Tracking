@@ -17,9 +17,11 @@ namespace SST.Application.Lectors.Commands.LinkLectorToUser
 
         public async Task<Unit> Handle(LinkLectorToUserCommand request, CancellationToken cancellationToken)
         {
+            var res = request.FullName.Split(" ");
+
             var entity = _context.Lectors
-                .Where(x => x.FirstName == x.FirstName
-                    && x.LastName == x.LastName)
+                .Where(x => x.FirstName == res[0]
+                    && x.LastName == res[1])
                 .FirstOrDefault();
 
             entity.UserRef = request.UserRef;

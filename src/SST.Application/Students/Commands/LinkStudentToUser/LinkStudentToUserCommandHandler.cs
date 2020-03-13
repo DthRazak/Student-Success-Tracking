@@ -17,10 +17,12 @@ namespace SST.Application.Students.Commands.LinkStudentToUser
 
         public async Task<Unit> Handle(LinkStudentToUserCommand request, CancellationToken cancellationToken)
         {
+            var res = request.FullName.Split(" ");
+
             var entity = _context.Students
                 .Where(x => x.Group == request.Group
-                    && x.FirstName == x.FirstName
-                    && x.LastName == x.LastName)
+                    && x.FirstName == res[0]
+                    && x.LastName == res[1])
                 .FirstOrDefault();
 
             entity.UserRef = request.UserRef;

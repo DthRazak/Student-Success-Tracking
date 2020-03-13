@@ -14,7 +14,11 @@ using SST.Application.Requests.Commands.CreateRequest;
 using SST.Application.Students.Commands.LinkStudentToUser;
 using SST.Application.Users.Commands.CreateUser;
 using SST.Application.Users.Queries.GetUser;
+using SST.Application.Students.Queries.GetGroups;
 using SST.WebUI.Forms;
+using SST.WebUI.ViewModels;
+using System.Text.Json;
+using SST.Application.Students.Queries.GetStudentsByGroup;
 
 namespace SST.WebUI.Controllers
 {
@@ -30,9 +34,14 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Signup()
+        public async Task<IActionResult> Signup()
         {
-            return View();
+            var model = new SignupModel
+            {
+                GroupsList = await _mediator.Send(new GetGroupsQuery()),
+                SignupForm = new SignupForm()
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -64,18 +73,18 @@ namespace SST.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Signup(SignupForm form)
         {
-            await _mediator.Send(new CreateUserCommand { Email = form.Email, Password = form.Password });
+            await _mediator.Send(new CreateUserCommand { Email = form.Email, PasswordHash = form.Password });
             await _mediator.Send(new CreateRequestCommand { UserRef = form.Email });
-            var list = form.FullName.Split(" ");
             await _mediator.Send(new LinkStudentToUserCommand
-            { Group = form.Group, FirstName = list[0], LastName = list[1], UserRef = form.Email });
+                { Group = form.Group, FullName = form.FullName, UserRef = form.Email });
 
             return RedirectToAction("Account", "Login");
         }
 
-        public JsonResult GetStudentsForGroup(string group)
+        [HttpGet]
+        public async Task<string> GetStudentsByGroup(string group)
         {
-            throw new NotImplementedException();
+            return JsonSerializer.Serialize(await _mediator.Send(new GetStudentByGroupQuery { Group = group}));
         }
 
         public async Task<IActionResult> Logout()
