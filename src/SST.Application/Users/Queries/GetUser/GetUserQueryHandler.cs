@@ -22,13 +22,11 @@ namespace SST.Application.Users.Queries.GetUser
 
         public async Task<UserVm> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Users
-                .Where(x => x.Email == request.Email)
-                .SingleOrDefaultAsync(cancellationToken);
+            var vm = await _context.Users
+                .ProjectTo<UserVm>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
-            // return _mapper.Map<UserVm>(entity);
-
-            return new UserVm { Email = entity.Email, IsAdmin = entity.IsAdmin, PasswordHash = entity.PasswordHash };
+            return vm;
         }
     }
 }

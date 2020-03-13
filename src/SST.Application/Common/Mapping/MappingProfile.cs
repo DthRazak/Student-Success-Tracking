@@ -22,7 +22,8 @@ namespace SST.Application.Common.Mapping
             foreach (var type in types)
             {
                 var instance = Activator.CreateInstance(type);
-                var methodInfo = type.GetMethod("Mapping");
+                var methodInfo = type.GetMethod("Mapping") 
+                    ?? type.GetInterface("IMapFrom`1").GetMethod("Mapping");
                 methodInfo?.Invoke(instance, new object[] { this });
             }
         }
