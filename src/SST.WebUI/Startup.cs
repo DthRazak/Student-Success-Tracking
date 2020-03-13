@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Autofac;
+using MediatR;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SST.Application.Common.Interfaces;
 using SST.Persistence;
+using System.Reflection;
+using SST.Application;
 
 namespace SST.WebUI
 {
@@ -29,6 +32,8 @@ namespace SST.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -36,15 +41,17 @@ namespace SST.WebUI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(options => //CookieAuthenticationOptions
-            //    {
-            //        options.LoginPath = new PathString("");
-            //    });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new PathString("/Accout/Login");
+                });
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             //services.AddHostedService<SportsUpdateService>();
             //services.AddHostedService<OddsUpdateService>();
+
+            //services.AddMediatR(Assembly.GetExecutingAssembly());
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -58,8 +65,9 @@ namespace SST.WebUI
             builder.Populate(services);
 
             builder.RegisterType<SSTDbContext>().As<ISSTDbContext>().SingleInstance();
+            //builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
 
-            //builder.RegisterModule<DependencyModule>();
+            builder.RegisterModule<Application.DependencyModule>();
 
             AutofacContainer = builder.Build();
 

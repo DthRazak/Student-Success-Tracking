@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Singup Page";
+}
+
+    <form asp-action="Signup" asp-controller="Account" asp-anti-forgery="true" method="post">
+        <input type="email" name="Email" /><br />
+
+        <input type="text" name="Password" /><br />
+
+        <input type="text" name="ConfirmPassword" /><br />
+
+        <select id="GroupSelect" name="Group">
+            <option value="ПМІ-32">ПМІ-32</option>
+            <option value="ПМІ-33">ПМІ-33</option>
+        </select>
+
+        <select id="fullNameSelect" name="FullName">
+            <option value="Мільчановський Волмимир">Мільчановський Волмимир</option>
+            <option value="Пистун Віталій">Пистун Віталій</option>
+            <option value="Шуяк Марта">Шуяк Марта</option>
+            <option value="Пилипович Оксана">Пилипович Оксана</option>
+            <option value="Гурська Надія">Гурська Надія</option>
+        </select>
+
+        <input type="submit" value="SIGNUP" />
+    </form>
+
+<script>
+    $( "#GroupSelect" ).change(function() {
+      
+    });
+</script>

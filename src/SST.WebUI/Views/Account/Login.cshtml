@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+    <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" method="post">
+        <input type="email" name="Email" /><br />
+
+        <input type="text" name="Password" /><br />
+
+        <input type="submit" value="LOGIN" />
+    </form>
