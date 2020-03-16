@@ -13,7 +13,7 @@ namespace SST.Persistence.Configurations
 
             builder
                 .Property(x => x.PasswordHash)
-                .HasColumnType("char(32)")
+                .HasColumnType("varchar(256)")
                 .IsRequired();
 
             builder

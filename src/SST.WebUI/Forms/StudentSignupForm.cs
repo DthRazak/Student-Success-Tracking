@@ -2,7 +2,7 @@
 
 namespace SST.WebUI.Forms
 {
-    public class SignupForm
+    public class StudentSignupForm
     {
         [Required(ErrorMessage = "Email not specified")]
         public string Email { get; set; }
@@ -16,9 +16,6 @@ namespace SST.WebUI.Forms
         public string ConfirmPassword { get; set; }
 
         [Required]
-        public string Group { get; set; }
-
-        [Required]
-        public string FullName { get; set; }
+        public int StudentId { get; set; }
     }
 }

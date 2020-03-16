@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -10,15 +8,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SST.Application.Requests.Commands.CreateRequest;
-using SST.Application.Students.Commands.LinkStudentToUser;
-using SST.Application.Users.Commands.CreateUser;
-using SST.Application.Users.Queries.GetUser;
 using SST.Application.Students.Queries.GetGroups;
 using SST.WebUI.Forms;
 using SST.WebUI.ViewModels;
 using System.Text.Json;
 using SST.Application.Students.Queries.GetStudentsByGroup;
+using SST.Application.Common.Interfaces;
 
 namespace SST.WebUI.Controllers
 {
@@ -26,20 +21,26 @@ namespace SST.WebUI.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IMediator _mediator;
+        private readonly IAccountService _accountService;
 
-        public AccountController(ILogger<AccountController> logger, IMediator mediator)
+        public AccountController(ILogger<AccountController> logger, IMediator mediator, IAccountService accountService)
         {
             _logger = logger;
             _mediator = mediator;
+            _accountService = accountService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Signup()
         {
+            var groupList = await _mediator.Send(new GetGroupsQuery());
             var model = new SignupModel
             {
-                GroupsList = await _mediator.Send(new GetGroupsQuery()),
-                SignupForm = new SignupForm()
+                GroupsList = groupList,
+                StudentsList = await _mediator.Send(new GetStudentByGroupQuery 
+                                                        { Group = groupList.Groups.FirstOrDefault() }),
+                StudentSignupForm = new StudentSignupForm(),
+                LectorSignupForm = new LectorSignupForm()
             };
             return View(model);
         }
@@ -54,31 +55,87 @@ namespace SST.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginForm form)
         {
-            var model = await _mediator.Send(new GetUserQuery { Email = form.Email });
-            var hash = form.Password; //TODO: hash
-
-            if (model.PasswordHash.TrimEnd() == hash)
+            if (ModelState.IsValid)
             {
-                await Authenticate(model.Email);
+                ClaimsPrincipal claimsPrinciple;
+                try
+                {
+                    claimsPrinciple = await _accountService.Login(
+                        form.Email, form.Password);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    return View(form);
+                }
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrinciple);
 
                 return RedirectToAction("Index", "Home");
             }
-            else
-                ModelState.AddModelError("", "Invalid login or password");
-
-            return View(model);
+            return View(form);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Signup(SignupForm form)
+        public async Task<IActionResult> SignupAsLector(LectorSignupForm form)
         {
-            await _mediator.Send(new CreateUserCommand { Email = form.Email, PasswordHash = form.Password });
-            await _mediator.Send(new CreateRequestCommand { UserRef = form.Email });
-            await _mediator.Send(new LinkStudentToUserCommand
-                { Group = form.Group, FullName = form.FullName, UserRef = form.Email });
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _accountService.CreateLectorAccount(form.Email, form.Password, form.LectorId);
+                }
+                catch (ArgumentException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
 
-            return RedirectToAction("Account", "Login");
+                return RedirectToAction("Login", "Account");
+            }
+
+            var groupList = await _mediator.Send(new GetGroupsQuery());
+            var model = new SignupModel
+            {
+                GroupsList = groupList,
+                StudentsList = await _mediator.Send(new GetStudentByGroupQuery
+                { Group = groupList.Groups.FirstOrDefault() }),
+                StudentSignupForm = new StudentSignupForm(),
+                LectorSignupForm = form
+            };
+
+            return View("Signup", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignupAsStudent(StudentSignupForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _accountService.CreateStudentAccount(form.Email, form.Password, form.StudentId);
+                }
+                catch (ArgumentException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+
+                return RedirectToAction("Login", "Account");
+            }
+
+            var groupList = await _mediator.Send(new GetGroupsQuery());
+            var model = new SignupModel
+            {
+                GroupsList = groupList,
+                StudentsList = await _mediator.Send(new GetStudentByGroupQuery
+                { Group = groupList.Groups.FirstOrDefault() }),
+                StudentSignupForm = form,
+                LectorSignupForm = new LectorSignupForm()
+            };
+
+            return View("Signup", model);
         }
 
         [HttpGet]
@@ -91,18 +148,6 @@ namespace SST.WebUI.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
-        }
-
-        private async Task Authenticate(string email)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, email)
-            };
-
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }
 }

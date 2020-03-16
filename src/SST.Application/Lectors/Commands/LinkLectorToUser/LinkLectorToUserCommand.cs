@@ -4,7 +4,7 @@ namespace SST.Application.Lectors.Commands.LinkLectorToUser
 {
     public class LinkLectorToUserCommand : IRequest
     {
-        public string FullName { get; set; }
+        public int Id { get; set; }
 
         public string UserRef { get; set; }
     }

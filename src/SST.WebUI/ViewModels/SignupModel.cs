@@ -1,4 +1,5 @@
 ﻿using SST.Application.Students.Queries.GetGroups;
+using SST.Application.Students.Queries.GetStudentsByGroup;
 using SST.WebUI.Forms;
 
 namespace SST.WebUI.ViewModels
@@ -7,6 +8,10 @@ namespace SST.WebUI.ViewModels
     {
         public GroupsListVm GroupsList { get; set; }
 
-        public SignupForm SignupForm { get; set; }
+        public StudentsListVm StudentsList { get; set; }
+
+        public StudentSignupForm StudentSignupForm { get; set; }
+
+        public LectorSignupForm LectorSignupForm { get; set; }
     }
 }
