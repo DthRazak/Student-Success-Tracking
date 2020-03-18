@@ -29,13 +29,13 @@ namespace SST.Persistence.Configurations
                 .HasOne(x => x.Student)
                 .WithOne(x => x.User)
                 .HasForeignKey<Student>(x => x.UserRef)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(x => x.Lector)
                 .WithOne(x => x.User)
                 .HasForeignKey<Lector>(x => x.UserRef)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

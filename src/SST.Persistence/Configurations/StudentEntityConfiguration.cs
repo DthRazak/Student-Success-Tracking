@@ -29,7 +29,7 @@ namespace SST.Persistence.Configurations
             builder
                 .HasOne(x => x.User)
                 .WithOne(x => x.Student)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.StudentSubjects)

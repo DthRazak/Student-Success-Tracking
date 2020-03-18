@@ -20,7 +20,7 @@ namespace SST.Persistence.Migrations
                 column: "UserRef",
                 principalTable: "Users",
                 principalColumn: "Email",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.SetNull);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Students_Users_UserRef",
@@ -28,7 +28,7 @@ namespace SST.Persistence.Migrations
                 column: "UserRef",
                 principalTable: "Users",
                 principalColumn: "Email",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.SetNull);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

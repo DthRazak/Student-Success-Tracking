@@ -200,7 +200,7 @@ namespace SST.Persistence.Migrations
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Lector")
                         .HasForeignKey("SST.Domain.Entities.Lector", "UserRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Request", b =>
@@ -217,7 +217,7 @@ namespace SST.Persistence.Migrations
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Student")
                         .HasForeignKey("SST.Domain.Entities.Student", "UserRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.StudentSubject", b =>

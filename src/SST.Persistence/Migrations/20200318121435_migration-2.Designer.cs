@@ -10,7 +10,7 @@ using SST.Persistence;
 namespace SST.Persistence.Migrations
 {
     [DbContext(typeof(SSTDbContext))]
-    [Migration("20200318074921_migration-2")]
+    [Migration("20200318121435_migration-2")]
     partial class migration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -202,7 +202,7 @@ namespace SST.Persistence.Migrations
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Lector")
                         .HasForeignKey("SST.Domain.Entities.Lector", "UserRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Request", b =>
@@ -219,7 +219,7 @@ namespace SST.Persistence.Migrations
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Student")
                         .HasForeignKey("SST.Domain.Entities.Student", "UserRef")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.StudentSubject", b =>
