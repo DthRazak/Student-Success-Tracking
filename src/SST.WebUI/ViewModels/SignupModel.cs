@@ -1,5 +1,5 @@
 ﻿using SST.Application.Students.Queries.GetGroups;
-using SST.Application.Students.Queries.GetStudentsByGroup;
+using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
 using SST.WebUI.Forms;
 
 namespace SST.WebUI.ViewModels

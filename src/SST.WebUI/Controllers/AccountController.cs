@@ -12,7 +12,8 @@ using SST.Application.Students.Queries.GetGroups;
 using SST.WebUI.Forms;
 using SST.WebUI.ViewModels;
 using System.Text.Json;
-using SST.Application.Students.Queries.GetStudentsByGroup;
+using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
+using SST.Application.Lectors.Queries.GetNotLinkedLectors;
 using SST.Application.Common.Interfaces;
 
 namespace SST.WebUI.Controllers
@@ -37,7 +38,7 @@ namespace SST.WebUI.Controllers
             var model = new SignupModel
             {
                 GroupsList = groupList,
-                StudentsList = await _mediator.Send(new GetStudentByGroupQuery 
+                StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery 
                                                         { Group = groupList.Groups.FirstOrDefault() }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = new LectorSignupForm()
@@ -98,7 +99,7 @@ namespace SST.WebUI.Controllers
             var model = new SignupModel
             {
                 GroupsList = groupList,
-                StudentsList = await _mediator.Send(new GetStudentByGroupQuery
+                StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
                 { Group = groupList.Groups.FirstOrDefault() }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = form
@@ -129,7 +130,7 @@ namespace SST.WebUI.Controllers
             var model = new SignupModel
             {
                 GroupsList = groupList,
-                StudentsList = await _mediator.Send(new GetStudentByGroupQuery
+                StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
                 { Group = groupList.Groups.FirstOrDefault() }),
                 StudentSignupForm = form,
                 LectorSignupForm = new LectorSignupForm()
@@ -141,7 +142,13 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<string> GetStudentsByGroup(string group)
         {
-            return JsonSerializer.Serialize(await _mediator.Send(new GetStudentByGroupQuery { Group = group}));
+            return JsonSerializer.Serialize(await _mediator.Send(new GetNotLinkedStudentsByGroupQuery { Group = group}));
+        }
+
+        [HttpGet]
+        public async Task<string> GetLectors()
+        {
+            return JsonSerializer.Serialize(await _mediator.Send(new GetNotLinkedLectorsQuery()));
         }
 
         public async Task<IActionResult> Logout()
