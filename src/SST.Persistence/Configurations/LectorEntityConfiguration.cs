@@ -28,7 +28,8 @@ namespace SST.Persistence.Configurations
 
             builder
                 .HasOne(x => x.User)
-                .WithOne(x => x.Lector);
+                .WithOne(x => x.Lector)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasMany(x => x.Subjects)

@@ -14,7 +14,7 @@ namespace SST.Domain.Entities
 
         public string UserRef { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
 
         public ICollection<StudentSubject> StudentSubjects { get; private set; }
     }
