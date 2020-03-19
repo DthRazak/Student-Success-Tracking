@@ -7,7 +7,6 @@ using SST.Application.Users.Queries.GetUser;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace SST.WebUI.Services
@@ -15,10 +14,12 @@ namespace SST.WebUI.Services
     public class AccountService : IAccountService
     {
         private readonly IMediator _mediator;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public AccountService(IMediator mediator)
+        public AccountService(IMediator mediator, IPasswordHasher passwordHasher)
         {
             _mediator = mediator;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task CreateStudentAccount(string email, string password, int studentId)
@@ -27,7 +28,8 @@ namespace SST.WebUI.Services
 
             if (model == null)
             {
-                _mediator.Send(new CreateUserCommand { Email = email, PasswordHash = CalculateHash(password) }).Wait();
+                _mediator.Send(new CreateUserCommand 
+                    { Email = email, PasswordHash = _passwordHasher.GetPasswordHash(password) }).Wait();
                 await _mediator.Send(new CreateRequestCommand { UserRef = email });
                 await _mediator.Send(new LinkStudentToUserCommand { Id = studentId, UserRef = email });
             }
@@ -43,7 +45,8 @@ namespace SST.WebUI.Services
 
             if (model != null)
             {
-                _mediator.Send(new CreateUserCommand { Email = email, PasswordHash = CalculateHash(password) }).Wait();
+                _mediator.Send(new CreateUserCommand 
+                    { Email = email, PasswordHash = _passwordHasher.GetPasswordHash(password) }).Wait();
                 await _mediator.Send(new CreateRequestCommand { UserRef = email });
                 await _mediator.Send(new LinkStudentToUserCommand { Id = lectorId, UserRef = email });
             }
@@ -57,7 +60,7 @@ namespace SST.WebUI.Services
         {
             var model = await _mediator.Send(new GetUserQuery { Email = email });
 
-            if (model != null && model.PasswordHash == CalculateHash(password))
+            if (model != null && model.PasswordHash == _passwordHasher.GetPasswordHash(password))
             {
                 if (model.IsApproved)
                 {
@@ -80,21 +83,6 @@ namespace SST.WebUI.Services
             {
                 throw new ArgumentException("Wrong email or password");
             }
-        }
-
-        private static string CalculateHash(string password)
-        {
-            byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 1000);
-            var hash = pbkdf2.GetBytes(32);
-
-            var hashBytes = new byte[48];
-            Array.Copy(salt, 0, hashBytes, 0, 16);
-            Array.Copy(hash, 0, hashBytes, 16, 32);
-
-            return Convert.ToBase64String(hashBytes);
         }
     }
 }

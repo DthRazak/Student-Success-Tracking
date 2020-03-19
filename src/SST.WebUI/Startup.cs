@@ -16,6 +16,7 @@ using SST.Persistence;
 using System.Reflection;
 using SST.Application;
 using SST.WebUI.Services;
+using SST.Application.Common.Hashing;
 
 namespace SST.WebUI
 {
@@ -67,6 +68,7 @@ namespace SST.WebUI
 
             builder.RegisterType<SSTDbContext>().As<ISSTDbContext>().SingleInstance();
             builder.RegisterType<AccountService>().As<IAccountService>();
+            builder.RegisterType<PasswordHasher>().As<IPasswordHasher>();
             //builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
 
             builder.RegisterModule<Application.DependencyModule>();
