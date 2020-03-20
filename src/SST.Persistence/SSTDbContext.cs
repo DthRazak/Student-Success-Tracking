@@ -2,9 +2,9 @@
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
 using SST.Persistence.Configurations;
-using SST.Persistance.Extensions;
 using System.Threading;
 using System.Threading.Tasks;
+using SST.Persistence.Extensions;
 
 namespace SST.Persistence
 {
