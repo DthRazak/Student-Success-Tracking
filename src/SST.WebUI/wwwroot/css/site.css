@@ -69,3 +69,95 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+/*Login*/
+
+.btn {
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    box-shadow: 0px 0px 24px 6px rgba(255,255,255,0.47);
+}
+
+    .btn:hover, .btn:focus {
+        color: black;
+        box-shadow: 0px 0px 24px 6px rgba(255,255,255,0.47);
+        outline: none;
+        padding-right: 4rem;
+        padding-left: 4rem;
+        transition: 0.4s;
+    }
+
+.form-bg {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 10px 0px;
+    border: 0px;
+}
+
+.page-bg {
+    background: #3a3a3a;
+}
+
+.footer-bg {
+    background-color: white;
+}
+
+.cover {
+    /*background: no-repeat center center;*/
+    background-size: cover;
+    overflow: hidden;
+}
+
+.heading-style{
+    text-align: center;
+    margin-top: 5%;
+}
+
+.label-style {
+    color: #221c1c;
+    font-size: 150%;
+    text-shadow: 0 0 1.5em white, 0 0 0.9em white, 0 0 0.7em white, 0 0 0.3em white;
+}
+
+.mrgn-20 {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.submit {
+    margin-top: 3%;
+    margin-bottom: 3%;
+    font-size: 1.2rem;
+    display: block;
+    max-width: 300px;
+    margin: auto;
+    background-color: gray;
+}
+
+.link-style {
+    color: #2454c1;
+    font-weight: bold;
+}
+
+    .link-style:hover {
+        color: black;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+.registr-link {
+    color: black;
+    padding-bottom: 0.5%;
+    padding-top: 0.5%;
+    font-size: 115%;
+    background-color: rgba(255, 255, 255, 0.50);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 10px 0px;
+    text-align: center;
+}
+
+/*Signup*/
+
+.selection-mrgn {
+    margin-left: 20%;
+    margin-right: 20%;
+}
