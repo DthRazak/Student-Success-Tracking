@@ -1,9 +1,6 @@
 ﻿using MediatR;
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +20,7 @@ namespace SST.Application.Users.Commands.CreateUser
             var entity = new User
             {
                 Email = request.Email,
-                PasswordHash = ComputeHash(request.Password),
+                PasswordHash = request.PasswordHash,
                 IsAdmin = false
             };
 
@@ -32,13 +29,6 @@ namespace SST.Application.Users.Commands.CreateUser
             await _context.SaveChangesAsync(cancellationToken);
 
             return entity.Email;
-        }
-
-        private static string ComputeHash(string rawData)
-        {
-            //TODO this method
-
-            return rawData;
         }
     }
 }

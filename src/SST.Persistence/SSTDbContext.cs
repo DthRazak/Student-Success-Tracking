@@ -4,6 +4,7 @@ using SST.Domain.Entities;
 using SST.Persistence.Configurations;
 using System.Threading;
 using System.Threading.Tasks;
+using SST.Persistence.Extensions;
 
 namespace SST.Persistence
 {
@@ -36,6 +37,8 @@ namespace SST.Persistence
             modelBuilder.ApplyConfiguration(new StudentSubjectEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SubjectEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+
+            modelBuilder.Seed();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

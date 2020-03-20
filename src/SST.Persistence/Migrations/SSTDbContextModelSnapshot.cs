@@ -68,6 +68,43 @@ namespace SST.Persistence.Migrations
                         .HasFilter("[UserRef] IS NOT NULL");
 
                     b.ToTable("Lectors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AcademicStatus = "Доцент",
+                            FirstName = "Анатолій",
+                            LastName = "Музичук"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AcademicStatus = "Асистент",
+                            FirstName = "Андрій",
+                            LastName = "Глова"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AcademicStatus = "Професор",
+                            FirstName = "Юрій",
+                            LastName = "Щербина"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AcademicStatus = "Доцент",
+                            FirstName = "Віталій",
+                            LastName = "Горлач"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AcademicStatus = "Асистент",
+                            FirstName = "Любомир",
+                            LastName = "Галамага"
+                        });
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Request", b =>
@@ -93,6 +130,15 @@ namespace SST.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Requests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreationDate = new DateTime(2020, 3, 20, 10, 53, 37, 855, DateTimeKind.Local).AddTicks(4391),
+                            IsApproved = true,
+                            UserRef = "admin@email.com"
+                        });
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Student", b =>
@@ -124,6 +170,43 @@ namespace SST.Persistence.Migrations
                         .HasFilter("[UserRef] IS NOT NULL");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FirstName = "Володимир",
+                            Group = "ПМІ-32",
+                            LastName = "Мільчановський"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FirstName = "Марта",
+                            Group = "ПМІ-32",
+                            LastName = "Шуяк"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FirstName = "Оксана",
+                            Group = "ПМІ-32",
+                            LastName = "Пилипович"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FirstName = "Доскач",
+                            Group = "ПМІ-31",
+                            LastName = "Денис"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FirstName = "Левкович",
+                            Group = "ПМІ-33",
+                            LastName = "Роман"
+                        });
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.StudentSubject", b =>
@@ -179,11 +262,19 @@ namespace SST.Persistence.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("char(32)");
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Email");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Email = "admin@email.com",
+                            IsAdmin = true,
+                            PasswordHash = "Yh+CEuxWzPTw0y2M9zgFEw1stxAwoa1mvyaoI2157nY="
+                        });
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Grade", b =>
@@ -199,7 +290,8 @@ namespace SST.Persistence.Migrations
                 {
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Lector")
-                        .HasForeignKey("SST.Domain.Entities.Lector", "UserRef");
+                        .HasForeignKey("SST.Domain.Entities.Lector", "UserRef")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Request", b =>
@@ -215,7 +307,8 @@ namespace SST.Persistence.Migrations
                 {
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Student")
-                        .HasForeignKey("SST.Domain.Entities.Student", "UserRef");
+                        .HasForeignKey("SST.Domain.Entities.Student", "UserRef")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.StudentSubject", b =>

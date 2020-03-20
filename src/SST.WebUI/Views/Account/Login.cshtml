@@ -1,0 +1,30 @@
+@model SST.WebUI.Forms.LoginForm;
+
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+
+<div class="form-bg cover">
+	<h2 class="heading-style">Log In form</h2>
+	<br />
+	<p class="registr-link mrgn-20">If you don't have an account, please,  <a asp-action="Signup" asp-controller="Account" class="link-style"> Sign Up</a></p>
+
+	<form asp-action="Login" asp-controller="Account" asp-anti-forgery="true" method="post">
+		<div asp-validation-summary="All"></div>
+
+		<br />
+		<div class="form-group mrgn-20">
+			<label class="label-style">Input Email</label>
+			<input type="email" name="Email" class="form-control" /><br />
+		</div>
+		<div class="form-group mrgn-20">
+			<label class="label-style">Input Password</label>
+			<input type="text" name="Password" class="form-control" /><br />
+		</div>
+		<br />
+		<input type="submit" value="LOG IN" class="btn submit" />
+		<br />
+		<br />
+	</form>
+</div>

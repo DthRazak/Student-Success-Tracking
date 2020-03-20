@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,11 +17,8 @@ namespace SST.Application.Students.Commands.LinkStudentToUser
 
         public async Task<Unit> Handle(LinkStudentToUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = _context.Students
-                .Where(x => x.Group == request.Group
-                    && x.FirstName == x.FirstName
-                    && x.LastName == x.LastName)
-                .FirstOrDefault();
+            var entity = await _context.Students
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             entity.UserRef = request.UserRef;
 

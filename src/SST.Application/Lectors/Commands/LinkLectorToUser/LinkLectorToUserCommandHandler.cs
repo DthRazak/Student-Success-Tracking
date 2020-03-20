@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,10 +17,8 @@ namespace SST.Application.Lectors.Commands.LinkLectorToUser
 
         public async Task<Unit> Handle(LinkLectorToUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = _context.Lectors
-                .Where(x => x.FirstName == x.FirstName
-                    && x.LastName == x.LastName)
-                .FirstOrDefault();
+            var entity = await _context.Lectors
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             entity.UserRef = request.UserRef;
 

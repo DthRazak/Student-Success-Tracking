@@ -23,9 +23,8 @@ namespace SST.Application.Users.Queries.GetUser
         public async Task<UserVm> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var vm = await _context.Users
-                .Where(x => x.Email == request.Email)
                 .ProjectTo<UserVm>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync(cancellationToken);
+                .SingleOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
             return vm;
         }

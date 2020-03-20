@@ -13,7 +13,7 @@ namespace SST.Persistence.Configurations
 
             builder
                 .Property(x => x.PasswordHash)
-                .HasColumnType("char(32)")
+                .HasColumnType("varchar(256)")
                 .IsRequired();
 
             builder
@@ -28,12 +28,14 @@ namespace SST.Persistence.Configurations
             builder
                 .HasOne(x => x.Student)
                 .WithOne(x => x.User)
-                .HasForeignKey<Student>(x => x.UserRef);
+                .HasForeignKey<Student>(x => x.UserRef)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(x => x.Lector)
                 .WithOne(x => x.User)
-                .HasForeignKey<Lector>(x => x.UserRef);
+                .HasForeignKey<Lector>(x => x.UserRef)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
