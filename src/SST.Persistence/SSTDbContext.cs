@@ -2,6 +2,7 @@
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
 using SST.Persistence.Configurations;
+using SST.Persistance.Extensions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,6 +37,8 @@ namespace SST.Persistence
             modelBuilder.ApplyConfiguration(new StudentSubjectEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SubjectEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+
+            modelBuilder.Seed();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
