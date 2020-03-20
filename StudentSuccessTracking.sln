@@ -9,10 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.Application", "src\SST.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.Persistence", "src\SST.Persistence\SST.Persistence.csproj", "{3AD7A203-2153-4FD4-97BB-4BBF20A58F28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SST.WebUI", "src\SST.WebUI\SST.WebUI.csproj", "{B0C776C6-8B42-4379-9FC3-DB16D16B44F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.WebUI", "src\SST.WebUI\SST.WebUI.csproj", "{B0C776C6-8B42-4379-9FC3-DB16D16B44F5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3AD7A203-2153-4FD4-97BB-4BBF20A58F28} = {3AD7A203-2153-4FD4-97BB-4BBF20A58F28}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SST.WebUI.tests", "tests\SST.WebUI.tests\SST.WebUI.tests.csproj", "{9B54A655-19B0-444B-9BAF-D64032AF9DAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{B0C776C6-8B42-4379-9FC3-DB16D16B44F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C776C6-8B42-4379-9FC3-DB16D16B44F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C776C6-8B42-4379-9FC3-DB16D16B44F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B54A655-19B0-444B-9BAF-D64032AF9DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B54A655-19B0-444B-9BAF-D64032AF9DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B54A655-19B0-444B-9BAF-D64032AF9DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B54A655-19B0-444B-9BAF-D64032AF9DAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
