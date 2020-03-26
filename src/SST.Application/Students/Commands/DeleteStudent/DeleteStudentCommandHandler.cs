@@ -24,6 +24,8 @@ namespace SST.Application.Students.Commands.DeleteStudent
             if (entity == null)
                 throw new ArgumentException($"Student with Id({request.Id}) does not exists!");
 
+            _context.Students.Remove(entity);
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
