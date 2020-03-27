@@ -41,7 +41,7 @@
 		<div class="row mrgn-20">
 			<div class="col-sm pd-0 select-col" id="groupDiv">
 				<p class="label-style mrgn-b-5">Select Group</p>
-				<select id="GroupSelect" name="Group" class="select-wdth">
+				<select id="GroupSelect" name="Group" class="select-wdth custom-select">
 					@foreach (var group in Model.GroupsList.Groups)
 					{
 						<option value="@group">@group</option>
@@ -50,7 +50,7 @@
 			</div>
 			<div class="col-sm pd-0">
 				<p class="label-style mrgn-b-5" id="nameSelectLabel">Select Student</p>
-				<select id="fullNameSelect" name="StudentId" class="select-wdth">
+				<select id="fullNameSelect" name="StudentId" class="select-wdth custom-select">
 					@foreach (var student in Model.StudentsList.Students)
 					{
 						<option value="@student.Id">@student.FullName</option>
