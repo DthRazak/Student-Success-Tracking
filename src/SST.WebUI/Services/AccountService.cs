@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SST.Application.Common.Interfaces;
+using SST.Application.Lectors.Commands.LinkLectorToUser;
 using SST.Application.Requests.Commands.CreateRequest;
 using SST.Application.Students.Commands.LinkStudentToUser;
 using SST.Application.Users.Commands.CreateUser;
@@ -43,12 +44,12 @@ namespace SST.WebUI.Services
         {
             var model = await _mediator.Send(new GetUserQuery { Email = email });
 
-            if (model != null)
+            if (model == null)
             {
                 _mediator.Send(new CreateUserCommand 
                     { Email = email, PasswordHash = _passwordHasher.GetPasswordHash(password) }).Wait();
                 await _mediator.Send(new CreateRequestCommand { UserRef = email });
-                await _mediator.Send(new LinkStudentToUserCommand { Id = lectorId, UserRef = email });
+                await _mediator.Send(new LinkLectorToUserCommand { Id = lectorId, UserRef = email });
             }
             else
             {
