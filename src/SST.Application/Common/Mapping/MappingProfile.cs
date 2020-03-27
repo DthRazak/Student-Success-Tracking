@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace SST.Application.Common.Mapping
 {
-    class MappingProfile : Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
