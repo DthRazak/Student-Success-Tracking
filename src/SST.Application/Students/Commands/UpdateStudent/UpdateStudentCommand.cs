@@ -3,7 +3,7 @@ using MediatR;
 
 namespace SST.Application.Students.Commands.UpdateStudent
 {
-    class UpdateStudentCommand : IRequest
+    public class UpdateStudentCommand : IRequest
     {
         public int Id { get; set; }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Users.Commands.UpdateUser
 {
-    class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
     {
         private readonly ISSTDbContext _context;
 

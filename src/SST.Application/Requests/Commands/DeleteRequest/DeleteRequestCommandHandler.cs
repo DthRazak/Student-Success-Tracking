@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Requests.Commands.DeleteRequest
 {
-    class DeleteRequestCommandHandler : IRequestHandler<DeleteRequestCommand, Unit>
+    public class DeleteRequestCommandHandler : IRequestHandler<DeleteRequestCommand, Unit>
     {
         private readonly ISSTDbContext _context;
 

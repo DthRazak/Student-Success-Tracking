@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Students.Commands.CreateStudent
 {
-    class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, int>
+    public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, int>
     {
         private readonly ISSTDbContext _context;
 

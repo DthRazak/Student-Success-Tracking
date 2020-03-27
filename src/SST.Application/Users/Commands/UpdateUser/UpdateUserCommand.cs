@@ -2,7 +2,7 @@
 
 namespace SST.Application.Users.Commands.UpdateUser
 {
-    class UpdateUserCommand : IRequest
+    public class UpdateUserCommand : IRequest
     {
         public string Email { get; set; }
 

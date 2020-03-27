@@ -2,7 +2,7 @@
 
 namespace SST.Application.Users.Commands.DeleteUser
 {
-    class DeleteUserCommand : IRequest
+    public class DeleteUserCommand : IRequest
     {
         public string Email { get; set; }
     }

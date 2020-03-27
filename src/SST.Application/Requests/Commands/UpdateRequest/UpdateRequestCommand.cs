@@ -3,7 +3,7 @@ using System;
 
 namespace SST.Application.Requests.Commands.UpdateRequest
 {
-    class UpdateRequestCommand : IRequest
+    public class UpdateRequestCommand : IRequest
     {
         public int Id { get; set; }
 

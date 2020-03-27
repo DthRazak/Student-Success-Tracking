@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Users.Commands.DeleteUser
 {
-    class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Unit>
     {
         private readonly ISSTDbContext _context;
 

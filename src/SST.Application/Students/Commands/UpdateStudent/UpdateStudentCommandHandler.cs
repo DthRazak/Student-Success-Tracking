@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Students.Commands.UpdateStudent
 {
-    class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, Unit>
+    public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand, Unit>
     {
         private readonly ISSTDbContext _context;
 
