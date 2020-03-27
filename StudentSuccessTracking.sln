@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.WebUI", "src\SST.WebUI\
 		{3AD7A203-2153-4FD4-97BB-4BBF20A58F28} = {3AD7A203-2153-4FD4-97BB-4BBF20A58F28}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SST.WebUI.tests", "tests\SST.WebUI.tests\SST.WebUI.tests.csproj", "{9B54A655-19B0-444B-9BAF-D64032AF9DAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.WebUI.tests", "tests\SST.WebUI.tests\SST.WebUI.tests.csproj", "{9B54A655-19B0-444B-9BAF-D64032AF9DAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SST.Application.Tests", "tests\SST.Application.Tests\SST.Application.Tests.csproj", "{7A56CD21-EFCE-4B94-9DCB-840EEDD3729B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{9B54A655-19B0-444B-9BAF-D64032AF9DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B54A655-19B0-444B-9BAF-D64032AF9DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B54A655-19B0-444B-9BAF-D64032AF9DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A56CD21-EFCE-4B94-9DCB-840EEDD3729B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A56CD21-EFCE-4B94-9DCB-840EEDD3729B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A56CD21-EFCE-4B94-9DCB-840EEDD3729B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A56CD21-EFCE-4B94-9DCB-840EEDD3729B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
