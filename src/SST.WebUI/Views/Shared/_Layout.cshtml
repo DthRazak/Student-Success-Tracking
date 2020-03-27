@@ -43,55 +43,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-    <script>
-        $("#GroupSelect").change(function () {
-            var group = document.getElementById("GroupSelect").value;
-            $.ajax({
-                type: "GET",
-                url: "/Account/GetStudentsByGroup",
-                data: 'group=' + group,
-                success: function (data) {
-                    var selTag = document.getElementById("fullNameSelect");
-                    selTag.textContent = '';
-                    var d = $.parseJSON(data);
-                    for (let i = 0; i < d.Students.length; ++i) {
-                        var op = document.createElement('option');
-                        op.value = d.Students[i]["Id"];
-                        op.textContent = d.Students[i]["FullName"];
-                        selTag.appendChild(op)
-                    }
-                },
-                error: function (data) {
-                    console.log(data);
-                }
-            });
-        });
-		$('.form-check-input').change(function () {
-			var selected_value = $("input[name='inlineRadioOptions']:checked").val();
-			if (selected_value == "option1") {
 
-			} else {
-				$.ajax({
-					type: "GET",
-					url: "/Account/GetLectors",
-					success: function (data) {
-						var selTag = document.getElementById("fullNameSelect");
-						selTag.textContent = '';
-						var d = $.parseJSON(data);
-						for (let i = 0; i < d.Lectors.length; ++i) {
-							var op = document.createElement('option');
-							op.value = d.Lectors[i]["Id"];
-							op.textContent = d.Lectors[i]["FullName"];
-							selTag.appendChild(op)
-						}
-					},
-					error: function (data) {
-						console.log(data);
-					}
-				});
-			}
-		});
-    </script>
 </body>
 </html>
