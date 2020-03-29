@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SST.Persistence;
+﻿using SST.Persistence;
 using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +19,6 @@ namespace SST.Application.Tests.Users.Queries
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
-
         }
 
         [Fact]
@@ -36,7 +32,7 @@ namespace SST.Application.Tests.Users.Queries
             result.ShouldBeOfType<UserVm>();
 
             result.Email.ShouldBe("admin@email.com");
-            result.IsAdmin.ShouldBeTrue();
+            result.Role.ShouldBe("Admin");
         }
     }
 }

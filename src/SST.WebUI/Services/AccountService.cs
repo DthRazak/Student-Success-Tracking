@@ -67,7 +67,8 @@ namespace SST.WebUI.Services
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimsIdentity.DefaultNameClaimType, email)
+                        new Claim(ClaimsIdentity.DefaultNameClaimType, email),
+                        new Claim(ClaimTypes.Role, model.Role)
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, "ApplicationCookie", 
