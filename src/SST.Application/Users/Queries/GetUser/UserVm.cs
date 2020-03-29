@@ -10,14 +10,15 @@ namespace SST.Application.Users.Queries.GetUser
 
         public string PasswordHash { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public string Role { get; set; }
 
         public bool IsApproved { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<User, UserVm>()
-                .ForMember(x => x.IsApproved, y => y.MapFrom(z => z.Request.IsApproved));
+                .ForMember(x => x.IsApproved, y => y.MapFrom(z => z.Request.IsApproved))
+                .ForMember(x => x.Role, y => y.MapFrom(z => z.IsAdmin ? "Admin" : z.Lector != null ? "Lector" : "Student"));
         }
     }
 }

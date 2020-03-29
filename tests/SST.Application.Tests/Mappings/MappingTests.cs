@@ -2,6 +2,7 @@
 using Shouldly;
 using SST.Application.Lectors.Queries.GetNotLinkedLectors;
 using SST.Application.Students.Queries.GetStudentsByGroup;
+using SST.Application.Users.Queries.GetUser;
 using SST.Domain.Entities;
 using Xunit;
 
@@ -50,6 +51,25 @@ namespace SST.Application.Tests.Mappings
             result.ShouldNotBeNull();
             result.ShouldBeOfType<StudentDto>();
             result.FullName.ShouldBe("Володимир Мільчановський");
+        }
+
+        [Fact]
+        public void ShouldMapUserToUserVm()
+        {
+            var entity = new User()
+            {
+                Email = "example@email.com",
+                IsAdmin = false,
+                PasswordHash = "password",
+                Request = new Request(),
+                Student = new Student()
+            };
+
+            var result = _mapper.Map<UserVm>(entity);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<UserVm>();
+            result.Role.ShouldBe("Student");
         }
     }
 }
