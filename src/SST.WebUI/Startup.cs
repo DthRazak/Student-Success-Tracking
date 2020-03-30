@@ -46,7 +46,7 @@ namespace SST.WebUI
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new PathString("/Accout/Login");
+                    options.LoginPath = new PathString("/Account/Login");
                 });
 
             services.AddAuthorization(options => 
