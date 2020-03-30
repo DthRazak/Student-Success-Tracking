@@ -49,6 +49,19 @@ namespace SST.WebUI
                     options.LoginPath = new PathString("/Accout/Login");
                 });
 
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("Admin", policy =>
+                    policy.RequireAssertion(context =>
+                        context.User.IsInRole("Admin")));
+                options.AddPolicy("Student", policy =>
+                    policy.RequireAssertion(context =>
+                        context.User.IsInRole("Student")));
+                options.AddPolicy("Lector", policy =>
+                    policy.RequireAssertion(context =>
+                        context.User.IsInRole("Lector")));
+            });
+
             services.AddMvc(option => option.EnableEndpointRouting = false);
             //services.AddHostedService<SportsUpdateService>();
             //services.AddHostedService<OddsUpdateService>();
