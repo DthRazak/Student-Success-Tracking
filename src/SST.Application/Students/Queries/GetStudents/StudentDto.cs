@@ -16,7 +16,7 @@ namespace SST.Application.Students.Queries.GetStudents
 
         public string Email { get; set; }
 
-        void Mapping(Profile profile)
+        public void Mapping(Profile profile)
         { 
             profile.CreateMap< Student, StudentDto > ()
                   .ForMember(x => x.Email, y => y.MapFrom(z => z.UserRef));
