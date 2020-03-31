@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using SST.Application.Common.Interfaces;
 using SST.Application.Lectors.Commands.CreateLector;
 using SST.Application.Lectors.Commands.DeleteLector;
+using SST.Application.Lectors.Queries.GetLectors;
 using SST.Application.Requests.Commands.UpdateRequest;
 using SST.Application.Requests.Queries.GetNotApprovedRequests;
 using SST.Application.Students.Commands.CreateStudent;
@@ -56,7 +57,9 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Lectors()
         {
-            return View();
+            var model = await _mediator.Send(new GetLectorsQuery());
+
+            return View(model);
         }
 
         [HttpPost]
