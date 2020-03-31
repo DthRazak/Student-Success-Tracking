@@ -9,6 +9,7 @@ using SST.Application.Requests.Commands.UpdateRequest;
 using SST.Application.Requests.Queries.GetNotApprovedRequests;
 using SST.Application.Students.Commands.CreateStudent;
 using SST.Application.Students.Commands.DeleteStudent;
+using SST.Application.Students.Queries.GetStudents;
 using SST.Application.Users.Commands.CreateUser;
 using SST.Application.Users.Commands.DeleteUser;
 using System;
@@ -47,7 +48,9 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Students()
         {
-            return View();
+            var model = await _mediator.Send(new GetStudentsQuery());
+
+            return View(model);
         }
 
         [HttpGet]
