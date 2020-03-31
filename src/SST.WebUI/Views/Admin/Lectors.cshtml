@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SST.Application.Lectors.Queries.GetLectors.LectorsListVm;
+@{
 	ViewData["Title"] = "Lectors Page";
 }
 
@@ -27,7 +28,7 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-12">
-						<label class="label-style">E-mail</label>
+						<label class="label-style">Academic status</label>
 						<input type="text" class="form-control" placeholder="Enter the e-mail...">
 					</div>
 				</div>
@@ -47,59 +48,28 @@
 					<thead>
 						<tr class="tr-bg">
 							<th class="text-center">#</th>
-							<th>First Name</th>
-							<th>Last Name</th>
+							<th>First name</th>
+							<th>Last name</th>
+							<th>Academic status</th>
 							<th>E-mail</th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-center">1</td>
-							<td>Andrew</td>
-							<td>Mike</td>
-							<td>an.mike@gmail</td>
-							<td class="td-actions">
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
-							</td>
-						</tr>
-						<tr>
-
-							<td class="text-center">2</td>
-							<td>John</td>
-							<td>Doe</td>
-							<td>doe_john@gmail.com</td>
-							<td class="td-actions">
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">3</td>
-							<td>Alex</td>
-							<td>Mike</td>
-							<td>alex.mike.teach@gmail.com</td>
-							<td class="td-actions">
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">4</td>
-							<td>Mike</td>
-							<td>Monday</td>
-							<td>stud_mike@gmail.com</td>
-							<td class="td-actions">
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">5</td>
-							<td>Paul</td>
-							<td>Dickens</td>
-							<td>paul_dickens@gmail.com</td>
-							<td class="td-actions">
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
-							</td>
-						</tr>
+						@for (int i = 0; i < Model.Lectors.Count; ++i)
+						{
+							<tr>
+								<td class="text-center">@(i + 1)</td>
+								<td>@Model.Lectors[i].FirstName</td>
+								<td>@Model.Lectors[i].LastName</td>
+								<td>@Model.Lectors[i].AcademicStatus</td>
+								<td>@Model.Lectors[i].Email</td>
+								<td class="td-actions">
+									<input class="btn btn-danger btn-just-icon btn-sm" type="button"
+										   id="admin-remove-lector-@Model.Lectors[i].Id" value="REMOVE" />
+								</td>
+							</tr>
+						}
 					</tbody>
 				</table>
 			</div>

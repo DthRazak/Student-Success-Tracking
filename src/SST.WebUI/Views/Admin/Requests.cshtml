@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SST.Application.Requests.Queries.GetNotApprovedRequests.RequestsListVm;
+@{
 	ViewData["Title"] = "Requests Page";
 }
 
@@ -17,64 +18,28 @@
 					<thead>
 						<tr class="tr-bg">
 							<th class="text-center">#</th>
-							<th>Name</th>
+							<th>Full Name</th>
 							<th>E-mail</th>
+							<th>Creation Date</th>
 							<th>Type</th>
 							<th class="text-center">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-center">1</td>
-							<td>Andrew Mike</td>
-							<td>an.mike@gmail</td>
-							<td>student</td>
-							<td class="td-actions text-center">
-								<input class="btn btn-success btn-just-icon btn-sm" type="button" value="ACCEPT" />
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REJECT" />
-							</td>
-						</tr>
-						<tr>
-
-							<td class="text-center">2</td>
-							<td>John Doe</td>
-							<td>doe_john@gmail.com</td>
-							<td>student</td>
-							<td class="td-actions text-center">
-								<input class="btn btn-success btn-just-icon btn-sm" type="button" value="ACCEPT" />
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REJECT" />
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">3</td>
-							<td>Alex Mike</td>
-							<td>alex.mike.teach@gmail.com</td>
-							<td>lector</td>
-							<td class="td-actions text-center">
-								<input class="btn btn-success btn-just-icon btn-sm" type="button" value="ACCEPT" />
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REJECT" />
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">4</td>
-							<td>Mike Monday</td>
-							<td>stud_mike@gmail.com</td>
-							<td>student</td>
-							<td class="td-actions text-center">
-								<input class="btn btn-success btn-just-icon btn-sm" type="button" value="ACCEPT" />
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REJECT" />
-							</td>
-						</tr>
-						<tr>
-							<td class="text-center">5</td>
-							<td>Paul Dickens</td>
-							<td>paul_dickens@gmail.com</td>
-							<td>lector</td>
-							<td class="td-actions text-center">
-								<input class="btn btn-success btn-just-icon btn-sm" type="button" value="ACCEPT" />
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REJECT" />
-							</td>
-						</tr>
+						@for (int i = 0; i < Model.Requests.Count; ++i)
+						{
+							<tr>
+								<td class="text-center">@(i+1)</td>
+								<td>@Model.Requests[i].FullName</td>
+								<td>@Model.Requests[i].UserRef</td>
+								<td>@Model.Requests[i].CreationDate</td>
+								<td>@Model.Requests[i].Type</td>
+								<td class="td-actions">
+									<input class="btn btn-success btn-just-icon btn-sm" type="button" id="request-accept-@Model.Requests[i].Id" value="ACCEPT" />
+									<input class="btn btn-danger btn-just-icon btn-sm" type="button" id="request-reject-@Model.Requests[i].Id" value="REJECT" />
+								</td>
+							</tr>
+						}
 					</tbody>
 				</table>
 			</div>
