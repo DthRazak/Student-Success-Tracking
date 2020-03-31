@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.WebUI", "src\SST.WebUI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.WebUI.tests", "tests\SST.WebUI.tests\SST.WebUI.tests.csproj", "{9B54A655-19B0-444B-9BAF-D64032AF9DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SST.Application.Tests", "tests\SST.Application.Tests\SST.Application.Tests.csproj", "{7A56CD21-EFCE-4B94-9DCB-840EEDD3729B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SST.Application.Tests", "tests\SST.Application.Tests\SST.Application.Tests.csproj", "{7A56CD21-EFCE-4B94-9DCB-840EEDD3729B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
