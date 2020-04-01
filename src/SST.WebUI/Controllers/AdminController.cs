@@ -123,7 +123,7 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddStudent([FromBody]CreateStudentCommand command)
+        public async Task<IActionResult> AddStudent([FromForm]CreateStudentCommand command)
         {
             try
             {

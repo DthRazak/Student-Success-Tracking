@@ -85,3 +85,36 @@ $("input[id^=request-reject-]").click(function () {
     toastr.success('Request rejected successfully.', 'Success', { timeOut: 3000 });
     //TODO: Ajax for reject
 });
+
+$("#add-student-form").submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/Admin/AddStudent",
+        data: $("#add-student-form").serialize(),
+        success: function () {
+            toastr.success('Student added successfully.', 'Success', { timeOut: 3000 });
+            // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+$("input[id^=admin-remove-student-]").click(function () {
+    var inputTag = this;
+    var id = parseInt(inputTag.id.slice(21));
+    $.ajax({
+        type: "POST",
+        url: "/Admin/DeleteStudent",
+        data: `id=${id}`,
+        success: function () {
+            toastr.success('Student removed successfully.', 'Success', { timeOut: 3000 });
+            inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});

@@ -13,27 +13,27 @@
 
 	<div class="row">
 		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
-			<form>
+			<form asp-action="AddLector" asp-controller="Admin" id="add-student-form">
 				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label class="label-style">First Name</label>
-						<input type="text" class="form-control" placeholder="Enter the first name...">
+						<input type="text" class="form-control" name="FirstName" placeholder="Enter the first name...">
 					</div>
 					<div class="form-group col-md-6">
 						<label class="label-style">Last Name</label>
-						<input type="text" class="form-control" placeholder="Enter the last name...">
+						<input type="text" class="form-control" name="LastName" placeholder="Enter the last name...">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<label class="label-style">Group</label>
-						<input type="text" class="form-control" placeholder="Enter the group...">
+						<input type="text" class="form-control " name="Group" placeholder="Enter the group...">
 					</div>
 				</div>
 				
-				<input class="btn btn-success" type="button" value="ADD NEW" />
+				<input class="btn btn-success" type="submit" id="add-student-btn" value="ADD NEW" />
 			</form>
 		</div>
 	</div>
