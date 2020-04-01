@@ -61,3 +61,27 @@ $('.form-check-input').change(function () {
         getLectors();
     }
 });
+
+$("input[id^=request-accept-]").click(function() {
+    var inputTag = this;
+    var id = parseInt(inputTag.id.slice(15));
+    $.ajax({
+        type: "POST",
+        url: "/Admin/ApproveRequest",
+        data: `id=${id}`,
+        success: function () {
+            toastr.success('Request approved successfully.', 'Success', { timeOut: 3000 });
+            inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+$("input[id^=request-reject-]").click(function () {
+    var inputTag = this;
+    var id = parseInt(inputTag.id.slice(15));
+    toastr.success('Request rejected successfully.', 'Success', { timeOut: 3000 });
+    //TODO: Ajax for reject
+});
