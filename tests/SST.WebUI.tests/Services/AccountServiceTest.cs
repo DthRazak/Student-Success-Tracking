@@ -12,13 +12,11 @@ namespace SST.WebUI.Tests.Services
     public class AccountServiceTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
-        private readonly SSTDbContext _context;
         private readonly ITestOutputHelper _output;
 
         public AccountServiceTest(CustomWebApplicationFactory<Startup> factory, ITestOutputHelper output)
         {
             _factory = factory;
-            _context = _factory.GetContext();
             _output = output;
         }
 
