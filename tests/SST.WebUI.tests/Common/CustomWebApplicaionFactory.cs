@@ -5,66 +5,65 @@ using Microsoft.Extensions.DependencyInjection;
 using SST.Persistence;
 using System;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace SST.WebUI.Tests.Common
 {
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
-        private SSTDbContext context;
-
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder
-                .ConfigureServices(services =>
+            builder.ConfigureServices(services =>
+            {
+                // Remove the app's ApplicationDbContext registration.
+                var descriptor = services.SingleOrDefault(
+                    d => d.ServiceType ==
+                        typeof(DbContextOptions<SSTDbContext>));
+
+                if (descriptor != null)
                 {
-                    // Create a new service provider.
-                    var serviceProvider = new ServiceCollection()
-                        .AddEntityFrameworkInMemoryDatabase()
-                        .BuildServiceProvider();
+                    services.Remove(descriptor);
+                }
 
-                    // Add a database context using an in-memory 
-                    // database for testing.
-                    services.AddDbContext<SSTDbContext>(options =>
-                    {
-                        options.UseInMemoryDatabase("InMemoryDbForTesting");
-                        options.UseInternalServiceProvider(serviceProvider);
-                    });
+                // Add ApplicationDbContext using an in-memory database for testing.
+                services.AddDbContext<SSTDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("InMemoryDbForTesting");
+                });
 
-                    services.AddScoped(provider => provider.GetService<SSTDbContext>());
+                // Build the service provider.
+                var sp = services.BuildServiceProvider();
 
-                    var sp = services.BuildServiceProvider();
-
-                    // Create a scope to obtain a reference to the database
-                    using var scope = sp.CreateScope();
+                // Create a scope to obtain a reference to the database
+                // context (ApplicationDbContext).
+                using (var scope = sp.CreateScope())
+                {
                     var scopedServices = scope.ServiceProvider;
-                    context = scopedServices.GetRequiredService<SSTDbContext>();
-                    var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
-
-                    //var options = new DbContextOptionsBuilder<SSTDbContext>()
-                    //    .UseInMemoryDatabase(databaseName: "InMemoryDbForTesting")
-                    //    .Options;
-                    //context = new SSTDbContext(options);
+                    var db = scopedServices.GetRequiredService<SSTDbContext>();
+                    var logger = scopedServices
+                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
                     // Ensure the database is created.
-                    context.Database.EnsureCreated();
+                    db.Database.EnsureCreated();
 
                     try
                     {
                         // Seed the database with test data.
-                        Utilities.InitializeDbForTests(context);
+                        Utilities.InitializeDbForTests(db);
                     }
                     catch (Exception ex)
                     {
                         logger.LogError(ex, "An error occurred seeding the " +
-                                            $"database with test messages. Error: {ex.Message}");
+                            "database with test messages. Error: {Message}", ex.Message);
                     }
-                })
-                .UseEnvironment("Test");
+                }
+            });
         }
-
-        public SSTDbContext GetContext()
+        public HttpClient GetAnonymousClient()
         {
-            return context;
+            return CreateClient();
         }
     }
 }
