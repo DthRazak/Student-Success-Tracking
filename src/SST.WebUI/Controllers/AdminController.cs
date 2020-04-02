@@ -138,7 +138,7 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddLector([FromBody]CreateLectorCommand command)
+        public async Task<IActionResult> AddLector([FromForm]CreateLectorCommand command)
         {
             try
             {

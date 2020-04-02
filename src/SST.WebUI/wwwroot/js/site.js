@@ -118,3 +118,36 @@ $("input[id^=admin-remove-student-]").click(function () {
         }
     });
 });
+
+$("#add-lector-form").submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/Admin/AddLector",
+        data: $("#add-lector-form").serialize(),
+        success: function () {
+            toastr.success('Lector added successfully.', 'Success', { timeOut: 3000 });
+            // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+$("input[id^=admin-remove-lector-]").click(function () {
+    var inputTag = this;
+    var id = parseInt(inputTag.id.slice(20));
+    $.ajax({
+        type: "POST",
+        url: "/Admin/DeleteLector",
+        data: `id=${id}`,
+        success: function () {
+            toastr.success('Lector removed successfully.', 'Success', { timeOut: 3000 });
+            inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
