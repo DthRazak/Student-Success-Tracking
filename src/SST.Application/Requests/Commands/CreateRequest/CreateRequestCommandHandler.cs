@@ -20,7 +20,7 @@ namespace SST.Application.Requests.Commands.CreateRequest
         {
             var entity = new Request
             {
-                IsApproved = false,
+               
                 CreationDate = DateTime.Now,
                 UserRef = request.UserRef
             };
