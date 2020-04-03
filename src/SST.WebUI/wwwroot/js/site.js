@@ -128,8 +128,12 @@ $("#add-student-form").submit(function(e) {
             toastr.success('Student added successfully.', 'Success', { timeOut: 3000 });
             // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
         },
-        error: function () {
-            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        error: function (data) {
+            if (data.status === 422) {
+                toastr.error('All fields requaired', 'Error', { timeOut: 3000 });
+            } else {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
         }
     });
 });
@@ -161,8 +165,12 @@ $("#add-lector-form").submit(function (e) {
             toastr.success('Lector added successfully.', 'Success', { timeOut: 3000 });
             // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
         },
-        error: function () {
-            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        error: function (data) {
+            if (data.status === 422) {
+                toastr.error('All fields requaired', 'Error', { timeOut: 3000 });
+            } else {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
         }
     });
 });

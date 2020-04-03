@@ -147,13 +147,20 @@ namespace SST.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddStudent([FromForm]CreateStudentCommand command)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _mediator.Send(command);
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
             }
-            catch (ArgumentException ex)
+            else
             {
-                _logger.LogError(ex.Message);
+                return UnprocessableEntity();
             }
 
             return NoContent();
@@ -162,13 +169,20 @@ namespace SST.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddLector([FromForm]CreateLectorCommand command)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await _mediator.Send(command);
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
             }
-            catch (ArgumentException ex)
+            else
             {
-                _logger.LogError(ex.Message);
+                return UnprocessableEntity();
             }
 
             return NoContent();

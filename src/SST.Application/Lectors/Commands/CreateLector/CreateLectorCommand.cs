@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace SST.Application.Lectors.Commands.CreateLector
 {
@@ -6,10 +7,13 @@ namespace SST.Application.Lectors.Commands.CreateLector
     {
         public int Id { get; set; }
 
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
+        [Required]
         public string AcademicStatus { get; set; }
 
         public string UserRef { get; set; }
