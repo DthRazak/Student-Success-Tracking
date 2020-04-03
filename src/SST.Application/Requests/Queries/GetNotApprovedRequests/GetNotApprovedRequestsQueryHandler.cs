@@ -23,7 +23,7 @@ namespace SST.Application.Requests.Queries.GetNotApprovedRequests
         public async Task<RequestsListVm> Handle(GetNotApprovedRequestsQuery request, CancellationToken cancellationToken)
         {
             var requests = await _context.Requests
-                .Where(r => r.IsApproved == false)
+                .Where(r => r.IsApproved == null)
                 .ProjectTo<RequestDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

@@ -1,0 +1,78 @@
+﻿@model SST.Application.Lectors.Queries.GetLectors.LectorsListVm;
+@{
+	ViewData["Title"] = "Lectors Page";
+}
+
+<div class="container emp-profile">
+	<br>
+	<hr />
+	<center><h1>Lecturers</h1></center>
+	<hr />
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<form asp-action="AddLector" asp-controller="Admin" id="add-lector-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label class="label-style">First Name</label>
+						<input type="text" class="form-control"  name="FirstName" placeholder="Enter the first name...">
+					</div>
+					<div class="form-group col-md-6">
+						<label class="label-style">Last Name</label>
+						<input type="text" class="form-control"  name="LastName" placeholder="Enter the last name...">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label class="label-style">Academic status</label>
+						<input type="text" class="form-control" name="AcademicStatus" placeholder="Enter the academic status...">
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD NEW" />
+			</form>
+		</div>
+	</div>
+
+	<br />
+	<br />
+	<br />
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr class="tr-bg">
+							<th class="text-center">#</th>
+							<th>First name</th>
+							<th>Last name</th>
+							<th>Academic status</th>
+							<th>E-mail</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (int i = 0; i < Model.Lectors.Count; ++i)
+						{
+							<tr>
+								<td class="text-center">@(i + 1)</td>
+								<td>@Model.Lectors[i].FirstName</td>
+								<td>@Model.Lectors[i].LastName</td>
+								<td>@Model.Lectors[i].AcademicStatus</td>
+								<td>@Model.Lectors[i].Email</td>
+								<td class="td-actions">
+									<input class="btn btn-danger btn-just-icon btn-sm" type="button"
+										   id="admin-remove-lector-@Model.Lectors[i].Id" value="REMOVE" />
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

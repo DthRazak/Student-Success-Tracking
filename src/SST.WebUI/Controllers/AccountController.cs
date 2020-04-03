@@ -72,7 +72,7 @@ namespace SST.WebUI.Controllers
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrinciple);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Info", claimsPrinciple.Claims.Single(c => c.Type == ClaimTypes.Role).Value);
             }
             return View(form);
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SST.Application.Lectors.Commands.DeleteLector
 {
-    class DeleteLectorCommandHandler : IRequestHandler<DeleteLectorCommand, Unit>
+    public class DeleteLectorCommandHandler : IRequestHandler<DeleteLectorCommand, Unit>
     {
         private readonly ISSTDbContext _context;
 

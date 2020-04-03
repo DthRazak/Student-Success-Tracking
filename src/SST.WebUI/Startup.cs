@@ -46,8 +46,21 @@ namespace SST.WebUI
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new PathString("/Accout/Login");
+                    options.LoginPath = new PathString("/Account/Login");
                 });
+
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("Admin", policy =>
+                    policy.RequireAssertion(context =>
+                        context.User.IsInRole("Admin")));
+                options.AddPolicy("Student", policy =>
+                    policy.RequireAssertion(context =>
+                        context.User.IsInRole("Student")));
+                options.AddPolicy("Lector", policy =>
+                    policy.RequireAssertion(context =>
+                        context.User.IsInRole("Lector")));
+            });
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             //services.AddHostedService<SportsUpdateService>();

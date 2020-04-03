@@ -8,14 +8,18 @@ namespace SST.Application.Students.Queries.GetStudents
     {
         public int Id { get; set; }
 
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string Group { get; set; }
+
         public string Email { get; set; }
 
         public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Student, StudentDto>()
-                .ForMember(x => x.FullName, y => y.MapFrom(z => z.FirstName + " " + z.LastName));
+        { 
+            profile.CreateMap< Student, StudentDto > ()
+                  .ForMember(x => x.Email, y => y.MapFrom(z => z.UserRef));
         }
     }
 }

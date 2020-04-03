@@ -247,3 +247,70 @@ body {
         margin-right: 0%;
     }
 }
+
+
+/*Admin info*/
+.mrg-0 {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.mrg-t-40 {
+    margin-top: 40px;
+}
+
+.emp-profile {
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.profile-img {
+    text-align: center;
+}
+
+    .profile-img img {
+        width: 100px;
+        height: 100px;
+    }
+
+.btn.btn-sm {
+    border-radius: 3px;
+}
+
+.btn.btn-just-icon.btn-sm {
+    height: 25px;
+    min-width: 30px;
+    width: 60px;
+}
+
+.btn.btn-just-icon {
+    font-size: 12px;
+    height: 41px;
+    min-width: 41px;
+    width: 41px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.btn.btn-danger {
+    color: #fff;
+    background-color: #f44336;
+    border-color: #f44336;
+    box-shadow: 0 2px 2px 0 rgba(244,67,54,.14), 0 3px 1px -2px rgba(244,67,54,.2), 0 1px 5px 0 rgba(244,67,54,.12);
+}
+
+    .btn.btn-danger:hover {
+        box-shadow: 0 14px 26px -12px rgba(244,67,54,.42), 0 4px 23px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(244,67,54,.2);
+        background-color: #f33527;
+    }
+
+/*Students*/
+
+.tr-bg {
+    background-color: #e9ecef;
+}

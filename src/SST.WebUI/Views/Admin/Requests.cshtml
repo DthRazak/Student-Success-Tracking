@@ -1,0 +1,99 @@
+﻿@model SST.WebUI.ViewModels.RequestModel;
+@{
+	ViewData["Title"] = "Requests Page";
+}
+
+	<div class="container emp-profile">
+		<br>
+		<hr />
+		<center><h1>Requests</h1></center>
+		<hr />
+		<br>
+		<br>
+
+		<div class="row">
+			<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr class="tr-bg">
+								@if (Model.AllRequestsList != null)
+								{
+									<th class="text-center">#</th>
+									<th>Full Name</th>
+									<th>E-mail</th>
+									<th>Creation Date</th>
+									<th>Type</th>
+									<th>Status</th>
+									<th class="text-center">Actions</th>
+								}
+								else
+								{
+									<th class="text-center">#</th>
+									<th>Full Name</th>
+									<th>E-mail</th>
+									<th>Creation Date</th>
+									<th>Type</th>
+									<th class="text-center">Actions</th>
+								}
+							</tr>
+						</thead>
+						<tbody>
+							@if (Model.AllRequestsList != null)
+							{
+								@for (int i = 0; i < Model.AllRequestsList.Requests.Count; ++i)
+								{
+									<tr>
+										<td class="text-center">@(i + 1)</td>
+										<td>@Model.AllRequestsList.Requests[i].FullName</td>
+										<td>@Model.AllRequestsList.Requests[i].UserRef</td>
+										<td>@Model.AllRequestsList.Requests[i].CreationDate</td>
+										<td>@Model.AllRequestsList.Requests[i].Type</td>
+										<td>@Model.AllRequestsList.Requests[i].IsApproved</td>
+										<td class="td-actions">
+											@if (!@Model.AllRequestsList.Requests[i].IsApproved.HasValue)
+											{
+												<input class="btn btn-success btn-just-icon btn-sm" type="button"
+													   id="request-accept-@Model.AllRequestsList.Requests[i].Id" value="ACCEPT" />
+												<input class="btn btn-danger btn-just-icon btn-sm" type="button"
+													   id="request-reject-@Model.AllRequestsList.Requests[i].Id" value="REJECT" />
+											}
+											else if (!@Model.AllRequestsList.Requests[i].IsApproved.Value)
+											{
+												<input class="btn btn-success btn-just-icon btn-sm" type="button"
+													   id="request-accept-@Model.AllRequestsList.Requests[i].Id" value="ACCEPT" />
+											}
+											else
+											{
+												<input class="btn btn-danger btn-just-icon btn-sm" type="button"
+													   id="request-reject-@Model.AllRequestsList.Requests[i].Id" value="REJECT" />
+											}
+										</td>
+									</tr>
+								}
+							}
+							else
+							{
+								@for (int i = 0; i < Model.NotApprovedRequestsList.Requests.Count; ++i)
+								{
+									<tr>
+										<td class="text-center">@(i + 1)</td>
+										<td>@Model.NotApprovedRequestsList.Requests[i].FullName</td>
+										<td>@Model.NotApprovedRequestsList.Requests[i].UserRef</td>
+										<td>@Model.NotApprovedRequestsList.Requests[i].CreationDate</td>
+										<td>@Model.NotApprovedRequestsList.Requests[i].Type</td>
+										<td class="td-actions">
+											<input class="btn btn-success btn-just-icon btn-sm" type="button"
+												   id="request-accept-@Model.NotApprovedRequestsList.Requests[i].Id" value="ACCEPT" />
+											<input class="btn btn-danger btn-just-icon btn-sm" type="button"
+												   id="request-reject-@Model.NotApprovedRequestsList.Requests[i].Id" value="REJECT" />
+										</td>
+									</tr>
+								}
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>

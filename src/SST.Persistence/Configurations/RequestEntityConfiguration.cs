@@ -12,8 +12,8 @@ namespace SST.Persistence.Configurations
                 .HasKey(x => x.Id);
 
             builder
-                .Property(x => x.IsApproved)
-                .IsRequired();
+                .Property(x => x.IsApproved);
+                
 
             builder
                 .Property(x => x.CreationDate)
