@@ -23,6 +23,7 @@ namespace SST.Application.Requests.Queries.GetRequests
         public async Task<RequestsListVm> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
         {
             var requests = await _context.Requests
+                .Where(r => r.User.IsAdmin == false)
                 .ProjectTo<RequestDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

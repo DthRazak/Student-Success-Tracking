@@ -63,7 +63,7 @@ namespace SST.WebUI.Services
 
             if (model != null && model.PasswordHash == _passwordHasher.GetPasswordHash(password))
             {
-                if (model.IsApproved)
+                if (model.IsApproved.HasValue && model.IsApproved.Value)
                 {
                     var claims = new List<Claim>
                     {
@@ -76,9 +76,13 @@ namespace SST.WebUI.Services
 
                     return new ClaimsPrincipal(claimsIdentity);
                 }
-                else
+                else if (!model.IsApproved.HasValue)
                 {
                     throw new Exception("Account is not approved");
+                }
+                else
+                {
+                    throw new Exception("Account is rejected");
                 }
             }
             else

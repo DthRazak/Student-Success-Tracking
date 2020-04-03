@@ -1,4 +1,14 @@
-﻿var getStudentsByGroup = function (group) {
+﻿$.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+        return null;
+    }
+    else {
+        return results[1] || 0;
+    }
+}
+
+var getStudentsByGroup = function (group) {
     $.ajax({
         type: "GET",
         url: "/Account/GetStudentsByGroup",
@@ -71,7 +81,13 @@ $("input[id^=request-accept-]").click(function() {
         data: `id=${id}`,
         success: function () {
             toastr.success('Request approved successfully.', 'Success', { timeOut: 3000 });
-            inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+            if (!$.urlParam("DisplayAll")) {
+                inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+            } else {
+                inputTag.value = "REJECT";
+                inputTag.classList.remove("btn-success");
+                inputTag.classList.add("btn-danger");
+            }
         },
         error: function () {
             toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
@@ -82,8 +98,24 @@ $("input[id^=request-accept-]").click(function() {
 $("input[id^=request-reject-]").click(function () {
     var inputTag = this;
     var id = parseInt(inputTag.id.slice(15));
-    toastr.success('Request rejected successfully.', 'Success', { timeOut: 3000 });
-    //TODO: Ajax for reject
+    $.ajax({
+        type: "POST",
+        url: "/Admin/RejectRequest",
+        data: `id=${id}`,
+        success: function () {
+            toastr.success('Request rejected successfully.', 'Success', { timeOut: 3000 });
+            if (!$.urlParam("DisplayAll")) {
+                inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+            } else {
+                inputTag.value = "ACCEPT";
+                inputTag.classList.remove("btn-danger");
+                inputTag.classList.add("btn-success");
+            }
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
 });
 
 $("#add-student-form").submit(function(e) {

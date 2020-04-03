@@ -8,11 +8,13 @@ using SST.Application.Lectors.Commands.DeleteLector;
 using SST.Application.Lectors.Queries.GetLectors;
 using SST.Application.Requests.Commands.UpdateRequest;
 using SST.Application.Requests.Queries.GetNotApprovedRequests;
+using SST.Application.Requests.Queries.GetRequests;
 using SST.Application.Students.Commands.CreateStudent;
 using SST.Application.Students.Commands.DeleteStudent;
 using SST.Application.Students.Queries.GetStudents;
 using SST.Application.Users.Commands.CreateUser;
 using SST.Application.Users.Commands.DeleteUser;
+using SST.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,10 +41,15 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Requests()
+        public async Task<IActionResult> Requests(bool? DisplayAll)
         {
-            var model = await _mediator.Send(new GetNotApprovedRequestsQuery());
+            var model = new RequestModel();
 
+            if (DisplayAll.HasValue && DisplayAll.Value)
+                model.AllRequestsList = await _mediator.Send(new GetRequestsQuery());
+            else
+                model.NotApprovedRequestsList = await _mediator.Send(new GetNotApprovedRequestsQuery());
+            
             return View(model);
         }
 
@@ -68,6 +75,21 @@ namespace SST.WebUI.Controllers
             try
             {
                 await _mediator.Send(new UpdateRequestCommand { Id = id, IsApproved = true });
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RejectRequest(int id)
+        {
+            try
+            {
+                await _mediator.Send(new UpdateRequestCommand { Id = id, IsApproved = false });
             }
             catch (ArgumentException ex)
             {
