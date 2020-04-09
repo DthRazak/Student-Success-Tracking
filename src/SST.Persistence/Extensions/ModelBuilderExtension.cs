@@ -122,5 +122,61 @@ namespace SST.Persistence.Extensions
             );
         }
 
+        private static void SeedGrade(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Grade>().HasData(
+                new Grade
+                {
+                    Id = 1,
+                    Mark=20
+                },
+                new Grade
+                {
+                    Id=2,
+                    Mark=15
+                },
+                new Grade
+                {
+                    Id=3,
+                    Mark=18
+                },
+                new Grade
+                {
+                    Id=4,
+                    Mark=14
+                },
+                new Grade
+                {
+                    Id=5,
+                    Mark=20
+                }
+            );
+        }
+        private static void SeedSubject(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Subject>().HasData(
+                new Subject
+                {
+                    Id=1,
+                    Name="Програмна інженерія"
+                },
+                new Subject
+                {
+                    Id=2,
+                    Name="Дискретна математика"
+                },
+                new Subject
+                {
+                    Id=3,
+                    Name="Методи оптимізації"
+                },
+                new Subject
+                {
+                    Id=4,
+                    Name="Математичний аналіз"
+                }
+            );  
+        }
+
     }
 }
