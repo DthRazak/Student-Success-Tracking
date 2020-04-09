@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using SST.WebUI.tests.Common;
+using System.Net.Http.Headers;
 
 namespace SST.WebUI.Tests.Common
 {
@@ -64,6 +67,27 @@ namespace SST.WebUI.Tests.Common
         public HttpClient GetAnonymousClient()
         {
             return CreateClient();
+        }
+
+        public HttpClient GetAdminUser()
+        {
+            var client = WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    services.AddAuthentication("Test")
+                    .AddScheme<AuthenticationSchemeOptions, AdminAuthHandler>(
+                            "Test", options => { });
+                });
+            }).CreateClient(new WebApplicationFactoryClientOptions
+            {
+                AllowAutoRedirect = false
+            });
+
+            client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Test"); ;
+
+            return client;
         }
     }
 }
