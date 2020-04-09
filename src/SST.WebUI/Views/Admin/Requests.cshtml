@@ -57,16 +57,19 @@
 													   id="request-accept-@Model.AllRequestsList.Requests[i].Id" value="ACCEPT" />
 												<input class="btn btn-danger btn-just-icon btn-sm" type="button"
 													   id="request-reject-@Model.AllRequestsList.Requests[i].Id" value="REJECT" />
+												//<a class="btn btn-just-icon btn-sm" asp-action="Requests" asp-controller="Admin">ALL</a>
 											}
 											else if (!@Model.AllRequestsList.Requests[i].IsApproved.Value)
 											{
 												<input class="btn btn-success btn-just-icon btn-sm" type="button"
 													   id="request-accept-@Model.AllRequestsList.Requests[i].Id" value="ACCEPT" />
+												//<a class="btn btn-just-icon btn-sm" asp-action="Requests" asp-controller="Admin">ALL</a>
 											}
 											else
 											{
 												<input class="btn btn-danger btn-just-icon btn-sm" type="button"
 													   id="request-reject-@Model.AllRequestsList.Requests[i].Id" value="REJECT" />
+												//<a class="btn btn-just-icon btn-sm" asp-action="Requests" asp-controller="Admin">ALL</a>
 											}
 										</td>
 									</tr>

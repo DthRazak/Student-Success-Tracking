@@ -1,50 +1,95 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebUI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
-</head>
-<body class="page-bg">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebUI</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - WebUI</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+	<script src="https://use.fontawesome.com/a71d3f960a.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/fontawesome.min.js" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/fontawesome.min.css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
 
-    <footer class="border-top footer text-muted footer-bg ">
-        <div class="container">
-            &copy; 2020 - WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/toastr.js/toastr.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</head>
+<body class="page-bg mrg-b-0">
+	@*<header>
+			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+				<div class="container">
+					<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebUI</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+						<ul class="navbar-nav flex-grow-1">
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>*@
+
+	<div class="container-fluid">
+		<div class="row min-vh-100 flex-column flex-md-row d-flex">
+			<aside class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-xs-12 p-0 bg-dark flex-shrink-1">
+				<nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2 navbar-fixed-side">
+					
+					<div class="collapse navbar-collapse ">
+						
+						<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between pd-b-500">
+							<li class="nav-item">
+								<a class="nav-link pl-0 text-nowrap" href="#"><h2 class="font-weight-bold">SST</h2></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link pl-0" asp-action="Info" asp-controller="Admin"><i class="fa fa-id-card-o fa-fw mrg-t-15"></i> <span class="d-none d-md-inline"> Info</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link pl-0" asp-action="Students" asp-controller="Admin"><i class="fa fa-graduation-cap fa-fw mrg-t-15"></i> <span class="d-none d-md-inline"> Students</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link pl-0" asp-action="Lectors" asp-controller="Admin"><i class="fa fa-users fa-fw mrg-t-15"></i> <span class="d-none d-md-inline"> Lecturers</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link pl-0" asp-action="Requests" asp-controller="Admin"><i class="fa fa-list fa-fw mrg-t-15"></i> <span class="d-none d-md-inline"> Requests</span></a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</aside>
+			<main class="col-xl-10 col-lg-10 col-md-10 col-sm-12 col-xs-12 bg-faded py-3 ">
+				@RenderBody()
+
+				
+			</main>
+			
+		</div>
+		
+	</div>
+	@*<div class="container">
+		<main role="main" class="pb-3">
+			
+		</main>
+	</div>*@
+
+	@*<footer class="border-top footer text-muted footer-bg l-0">
+		<div class="container">
+		&copy; 2020 - WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>*@
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/toastr.js/toastr.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
 
 </body>
 </html>
