@@ -3,6 +3,7 @@ using Shouldly;
 using SST.Application.Lectors.Queries.GetNotLinkedLectors;
 using SST.Application.Students.Queries.GetStudentsByGroup;
 using SST.Application.Subjects.Queries;
+using SST.Application.Grades.Queries.GetGradeInfoByGroupAndSubject;
 using SST.Application.Users.Queries.GetUser;
 using SST.Domain.Entities;
 using Xunit;
@@ -132,6 +133,40 @@ namespace SST.Application.Tests.Mappings
             result.Id.ShouldBe(3);
             result.Name.ShouldBe("Програмна інженерія");
             result.LectorFullName.ShouldBe("Анатолій Музичук");
+        }
+
+        [Fact]
+        public void ShouldMapStudentSubjectToGradeInfoDto()
+        {
+            var entity = new StudentSubject()
+            {
+                Id = 1,
+                Student = new Student()
+                {
+                    Id = 2,
+                    FirstName = "Віталій",
+                    LastName = "Пистун",
+                    Group = "ПМІ-32"
+                },
+                Subject = new Subject()
+                {
+                    Id = 3,
+                    Name = "Програмна інженерія",
+                    Lector = new Lector()
+                    {
+                        Id = 4,
+                        FirstName = "Анатолій",
+                        LastName = "Музичук",
+                        AcademicStatus = "доцент"
+                    },
+                }
+            };
+
+            var result = _mapper.Map<GradesInfoDto>(entity);
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<GradesInfoDto>();
+            result.StudentFullName.ShouldBe("Віталій Пистун");
+            result.Total.ShouldBe(0);
         }
     }
 }

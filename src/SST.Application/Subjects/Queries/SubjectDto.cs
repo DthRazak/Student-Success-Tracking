@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Application.Subjects.Queries
 {
-    public class SubjectDto : IMapFrom<Subject>
+    public class SubjectDto : IMapFrom<Subject>, IMapFrom<StudentSubject>
     {
         public int Id { get; set; }
 
