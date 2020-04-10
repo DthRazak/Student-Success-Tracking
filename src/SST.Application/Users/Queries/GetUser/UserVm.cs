@@ -14,11 +14,19 @@ namespace SST.Application.Users.Queries.GetUser
 
         public bool? IsApproved { get; set; }
 
+        public int SSTID { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<User, UserVm>()
                 .ForMember(x => x.IsApproved, y => y.MapFrom(z => z.Request.IsApproved))
-                .ForMember(x => x.Role, y => y.MapFrom(z => z.IsAdmin ? "Admin" : z.Lector != null ? "Lector" : "Student"));
+                .ForMember(x => x.Role, y => y.MapFrom(z => z.IsAdmin ? "Admin" : z.Lector != null ? "Lector" : "Student"))
+                .ForMember(x => x.SSTID, y => y.MapFrom(z => 
+                    (Role == "Lector") ?
+                        z.Lector.Id
+                    : (Role == "Student") ?
+                        z.Student.Id
+                    : 0));
         }
     }
 }
