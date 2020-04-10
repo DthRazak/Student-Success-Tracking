@@ -12,6 +12,9 @@ namespace SST.Persistence.Extensions
             SeedRequest(modelBuilder);
             SeedStudent(modelBuilder);
             SeedLector(modelBuilder);
+            SeedGrade(modelBuilder);
+            SeedSubject(modelBuilder);
+            SeedStudentSubject(modelBuilder);
         }
 
         private static void SeedUser(ModelBuilder modelBuilder)
@@ -186,7 +189,7 @@ namespace SST.Persistence.Extensions
                 }
             );  
         }
-        private static void SeedStudentSubjec(ModelBuilder modelBuilder)
+        private static void SeedStudentSubject(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StudentSubject>().HasData(
                 new StudentSubject
