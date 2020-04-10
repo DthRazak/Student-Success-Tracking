@@ -89,8 +89,8 @@ body {
     }
 
 .form-bg {
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 10px 0px;
+    /*background-color: white;*/
+    /*box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 10px 0px;*/
     border: 0px;
 }
 
@@ -103,6 +103,10 @@ body {
 }*/
 
 .mrg-b-0 {
+    margin-bottom: 0px;
+}
+
+.emp-profile.mrg-b-0 {
     margin-bottom: 0px;
 }
 
@@ -143,11 +147,11 @@ body {
    left: 0px;
 }
 
-.cover {
-    /*background: no-repeat center center;*/
+/*.cover {
+    /*background: no-repeat center center;
     background-size: cover;
     overflow: hidden;
-}
+}*/
 
 .heading-style{
     text-align: center;
