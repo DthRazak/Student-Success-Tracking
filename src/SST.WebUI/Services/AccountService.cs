@@ -71,6 +71,11 @@ namespace SST.WebUI.Services
                         new Claim(ClaimTypes.Role, model.Role)
                     };
 
+                    if (model.Role != "Admin")
+                    {
+                        claims.Add(new Claim("SST-ID", model.SSTID.ToString()));
+                    }
+
                     var claimsIdentity = new ClaimsIdentity(claims, "ApplicationCookie", 
                         ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
