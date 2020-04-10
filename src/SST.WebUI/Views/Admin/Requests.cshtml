@@ -1,14 +1,28 @@
 ﻿@model SST.WebUI.ViewModels.RequestModel;
 @{
+	Layout = "AdminLayout";
 	ViewData["Title"] = "Requests Page";
 }
 
-	<div class="container emp-profile">
-		<br>
+	<div class="container emp-profile mrg-t-0">
 		<hr />
 		<center><h1>Requests</h1></center>
 		<hr />
 		<br>
+
+		<div class="row">
+			<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+				@if (Context.Request.Query.ContainsKey("DisplayAll")
+				   && Context.Request.Query.FirstOrDefault(x => x.Key == "DisplayAll").Value == "true")
+				{
+					<a class="btn btn-info btn-show pd-l-r-1" href="?DisplayAll=false">SHOW REQUESTED</a>
+				}
+				else
+				{
+					<a class="btn btn-info btn-show pd-l-r-1" href="?DisplayAll=true">SHOW ALL</a>
+				}
+			</div>
+		</div>
 		<br>
 
 		<div class="row">
@@ -57,16 +71,19 @@
 													   id="request-accept-@Model.AllRequestsList.Requests[i].Id" value="ACCEPT" />
 												<input class="btn btn-danger btn-just-icon btn-sm" type="button"
 													   id="request-reject-@Model.AllRequestsList.Requests[i].Id" value="REJECT" />
+
 											}
 											else if (!@Model.AllRequestsList.Requests[i].IsApproved.Value)
 											{
 												<input class="btn btn-success btn-just-icon btn-sm" type="button"
 													   id="request-accept-@Model.AllRequestsList.Requests[i].Id" value="ACCEPT" />
+
 											}
 											else
 											{
 												<input class="btn btn-danger btn-just-icon btn-sm" type="button"
 													   id="request-reject-@Model.AllRequestsList.Requests[i].Id" value="REJECT" />
+
 											}
 										</td>
 									</tr>
