@@ -14,7 +14,7 @@ namespace SST.Persistence.Extensions
             SeedLector(modelBuilder);
             SeedGrade(modelBuilder);
             SeedSubject(modelBuilder);
-            SeedStudentSubject(modelBuilder);
+            SeedStudentSubject(modelBuilder); 
         }
 
         private static void SeedUser(ModelBuilder modelBuilder)
