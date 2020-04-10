@@ -53,7 +53,7 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+ //       [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginForm form)
         {
             if (ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> SignupAsLector(LectorSignupForm form)
         {
             if (ModelState.IsValid)
@@ -109,7 +109,7 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> SignupAsStudent(StudentSignupForm form)
         {
             if (ModelState.IsValid)
