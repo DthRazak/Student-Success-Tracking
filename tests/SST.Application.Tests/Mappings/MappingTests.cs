@@ -2,6 +2,7 @@
 using Shouldly;
 using SST.Application.Lectors.Queries.GetNotLinkedLectors;
 using SST.Application.Students.Queries.GetStudentsByGroup;
+using SST.Application.Subjects.Queries;
 using SST.Application.Users.Queries.GetUser;
 using SST.Domain.Entities;
 using Xunit;
@@ -70,6 +71,67 @@ namespace SST.Application.Tests.Mappings
             result.ShouldNotBeNull();
             result.ShouldBeOfType<UserVm>();
             result.Role.ShouldBe("Student");
+        }
+        
+        [Fact]
+        public void ShouldMapSubjectToSubjectDto()
+        {
+            var entity = new Subject()
+            {
+                Id = 1,
+                Name = "Програмна інженерія",
+                Lector = new Lector()
+                {
+                    Id = 2,
+                    FirstName = "Анатолій",
+                    LastName = "Музичук",
+                    AcademicStatus = "доцент"
+                },
+            };
+
+            var result = _mapper.Map<SubjectDto>(entity);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<SubjectDto>();
+            result.Id.ShouldBe(1);
+            result.Name.ShouldBe("Програмна інженерія");
+            result.LectorFullName.ShouldBe("Анатолій Музичук");
+        }
+
+        [Fact]
+        public void ShouldMapStudentSubjectToSubjectDto()
+        {
+            var entity = new StudentSubject()
+            {
+                Id = 1,
+                Student = new Student()
+                {
+                    Id = 2,
+                    FirstName = "Віталій",
+                    LastName = "Пистун",
+                    Group = "ПМІ-32"
+                },
+                Subject = new Subject()
+                {
+                    Id = 3,
+                    Name = "Програмна інженерія",
+                    Lector = new Lector()
+                    {
+                        Id = 4,
+                        FirstName = "Анатолій",
+                        LastName = "Музичук",
+                        AcademicStatus = "доцент"
+                    },
+                }
+            };
+
+            var result = _mapper.Map<SubjectDto>(entity);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType<SubjectDto>();
+            result.Id.ShouldBe(3);
+            result.Name.ShouldBe("Програмна інженерія");
+            result.LectorFullName.ShouldBe("Анатолій Музичук");
         }
     }
 }
