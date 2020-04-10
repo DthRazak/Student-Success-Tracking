@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using SST.Application.Common.Hashing;
 using SST.Domain.Entities;
 using SST.Persistence;
 using System;

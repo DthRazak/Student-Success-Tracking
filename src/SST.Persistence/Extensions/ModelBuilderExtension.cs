@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SST.Application.Common.Hashing;
 using SST.Domain.Entities;
 using System;
 
@@ -24,6 +25,14 @@ namespace SST.Persistence.Extensions
                     IsAdmin = true,
                 }
             );
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    PasswordHash = new PasswordHasher().GetPasswordHash("Password"),
+                    Email = "martashuyak@gmail.com"
+                }
+            );
         }
 
         private static void SeedRequest(ModelBuilder modelBuilder)
@@ -35,6 +44,16 @@ namespace SST.Persistence.Extensions
                     CreationDate = DateTime.Now,
                     IsApproved = true,
                     UserRef = "admin@email.com"
+                }
+            );
+
+            modelBuilder.Entity<Request>().HasData(
+                new Request
+                {
+                    Id = 2,
+                    CreationDate = DateTime.Now,
+                    IsApproved = true,
+                    UserRef = "martashuyak@gmail.com"
                 }
             );
         }
@@ -54,7 +73,8 @@ namespace SST.Persistence.Extensions
                     Id = 2,
                     FirstName = "Марта",
                     LastName = "Шуяк",
-                    Group = "ПМІ-32"
+                    Group = "ПМІ-32",
+                    UserRef = "martashuyak@gmail.com",
                 },
                 new Student
                 {
