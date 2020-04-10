@@ -98,9 +98,9 @@ body {
     height: 30px;
 }
 
-.page-bg {
+/*.page-bg {
     background: #d1d1d1;
-}
+}*/
 
 .mrg-b-0 {
     margin-bottom: 0px;
@@ -287,6 +287,11 @@ body {
 
 
 /*Admin info*/
+
+.emp-profile.mrg-t-0 {
+    margin-top: 0px;
+}
+
 .mrg-0 {
     margin-left: 0;
     margin-right: 0;
@@ -350,6 +355,23 @@ body {
 
 .tr-bg {
     background-color: #e9ecef;
+}
+
+/*Requests*/
+
+.btn.btn-show.pd-l-r-1 {
+    padding-right: 1%;
+    padding-left: 1%;
+}
+
+.btn.btn-show {
+    font-size: 16px;
+    min-width: 41px;
+    /* width: 41px; */
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
 }
 
 /*Sidebar*/
