@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/aspnetcore,visualstudio
-# Edit at https://www.gitignore.io/?templates=aspnetcore,visualstudio
+# Created by https://www.gitignore.io/api/sonarqube,aspnetcore,visualstudio
+# Edit at https://www.gitignore.io/?templates=sonarqube,aspnetcore,visualstudio
 
 ### ASPNETCore ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -272,6 +272,19 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 
+### SonarQube ###
+# SonarQube ignore files.
+#
+# https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
+# Sonar Scanner working directories
+.sonar/
+.sonarqube/
+.scannerwork/
+
+# http://www.sonarlint.org/commandline/
+# SonarLint working directories, configuration files (including credentials)
+.sonarlint/
+
 ### VisualStudio ###
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
@@ -477,4 +490,4 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
-# End of https://www.gitignore.io/api/aspnetcore,visualstudio
+# End of https://www.gitignore.io/api/sonarqube,aspnetcore,visualstudio
