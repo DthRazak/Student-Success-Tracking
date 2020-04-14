@@ -396,3 +396,15 @@ body {
     color: #fff;
     transition: all 0.3s;
 }
+
+/*----------Student pages-----------*/
+
+/*Subjects*/
+
+.w-10 {
+    width: 10%;
+}
+
+.w-40 {
+    width: 40%;
+}
