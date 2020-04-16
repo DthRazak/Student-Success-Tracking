@@ -22,9 +22,9 @@ namespace SST.Application.Users.Queries.GetUser
                 .ForMember(x => x.IsApproved, y => y.MapFrom(z => z.Request.IsApproved))
                 .ForMember(x => x.Role, y => y.MapFrom(z => z.IsAdmin ? "Admin" : z.Lector != null ? "Lector" : "Student"))
                 .ForMember(x => x.SSTID, y => y.MapFrom(z => 
-                    (Role == "Lector") ?
+                    (!z.IsAdmin && z.Lector != null) ?
                         z.Lector.Id
-                    : (Role == "Student") ?
+                    : (!z.IsAdmin && z.Student != null) ?
                         z.Student.Id
                     : 0));
         }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SST.Application.Students.Queries.GetStudent.StudentVm;
+@{
 	Layout = "StudentLayout";
 	ViewData["Title"] = "Info Page";
 }
@@ -26,7 +27,7 @@
 						<label class="lab-st"><b>Full name</b></label>
 					</div>
 					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 bg-w">
-						<p class="p-st">Marta Shuiak</p>
+						<p class="p-st">@Model.FullName</p>
 					</div>
 				</div>
 			</div>
@@ -36,7 +37,7 @@
 						<label class="lab-st"><b>E-mail</b></label>
 					</div>
 					<div class="col-xl-9 col-lg-9 col-md-8 col-sm-8 col-12 bg-w">
-						<p class="p-st">student@email.com</p>
+						<p class="p-st">@Model.Email</p>
 					</div>
 				</div>
 			</div>
@@ -53,7 +54,7 @@
 						<label class="lab-st"><b>Group</b></label>
 					</div>
 					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 bg-w">
-						<p class="p-st">PMI-32</p>
+						<p class="p-st">@Model.Group</p>
 					</div>
 				</div>
 			</div>

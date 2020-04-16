@@ -10,5 +10,7 @@ namespace SST.Domain.Entities
         public int StudentSubjectRef { get; set; }
 
         public StudentSubject StudentSubject { get; set; }
+
+        public System.DateTime Date { get; set; }
     }
 }
