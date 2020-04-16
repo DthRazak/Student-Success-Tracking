@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SST.Application.Subjects.Queries.SubjectsListVm;
+@{
 	Layout = "StudentLayout";
 	ViewData["Title"] = "Subjects Page";
 }
@@ -22,16 +23,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-center">1</td>
-							<td>Математичні основи криптології</td>
-							<td>Малець Романна</td>
-						</tr>
-						<tr>
-							<td class="text-center">2</td>
-							<td>Інформаційна безпека підприємств</td>
-							<td>Рикалюк Роман</td>
-						</tr>
+						@for (int i = 0; i < Model.Subjects.Count; ++i)
+						{
+							<tr>
+								<td class="text-center">@(i+1)</td>
+								<td>@Model.Subjects[i].Name</td>
+								<td>@Model.Subjects[i].LectorFullName</td>
+							</tr>
+						}
 					</tbody>
 				</table>
 			</div>

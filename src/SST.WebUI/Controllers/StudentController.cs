@@ -48,7 +48,7 @@ namespace SST.WebUI.Controllers
 
             var model = await _mediator.Send(new GetSubjectsByStudentQuery { StudentId = id });
 
-            return View();
+            return View(model);
         }
 
         [HttpGet]
