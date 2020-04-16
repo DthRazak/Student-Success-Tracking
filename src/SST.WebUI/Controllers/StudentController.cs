@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SST.Application.Students.Queries.GetStudent;
 using SST.Application.Subjects.Queries.GetSubjectsByStudent;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,11 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Info()
         {
-            return View();
+            var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
+
+            var model = await _mediator.Send(new GetStudentQuery { StudentId = id });
+
+            return View(model);
         }
 
         [HttpGet]
