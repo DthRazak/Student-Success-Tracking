@@ -151,32 +151,37 @@ namespace SST.Persistence.Extensions
                 new Grade
                 {
                     Id = 1,
-                    Mark=20,
-                    StudentSubjectRef=1
+                    Mark = 20,
+                    StudentSubjectRef = 1,
+                    Date = new DateTime(2020,03,20)
                 },
                 new Grade
                 {
-                    Id=2,
-                    Mark=15,
-                    StudentSubjectRef=2
+                    Id = 2,
+                    Mark = 15,
+                    StudentSubjectRef = 2,
+                    Date = new DateTime(2020, 03, 16)
                 },
                 new Grade
                 {
-                    Id=3,
-                    Mark=18,
-                    StudentSubjectRef=3
+                    Id = 3,
+                    Mark = 18,
+                    StudentSubjectRef = 3,
+                    Date = new DateTime(2020, 03, 10)
                 },
                 new Grade
                 {
-                    Id=4,
-                    Mark=14,
-                    StudentSubjectRef=2
+                    Id = 4,
+                    Mark = 14,
+                    StudentSubjectRef = 2,
+                    Date = new DateTime(2020, 03, 03)
                 },
                 new Grade
                 {
-                    Id=5,
-                    Mark=20,
-                    StudentSubjectRef=3
+                    Id = 5,
+                    Mark = 20,
+                    StudentSubjectRef = 3,
+                    Date = new DateTime(2020, 04, 02)
                 }
             );
         }
@@ -185,27 +190,27 @@ namespace SST.Persistence.Extensions
             modelBuilder.Entity<Subject>().HasData(
                 new Subject
                 {
-                    Id=1,
-                    Name="Програмна інженерія",
-                    LectorRef=1
+                    Id = 1,
+                    Name = "Програмна інженерія",
+                    LectorRef = 1
                 },
                 new Subject
                 {
-                    Id=2,
-                    Name="Дискретна математика",
-                    LectorRef=3
+                    Id = 2,
+                    Name = "Дискретна математика",
+                    LectorRef = 3
                 },
                 new Subject
                 {
-                    Id=3,
-                    Name="Програмування",
-                    LectorRef=5
+                    Id = 3,
+                    Name = "Програмування",
+                    LectorRef = 5
                 },
                 new Subject
                 {
-                    Id=4,
-                    Name="Статистика",
-                    LectorRef=3
+                    Id = 4,
+                    Name = "Статистика",
+                    LectorRef = 3
                 }
             );  
         }
@@ -214,21 +219,21 @@ namespace SST.Persistence.Extensions
             modelBuilder.Entity<StudentSubject>().HasData(
                 new StudentSubject
                 {
-                    Id=1,
-                    StudentRef=2,
-                    SubjectRef=2
+                    Id = 1,
+                    StudentRef = 2,
+                    SubjectRef = 2
                 },
                 new StudentSubject
                 {
-                    Id=2,
-                    StudentRef=1,
-                    SubjectRef=3
+                    Id = 2,
+                    StudentRef = 1,
+                    SubjectRef = 3
                 },
                 new StudentSubject
                 {
-                    Id=3,
-                    StudentRef=3,
-                    SubjectRef=1
+                    Id = 3,
+                    StudentRef = 3,
+                    SubjectRef = 1
                 }
             );
         }

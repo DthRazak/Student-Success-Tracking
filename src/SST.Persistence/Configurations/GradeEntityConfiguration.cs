@@ -18,11 +18,14 @@ namespace SST.Persistence.Configurations
             builder
                 .Property(x => x.StudentSubjectRef)
                 .IsRequired();
+            builder
+                .Property(x => x.Date)
+                .IsRequired();
 
             builder
                 .HasOne(x => x.StudentSubject)
                 .WithMany(x => x.Grades)
-                .HasForeignKey(x => x.StudentSubjectRef);
+                .HasForeignKey(x => x.StudentSubjectRef);                
         }
     }
 }
