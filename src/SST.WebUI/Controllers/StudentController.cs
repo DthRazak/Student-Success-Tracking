@@ -1,11 +1,12 @@
-﻿using MediatR;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SST.Application.Grades.Queries.GetGradeInfoByStudentAndSubject;
 using SST.Application.Students.Queries.GetStudent;
 using SST.Application.Subjects.Queries.GetSubjectsByStudent;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SST.WebUI.Controllers
 {
@@ -54,7 +55,22 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Grades()
         {
-            return View();
+            var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
+
+            var model = await _mediator.Send(new GetSubjectsByStudentQuery { StudentId = id });
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisplayGrages(int subjectId)
+        {
+            var studentId = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
+
+            var model = await _mediator.Send(new GetGradeInfoByStudentAndSubjectQuery
+                { StudentId = studentId, SubjectId = subjectId });
+
+            return PartialView("GradesPartial", model);
         }
     }
 }

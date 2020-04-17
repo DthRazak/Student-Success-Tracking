@@ -191,3 +191,23 @@ $("input[id^=admin-remove-lector-]").click(function () {
         }
     });
 });
+
+$("button[id=st-show-grades]").click(function () {
+    var subjectId = $("#StudentSubjectSelect :selected").val();
+    $.ajax({
+        type: "POST",
+        url: "/Student/DisplayGrages",
+        data: `subjectId=${subjectId}`,
+        success: function (data) {
+            $("#st-grade-table").replaceWith(data);
+            $("input[id=GradesCheck]").removeAttr("checked")
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+$("input[id=GradesCheck]").click(function () {
+    $("#classmates-grades").toggle(!this.checked);
+});
