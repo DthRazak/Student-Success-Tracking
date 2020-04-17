@@ -1,0 +1,63 @@
+﻿@model SST.Application.Subjects.Queries.SubjectsListVm;
+@{
+	Layout = "StudentLayout";
+	ViewData["Title"] = "Grades Page";
+}
+
+	<div class="container emp-profile mrg-t-0">
+		<hr />
+		<center><h1>Grades</h1></center>
+		<hr />
+		<br>
+		<br>
+
+		<div class="row mrg-side-4">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+				<div class="custom-control custom-checkbox mb-3 mrg-t-5">
+					<input type="checkbox" class="custom-control-input" id="GradesCheck" name="MyGrades">
+					<label class="custom-control-label" for="GradesCheck">Only my grades</label>
+				</div>
+			</div>
+			<div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12 sel-div-sm">
+				@*<label for="SubjectSelect">Subject</label>*@
+				<select class="custom-select" id="StudentSubjectSelect" name="Subject">
+					@foreach (var subject in Model.Subjects)
+					{
+						<option value="@subject.Id">@subject.Name</option>
+					}
+				</select>
+			</div>
+			<div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12 sh-div-sm">
+				<button class="btn btn-info btn-show pd-l-r-7 gr-btn-show mrg-t-5" id="st-show-grades">SHOW</button>
+			</div>
+		</div>
+
+		<br />
+		<br />
+		<div class="row">
+			<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+				<div class="table-responsive">
+					<table class="table" id="st-grade-table">
+						<thead>
+							<tr class="tr-bg">
+								<th class="text-center">#</th>
+								<th>Full name</th>
+								<th>Data</th>
+								<th>Data</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-center">1</td>
+								<td>-------</td>
+								<td>-------</td>
+								<td>-------</td>
+								<td>-------</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SST.Application.Students.Queries.GetStudent.StudentVm;
+@{
 	Layout = "StudentLayout";
 	ViewData["Title"] = "Info Page";
 }
@@ -15,66 +16,52 @@
 		<hr />
 		<div class="row mrg-0">
 
-			<div class="col-md-4">
+			<div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="profile-img">
 					<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/user.png" alt="" />
 				</div>
 			</div>
-			<div class="col-md-4 mrg-t-40">
+			<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 mrg-t-40">
 				<div class="row mrg-0">
-					<div class="col-md-4">
-						<label>Full name</label>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<label class="lab-st"><b>Full name</b></label>
 					</div>
-					<div class="col-md-8">
-						<p>Ivan Zyma</p>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 bg-w">
+						<p class="p-st">@Model.FullName</p>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 mrg-t-40">
+			<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 mrg-t-40">
 				<div class="row mrg-0">
-					<div class="col-md-4">
-						<label>E-mail</label>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+						<label class="lab-st"><b>E-mail</b></label>
 					</div>
-					<div class="col-md-">
-						<p>student@email.com</p>
+					<div class="col-xl-9 col-lg-9 col-md-8 col-sm-8 col-12 bg-w">
+						<p class="p-st">@Model.Email</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<hr />
-		<div class="row mrg-0">
 
-			<div class="col-md-4">
+		<hr class="hr-st"/>
+		<br />
+		<div class="row mrg-0">
+			<div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12">
+			</div>
+			<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
 				<div class="row mrg-0">
-					<div class="col-md-4">
-						<label>Gender</label>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<label class="lab-st"><b>Group</b></label>
 					</div>
-					<div class="col-md-8">
-						<p>Male</p>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 bg-w">
+						<p class="p-st">@Model.Group</p>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 mrg-t-40">
-				<div class="row mrg-0">
-					<div class="col-md-4">
-						<label>Specialty</label>
-					</div>
-					<div class="col-md-8">
-						<p>Applied mathematics and informatics</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 mrg-t-40">
-				<div class="row mrg-0">
-					<div class="col-md-4">
-						<label>Group</label>
-					</div>
-					<div class="col-md-8">
-						<p>PMI-33</p>
-					</div>
-				</div>
+			<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
 			</div>
 		</div>
+		<br />
 		<hr />
 		<br />
 	</div>

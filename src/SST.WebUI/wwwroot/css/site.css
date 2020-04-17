@@ -396,3 +396,103 @@ body {
     color: #fff;
     transition: all 0.3s;
 }
+
+/*----------Student pages-----------*/
+
+/*Subjects*/
+
+.w-10 {
+    width: 10%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+/*Info*/
+
+.bg-w {
+    background-color: white;
+    text-align:center;
+}
+
+.p-st {
+    margin-bottom: 0px;
+}
+
+@media screen and (max-width: 767px) {
+    .p-st {
+        font-size: 0.9rem;
+    }
+}
+
+.lab-st {
+    margin-bottom: 0px;
+}
+
+@media screen and (max-width: 575px) {
+    .lab-st {
+        margin-bottom: .5rem;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .hr-st {
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .hr-st {
+        margin-top: 40px;
+    }
+}
+
+/*Grades*/
+
+.btn.btn-show.pd-l-r-7 {
+    padding-right: 7%;
+    padding-left: 7%;
+}
+
+.mrg-side-4 {
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+@media screen and (max-width: 767px) {
+    .mrg-side-4 {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+}
+
+.gr-btn-show {
+    float: right;
+}
+
+@media screen and (max-width: 767px) {
+    .gr-btn-show {
+        float: left;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .sh-div-sm {
+        margin-top: 20px;
+    }
+
+    .sel-div-sm {
+        margin-top: 10px;
+    }
+}
+
+@media screen and (min-width: 767px) {
+    .gr-btn-show.mrg-t-5 {
+        margin-top: 5px;
+    }
+}
+
+.mrg-t-5 {
+    margin-top: 5px;
+}

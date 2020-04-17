@@ -1,0 +1,54 @@
+﻿@model SST.Application.Grades.Queries.GetGradeInfoByStudentAndSubject.GradesInfoVm;
+
+    <table class="table" id="st-grade-table">
+        <thead>
+            <tr class="tr-bg">
+                <th class="text-center">#</th>
+                <th>Full name</th>
+                @foreach (var data in Model.Dates)
+                {
+                    <th>@data.ToShortDateString()</th>
+                }
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.GradesInfos.Count; i++)
+            {
+                @if (Model.GradesInfos[i].StudentFullName == Model.StudentFullName)
+                {
+                    <tr id="my-grades">
+                        <td class="text-center">@(i + 1)</td>
+                        <td>@Model.GradesInfos[i].StudentFullName</td>
+                        @for (int j = 0, k = 0; j < Model.Dates.Count; j++)
+                        {
+                            <td> @if (k != Model.GradesInfos[i].Marks.Count && Model.GradesInfos[i].Marks.Keys[k] == Model.Dates[j])
+                                {
+                                    @Model.GradesInfos[i].Marks.Values[k]
+                                    k++; 
+                                }
+                            </td>
+                        }
+                        <td>@Model.GradesInfos[i].Total</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr id="classmates-grades">
+                        <td class="text-center">@(i + 1)</td>
+                        <td>@Model.GradesInfos[i].StudentFullName</td>
+                        @for (int j = 0, k = 0; j < Model.Dates.Count; j++)
+                        {
+                            <td> @if (k != Model.GradesInfos[i].Marks.Count && Model.GradesInfos[i].Marks.Keys[k] == Model.Dates[j])
+                                {
+                                    @Model.GradesInfos[i].Marks.Values[k]
+                                    k++;
+                                }
+                            </td>
+                        }
+                        <td>@Model.GradesInfos[i].Total</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
