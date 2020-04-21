@@ -69,6 +69,18 @@ namespace SST.WebUI.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> LectorsSubjects()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> StudentsSubjects()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> ApproveRequest(int id)
         {
