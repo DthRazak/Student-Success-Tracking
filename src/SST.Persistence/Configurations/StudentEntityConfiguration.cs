@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Persistence.Configurations
 {
-    class StudentEntityConfiguration : IEntityTypeConfiguration<Student>
+    public class StudentEntityConfiguration : IEntityTypeConfiguration<Student>
     {
         public void Configure(EntityTypeBuilder<Student> builder)
         {
@@ -20,11 +20,12 @@ namespace SST.Persistence.Configurations
                 .IsRequired();
 
             builder
-                .Property(x => x.Group)
+                .Property(x => x.GroupRef)
                 .IsRequired();
 
             builder
-                .Property(x => x.UserRef);
+                .Property(x => x.UserRef)
+                .IsRequired(false);
 
             builder
                 .HasOne(x => x.User)
@@ -32,7 +33,16 @@ namespace SST.Persistence.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasMany(x => x.StudentSubjects)
+                .HasOne(x => x.Group)
+                .WithMany(x => x.Students)
+                .HasForeignKey(x => x.GroupRef);
+
+            builder
+                .HasMany(x => x.Grades)
+                .WithOne(x => x.Student);
+
+            builder
+                .HasMany(x => x.SecondaryGroups)
                 .WithOne(x => x.Student);
         }
     }

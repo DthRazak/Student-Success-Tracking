@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Persistence.Configurations
 {
-    class LectorEntityConfiguration : IEntityTypeConfiguration<Lector>
+    public class LectorEntityConfiguration : IEntityTypeConfiguration<Lector>
     {
         public void Configure(EntityTypeBuilder<Lector> builder)
         {
@@ -24,7 +24,8 @@ namespace SST.Persistence.Configurations
                 .IsRequired();
 
             builder
-                .Property(x => x.UserRef);
+                .Property(x => x.UserRef)
+                .IsRequired(false);
 
             builder
                 .HasOne(x => x.User)

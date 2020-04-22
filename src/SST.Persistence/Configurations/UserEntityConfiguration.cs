@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Persistence.Configurations
 {
-    class UserEntityConfiguration : IEntityTypeConfiguration<User>
+    public class UserEntityConfiguration : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {

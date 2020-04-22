@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Persistence.Configurations
 {
-    class RequestEntityConfiguration : IEntityTypeConfiguration<Request>
+    public class RequestEntityConfiguration : IEntityTypeConfiguration<Request>
     {
         public void Configure(EntityTypeBuilder<Request> builder)
         {
@@ -12,8 +12,8 @@ namespace SST.Persistence.Configurations
                 .HasKey(x => x.Id);
 
             builder
-                .Property(x => x.IsApproved);
-                
+                .Property(x => x.IsApproved)
+                .IsRequired(false);
 
             builder
                 .Property(x => x.CreationDate)

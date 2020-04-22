@@ -4,34 +4,30 @@ using SST.Domain.Entities;
 
 namespace SST.Persistence.Configurations
 {
-    public class GradeEntityConfiguration : IEntityTypeConfiguration<Grade>
+    public class SecondaryGroupEntityConfiguration : IEntityTypeConfiguration<SecondaryGroup>
     {
-        public void Configure(EntityTypeBuilder<Grade> builder)
+        public void Configure(EntityTypeBuilder<SecondaryGroup> builder)
         {
             builder
                 .HasKey(x => x.Id);
-
-            builder
-                .Property(x => x.Mark)
-                .IsRequired();
 
             builder
                 .Property(x => x.StudentRef)
                 .IsRequired();
 
             builder
-                .Property(x => x.JournalColumnRef)
+                .Property(x => x.GroupRef)
                 .IsRequired();
 
             builder
                 .HasOne(x => x.Student)
-                .WithMany(x => x.Grades)
+                .WithMany(x => x.SecondaryGroups)
                 .HasForeignKey(x => x.StudentRef);
 
             builder
-                .HasOne(x => x.JournalColumn)
-                .WithMany(x => x.Grades)
-                .HasForeignKey(x => x.JournalColumnRef);
+                .HasOne(x => x.Group)
+                .WithMany(x => x.SecondaryGroups)
+                .HasForeignKey(x => x.GroupRef);
         }
     }
 }
