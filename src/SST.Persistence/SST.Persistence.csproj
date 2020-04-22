@@ -42,8 +42,4 @@
     <ProjectReference Include="..\SST.Application\SST.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

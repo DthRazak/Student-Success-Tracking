@@ -21,7 +21,7 @@ namespace SST.Persistence.Configurations
 
             builder
                 .Property(x => x.GroupRef)
-                .IsRequired();
+                .IsRequired(false);
 
             builder
                 .Property(x => x.UserRef)
