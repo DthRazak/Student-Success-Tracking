@@ -23,6 +23,7 @@ namespace SST.Application.Subjects.Queries.GetSubjects
         public async Task<SubjectsListVm> Handle(GetSubjectsQuery request, CancellationToken cancellationToken)
         {
             var subjects = await _context.Subjects
+               .Include(s => s.Lector)
                .ProjectTo<SubjectDto>(_mapper.ConfigurationProvider)
                .ToListAsync(cancellationToken);
 

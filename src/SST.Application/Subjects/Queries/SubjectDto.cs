@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Application.Subjects.Queries
 {
-    public class SubjectDto : IMapFrom<Subject>, IMapFrom<StudentSubject>
+    public class SubjectDto : IMapFrom<Subject>, IMapFrom<GroupSubject>
     {
         public int Id { get; set; }
 
@@ -16,10 +16,10 @@ namespace SST.Application.Subjects.Queries
         {
             profile.CreateMap<Subject, SubjectDto>()
                 .ForMember(x => x.LectorFullName, y => y.MapFrom(z => z.Lector.FirstName + " " + z.Lector.LastName));
-            profile.CreateMap<StudentSubject, SubjectDto>()
-                .ForMember(x => x.Id, y => y.MapFrom(z => z.Subject.Id))
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Subject.Name))
-                .ForMember(x => x.LectorFullName, y => y.MapFrom(z => z.Subject.Lector.FirstName + " " + z.Subject.Lector.LastName));
+            //profile.CreateMap<GroupSubject, SubjectDto>()
+            //    .ForMember(x => x.Id, y => y.MapFrom(z => z.Subject.Id))
+            //    .ForMember(x => x.Name, y => y.MapFrom(z => z.Subject.Name))
+            //    .ForMember(x => x.LectorFullName, y => y.MapFrom(z => z.Subject.Lector.FirstName + " " + z.Subject.Lector.LastName));
         }
     }
 }
