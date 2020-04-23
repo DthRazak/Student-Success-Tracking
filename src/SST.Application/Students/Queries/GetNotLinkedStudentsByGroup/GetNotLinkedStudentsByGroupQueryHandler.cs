@@ -23,7 +23,7 @@ namespace SST.Application.Students.Queries.GetNotLinkedStudentsByGroup
         public async Task<StudentsListVm> Handle(GetNotLinkedStudentsByGroupQuery request, CancellationToken cancellationToken)
         {
             var students = await _context.Students
-                .Where(x => x.Group == request.Group && x.User == null)
+                .Where(x => x.GroupRef == request.Group && x.User == null)
                 .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

@@ -39,7 +39,7 @@ namespace SST.WebUI.Controllers
             {
                 GroupsList = groupList,
                 StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery 
-                                                        { Group = groupList.Groups.FirstOrDefault() }),
+                                                        { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = new LectorSignupForm()
             };
@@ -100,7 +100,7 @@ namespace SST.WebUI.Controllers
             {
                 GroupsList = groupList,
                 StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = groupList.Groups.FirstOrDefault() }),
+                { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = form
             };
@@ -131,7 +131,7 @@ namespace SST.WebUI.Controllers
             {
                 GroupsList = groupList,
                 StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = groupList.Groups.FirstOrDefault() }),
+                { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = form,
                 LectorSignupForm = new LectorSignupForm()
             };
