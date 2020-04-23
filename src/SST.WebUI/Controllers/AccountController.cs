@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SST.Application.Students.Queries.GetGroups;
+using SST.Application.Groups.Queries.GetGroups;
 using SST.WebUI.Forms;
 using SST.WebUI.ViewModels;
 using System.Text.Json;
