@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SST.Application.Students.Queries.GetGroups
+namespace SST.Application.Groups.Queries.GetGroups
 {
     public class GroupsListVm
     {
