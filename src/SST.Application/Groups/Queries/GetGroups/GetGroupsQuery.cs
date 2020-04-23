@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace SST.Application.Students.Queries.GetGroups
+namespace SST.Application.Groups.Queries.GetGroups
 {
     public class GetGroupsQuery : IRequest<GroupsListVm>
     {

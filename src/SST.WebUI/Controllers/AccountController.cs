@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SST.Application.Students.Queries.GetGroups;
+using SST.Application.Groups.Queries.GetGroups;
 using SST.WebUI.Forms;
 using SST.WebUI.ViewModels;
 using System.Text.Json;
@@ -39,7 +39,7 @@ namespace SST.WebUI.Controllers
             {
                 GroupsList = groupList,
                 StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery 
-                                                        { Group = groupList.Groups.FirstOrDefault() }),
+                                                        { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = new LectorSignupForm()
             };
@@ -100,7 +100,7 @@ namespace SST.WebUI.Controllers
             {
                 GroupsList = groupList,
                 StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = groupList.Groups.FirstOrDefault() }),
+                { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = form
             };
@@ -131,7 +131,7 @@ namespace SST.WebUI.Controllers
             {
                 GroupsList = groupList,
                 StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = groupList.Groups.FirstOrDefault() }),
+                { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = form,
                 LectorSignupForm = new LectorSignupForm()
             };

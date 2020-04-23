@@ -1,0 +1,13 @@
+﻿using AutoMapper;
+using SST.Application.Common.Mapping;
+using SST.Domain.Entities;
+
+namespace SST.Application.Groups.Queries.GetGroups
+{
+    public class GroupsDto : IMapFrom<Group>
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+    }
+}
