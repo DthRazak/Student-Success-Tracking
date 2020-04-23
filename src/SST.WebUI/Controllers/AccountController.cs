@@ -38,11 +38,16 @@ namespace SST.WebUI.Controllers
             var model = new SignupModel
             {
                 GroupsList = groupList,
-                StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery 
-                                                        { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = new LectorSignupForm()
             };
+            var firstGroup = groupList.Groups.FirstOrDefault();
+            if (firstGroup != null)
+            {
+                model.StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
+                { Group = firstGroup.Id });
+            }
+
             return View(model);
         }
 
@@ -99,11 +104,15 @@ namespace SST.WebUI.Controllers
             var model = new SignupModel
             {
                 GroupsList = groupList,
-                StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = form
             };
+            var firstGroup = groupList.Groups.FirstOrDefault();
+            if (firstGroup != null)
+            {
+                model.StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
+                { Group = firstGroup.Id });
+            }
 
             return View("Signup", model);
         }
@@ -130,17 +139,21 @@ namespace SST.WebUI.Controllers
             var model = new SignupModel
             {
                 GroupsList = groupList,
-                StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = groupList.Groups.FirstOrDefault().Id }),
                 StudentSignupForm = form,
                 LectorSignupForm = new LectorSignupForm()
             };
+            var firstGroup = groupList.Groups.FirstOrDefault();
+            if (firstGroup != null)
+            {
+                model.StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
+                { Group = firstGroup.Id });
+            }
 
             return View("Signup", model);
         }
 
         [HttpGet]
-        public async Task<string> GetStudentsByGroup(string group)
+        public async Task<string> GetStudentsByGroup(int group)
         {
             return JsonSerializer.Serialize(await _mediator.Send(new GetNotLinkedStudentsByGroupQuery { Group = group}));
         }
