@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 using AutoMapper;
 using SST.Application.Tests.Common;
-using SST.Application.Students.Queries.GetGroups;
+using SST.Application.Groups.Queries.GetGroups;
 
 namespace SST.Application.Tests.Students.Queries
 {
