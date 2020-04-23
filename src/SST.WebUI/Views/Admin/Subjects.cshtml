@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Subjects Page";
+}
+
+
+<div class="container emp-profile mrg-t-0">
+	<hr />
+	<center><h1>Subjects</h1></center>
+	<hr />
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto sel-div-sm">
+			<select class="custom-select" id="LectorSelect" name="LectSel">
+				<option>Григорій Шинкаренко</option>
+				<option>Анатолій Музичук</option>
+				<option>Роман Олійник</option>
+				<option>Надія Колос</option>
+			</select>
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr class="tr-bg">
+							<th class="text-center">#</th>
+							<th>Subject</th>
+							<th>Group</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="text-center">1</td>
+							<td>Системи штучного інтелекту</td>
+							<td>ПМІ-32</td>
+							<td class="td-actions">
+								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<form asp-action="AddSubjectForLector" asp-controller="Admin" id="add-subject-for-lector-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+				<div class="form-row">
+					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Subject</label>
+						<input type="text" class="form-control" name="Subject" placeholder="Enter the subject...">
+					</div>
+					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Group</label>
+						<select class="custom-select" id="GroupSelect" name="GrSel">
+							<option>ПМІ-31</option>
+							<option>ПМІ-32</option>
+							<option>ПМІ-33</option>
+						</select>
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD NEW" />
+			</form>
+		</div>
+	</div>
+</div>

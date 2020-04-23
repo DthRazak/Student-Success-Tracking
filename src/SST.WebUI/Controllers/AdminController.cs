@@ -70,13 +70,13 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> LectorsSubjects()
+        public async Task<IActionResult> Subjects()
         {
             return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> StudentsSubjects()
+        public async Task<IActionResult> Groups()
         {
             return View();
         }
