@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Hashing;
 using SST.Domain.Entities;
-using System;
 
 namespace SST.Persistence.Extensions
 {
@@ -13,12 +13,12 @@ namespace SST.Persistence.Extensions
             SeedRequest(modelBuilder);
             SeedStudent(modelBuilder);
             SeedLector(modelBuilder);
-            SeedGrade(modelBuilder);
             SeedSubject(modelBuilder);
-            SeedGroupSubject(modelBuilder);
             SeedGroup(modelBuilder);
+            SeedGroupSubject(modelBuilder);
             SeedSecondaryGroup(modelBuilder);
             SeedJournalColumn(modelBuilder);
+            SeedGrade(modelBuilder);
         }
 
         // USER
@@ -28,7 +28,7 @@ namespace SST.Persistence.Extensions
                 new User
                 {
                     Email = "admin@email.com",
-                    PasswordHash = "Yh+CEuxWzPTw0y2M9zgFEw1stxAwoa1mvyaoI2157nY=",      //admin
+                    PasswordHash = new PasswordHasher().GetPasswordHash("admin"),
                     IsAdmin = true,
                 }
             );
@@ -283,35 +283,35 @@ namespace SST.Persistence.Extensions
                     Id = 1,
                     Name = "ПМІ-31",
                     Faculty = "Факультет прикладної математики та інформатики",
-                    //    IsMain = true
+                    IsMain = true
                 },
                 new Group
                 {
                     Id = 2,
                     Name = "ПМІ-32",
                     Faculty = "Факультет прикладної математики та інформатики",
-                    //    IsMain = true
+                    IsMain = true
                 },
                 new Group
                 {
                     Id = 3,
                     Name = "ПМІ-33",
                     Faculty = "Факультет прикладної математики та інформатики",
-                    //    IsMain = true
+                    IsMain = true
                 },
                 new Group
                 {
                     Id = 4,
                     Name = "ЖРН-11с",
                     Faculty = "Факультет журналістики",
-                    //    IsMain = true
+                    IsMain = true
                 },
                 new Group
                 {
                    Id = 5,
                    Name = "ФФП-42с",
                    Faculty = "Філософський факультет",
-                   //    IsMain = true
+                   IsMain = true
                 }
             );
         }
@@ -319,7 +319,7 @@ namespace SST.Persistence.Extensions
         // SECONDARY GROUP
         private static void SeedSecondaryGroup(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SecondaryGroup>().HasData(
+            /*modelBuilder.Entity<SecondaryGroup>().HasData(
                 new SecondaryGroup
                 {
                     Id = 1,
@@ -330,7 +330,7 @@ namespace SST.Persistence.Extensions
                     Id = 2,
                     GroupRef = 2,
                 }
-            );
+            );*/
         }
 
         // JOURNAL COLUMN
@@ -340,30 +340,34 @@ namespace SST.Persistence.Extensions
                 new JournalColumn
                 {
                     Id = 1,
-                    Date = new DateTime(2020, 03, 03)
+                    Date = new DateTime(2020, 03, 03),
+                    GroupSubjectRef = 2
                 },
                 new JournalColumn
                 {
                     Id = 2,
-                    Date = new DateTime(2020, 03, 10)
+                    Date = new DateTime(2020, 03, 10),
+                    GroupSubjectRef = 2
                 },
                 new JournalColumn
                 {
                     Id = 3,
-                    Date = new DateTime(2020, 03, 16)
+                    Date = new DateTime(2020, 03, 16),
+                    GroupSubjectRef = 2
                 },
                 new JournalColumn
                 {
                     Id = 4,
-                    Date = new DateTime(2020, 03, 20)
+                    Date = new DateTime(2020, 03, 20),
+                    GroupSubjectRef = 2
                 },
                 new JournalColumn
                 {
                     Id = 5,
-                    Date = new DateTime(2020, 04, 02)
+                    Date = new DateTime(2020, 04, 02),
+                    GroupSubjectRef = 2
                 }
             );
         }
-
     }
 }
