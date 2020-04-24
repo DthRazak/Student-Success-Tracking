@@ -117,11 +117,11 @@ body {
     }
 }
 
-@media (min-width: 768px) and (max-width: 1100px) {
+/*@media (min-width: 768px) and (max-width: 1100px) {
     .w-70 {
         width: 15%;
     }
-}
+}*/
 
 
 .pd-b-500 {
@@ -503,3 +503,5 @@ body {
 .mrg-t-5 {
     margin-top: 5px;
 }
+
+/*Subjects*/

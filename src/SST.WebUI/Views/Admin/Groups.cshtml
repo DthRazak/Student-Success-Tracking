@@ -1,4 +1,69 @@
 ﻿@{
     Layout = "AdminLayout";
-    ViewData["Title"] = "Group Page";
+    ViewData["Title"] = "Groups Page";
 }
+
+<div class="container emp-profile mrg-t-0">
+	<hr />
+	<center><h1>Groups</h1></center>
+	<hr />
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr class="tr-bg">
+							<th class="text-center">#</th>
+							<th>Group</th>
+							<th>Faculty</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="text-center">1</td>
+							<td>ПМІ-32</td>
+							<td>Факультет прикладної математики та інформатики</td>
+							<td class="td-actions">
+								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<form asp-action="AddGroup" asp-controller="Admin" id="add-subject-for-lector-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+				<div class="form-row">
+					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mrg-b-0">
+						<div class="custom-control custom-checkbox mb-3 mrg-t-5">
+							<input type="checkbox" class="custom-control-input" id="PriorityCheck" name="GroupPriority">
+							<label class="custom-control-label" for="PriorityCheck">Main group</label>
+						</div>
+					</div>
+					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Group</label>
+						<input type="text" class="form-control" name="Subject" placeholder="Enter the group...">
+					</div>
+					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Year</label>
+						<input type="number" class="form-control" name="Year" placeholder="Enter the year...">
+					</div>
+					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Faculty</label>
+						<input type="text" class="form-control" name="Faculty" placeholder="Enter the faculty...">
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD NEW" />
+			</form>
+		</div>
+	</div>
+</div>

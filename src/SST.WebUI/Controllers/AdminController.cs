@@ -46,10 +46,14 @@ namespace SST.WebUI.Controllers
             var model = new RequestModel();
 
             if (DisplayAll.HasValue && DisplayAll.Value)
+            {
                 model.AllRequestsList = await _mediator.Send(new GetRequestsQuery());
+            }
             else
+            {
                 model.NotApprovedRequestsList = await _mediator.Send(new GetNotApprovedRequestsQuery());
-            
+            }
+
             return View(model);
         }
 
