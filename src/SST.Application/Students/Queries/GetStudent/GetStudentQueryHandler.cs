@@ -21,6 +21,7 @@ namespace SST.Application.Students.Queries.GetStudent
         public async Task<StudentVm> Handle(GetStudentQuery request, CancellationToken cancellationToken)
         {
             var student = await _context.Students
+                .Include(s => s.Group)
                 .SingleOrDefaultAsync(s => s.Id == request.StudentId, cancellationToken);
 
             return _mapper.Map<StudentVm>(student);

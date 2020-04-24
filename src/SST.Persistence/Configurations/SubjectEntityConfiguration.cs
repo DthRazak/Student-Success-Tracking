@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Persistence.Configurations
 {
-    class SubjectEntityConfiguration : IEntityTypeConfiguration<Subject>
+    public class SubjectEntityConfiguration : IEntityTypeConfiguration<Subject>
     {
         public void Configure(EntityTypeBuilder<Subject> builder)
         {
@@ -25,7 +25,7 @@ namespace SST.Persistence.Configurations
                 .HasForeignKey(x => x.LectorRef);
 
             builder
-                .HasMany(x => x.StudentSubjects)
+                .HasMany(x => x.GroupSubjects)
                 .WithOne(x => x.Subject);
         }
     }

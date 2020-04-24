@@ -12,6 +12,6 @@ namespace SST.Domain.Entities
 
         public Lector Lector { get; set; }
 
-        public ICollection<StudentSubject> StudentSubjects { get; private set; }
+        public ICollection<GroupSubject> GroupSubjects { get; private set; }
     }
 }

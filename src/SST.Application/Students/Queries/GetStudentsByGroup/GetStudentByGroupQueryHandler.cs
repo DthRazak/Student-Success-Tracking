@@ -23,7 +23,7 @@ namespace SST.Application.Students.Queries.GetStudentsByGroup
         public async Task<StudentsListVm> Handle(GetStudentByGroupQuery request, CancellationToken cancellationToken)
         {
             var students = await _context.Students
-                .Where(x => x.Group == request.Group)
+                .Where(x => x.GroupRef == request.GroupId)
                 .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

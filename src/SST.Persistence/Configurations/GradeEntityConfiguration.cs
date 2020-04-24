@@ -4,7 +4,7 @@ using SST.Domain.Entities;
 
 namespace SST.Persistence.Configurations
 {
-    class GradeEntityConfiguration : IEntityTypeConfiguration<Grade>
+    public class GradeEntityConfiguration : IEntityTypeConfiguration<Grade>
     {
         public void Configure(EntityTypeBuilder<Grade> builder)
         {
@@ -16,16 +16,22 @@ namespace SST.Persistence.Configurations
                 .IsRequired();
 
             builder
-                .Property(x => x.StudentSubjectRef)
-                .IsRequired();
-            builder
-                .Property(x => x.Date)
+                .Property(x => x.StudentRef)
                 .IsRequired();
 
             builder
-                .HasOne(x => x.StudentSubject)
+                .Property(x => x.JournalColumnRef)
+                .IsRequired();
+
+            builder
+                .HasOne(x => x.Student)
                 .WithMany(x => x.Grades)
-                .HasForeignKey(x => x.StudentSubjectRef);                
+                .HasForeignKey(x => x.StudentRef);
+
+            builder
+                .HasOne(x => x.JournalColumn)
+                .WithMany(x => x.Grades)
+                .HasForeignKey(x => x.JournalColumnRef);
         }
     }
 }
