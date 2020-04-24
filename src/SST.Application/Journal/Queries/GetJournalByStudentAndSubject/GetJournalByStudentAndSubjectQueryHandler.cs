@@ -23,30 +23,58 @@ namespace SST.Application.Journal.Queries.GetJournalByStudentAndSubject
         public async Task<JournalVm> Handle(GetJournalByStudentAndSubjectQuery request, CancellationToken cancellationToken)
         {
             var student = await _context.Students
-                .Include(s => s.Group)
-                .ThenInclude(g => g.GroupSubjects)
                 .FirstOrDefaultAsync(s => s.Id == request.StudentId, cancellationToken);
 
             var studentFullName = student.FirstName + " " + student.LastName;
-            var subject = student.Group.GroupSubjects
-                .First(s => s.Id == request.SubjectId);
+            var groupSubject = await _context.GroupSubjects
+                .Include(gs => gs.Group)
+                    .ThenInclude(g => g.Students)
+                .FirstAsync(s => s.SubjectRef == request.SubjectId && s.GroupRef == student.GroupRef, cancellationToken);
 
-            var journal = new List<JournalColumnDto>();
-            foreach (var column in subject.Journal)
+            var groupStudents = new List<StudentDto>();
+            foreach (var st in groupSubject.Group.Students)
             {
-                journal.Add(_mapper.Map<JournalColumnDto>(column));
+                groupStudents.Add(_mapper.Map<StudentDto>(st));
             }
 
-            journal.OrderBy(j => j.Date);
+            var journalColumns = await _context.JournalColumns
+                .Include(jc => jc.Grades)
+                .Where(jc => jc.GroupSubjectRef == groupSubject.Id)
+                .ToListAsync(cancellationToken);
 
-            var totalList = new SortedList<string, int>();
+            var header = new List<JournalHeaderDto>();
+            foreach (var column in journalColumns)
+            {
+                header.Add(new JournalHeaderDto
+                {
+                    Date = column.Date,
+                    Note = column.Note
+                });
+            }
 
-            // TODO: total
+            header.Sort();
+
+            var dates = header.Select(x => x.Date).ToList();
+
+            var journal = new SortedList<StudentDto, JournalRowDto>();
+            foreach (var st in groupStudents)
+            {
+                var row = new JournalRowDto(dates);
+                foreach (var column in journalColumns)
+                {
+                    var grade = column.Grades.Where(g => g.StudentRef == st.Id).FirstOrDefault();
+                    row.Row[column.Date] = grade != null ? grade.Mark : 0;
+                    row.Total = row.Row.Values.Sum();
+                }
+
+                journal.Add(st, row);
+            }
+
             var vm = new JournalVm
             {
                 StudentFullName = studentFullName,
-                Journal = journal,
-                Total = totalList
+                Header = header,
+                Journal = journal
             };
 
             return vm;

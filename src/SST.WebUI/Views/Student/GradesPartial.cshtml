@@ -1,54 +1,58 @@
-﻿@*@model SST.Application.Grades.Queries.GetGradeInfoByStudentAndSubject.GradesInfoVm;
+﻿@model SST.Application.Journal.Queries.JournalVm;
 
     <table class="table" id="st-grade-table">
         <thead>
             <tr class="tr-bg">
                 <th class="text-center">#</th>
                 <th>Full name</th>
-                @foreach (var data in Model.Dates)
+                @foreach (var data in Model.Header)
                 {
-                    <th>@data.ToShortDateString()</th>
+                    <th data-toggle="tooltip" data-placement="top" title="@data.Note">@data.Date.ToShortDateString()</th>
                 }
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Model.GradesInfos.Count; i++)
+            @for (int i = 0; i < Model.Journal.Count; i++)
             {
-                @if (Model.GradesInfos[i].StudentFullName == Model.StudentFullName)
+                @if (Model.Journal.Keys[i].FullName == Model.StudentFullName)
                 {
                     <tr id="my-grades">
                         <td class="text-center">@(i + 1)</td>
-                        <td>@Model.GradesInfos[i].StudentFullName</td>
-                        @for (int j = 0, k = 0; j < Model.Dates.Count; j++)
+                        <td>@Model.Journal.Keys[i].FullName</td>
+                        @for (int j = 0; j < Model.Journal.Values[i].Row.Values.Count; j++)
                         {
-                            <td> @if (k != Model.GradesInfos[i].Marks.Count && Model.GradesInfos[i].Marks.Keys[k] == Model.Dates[j])
-                                {
-                                    @Model.GradesInfos[i].Marks.Values[k]
-                                    k++; 
-                                }
-                            </td>
+                            @if (@Model.Journal.Values[i].Row.Values[j] != 0)
+                            {
+                                <td>@Model.Journal.Values[i].Row.Values[j]</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
                         }
-                        <td>@Model.GradesInfos[i].Total</td>
+                        <td>@Model.Journal.Values[i].Total</td>
                     </tr>
                 }
                 else
                 {
                     <tr id="classmates-grades">
                         <td class="text-center">@(i + 1)</td>
-                        <td>@Model.GradesInfos[i].StudentFullName</td>
-                        @for (int j = 0, k = 0; j < Model.Dates.Count; j++)
+                        <td>@Model.Journal.Keys[i].FullName</td>
+                        @for (int j = 0; j < Model.Journal.Values[i].Row.Values.Count; j++)
                         {
-                            <td> @if (k != Model.GradesInfos[i].Marks.Count && Model.GradesInfos[i].Marks.Keys[k] == Model.Dates[j])
-                                {
-                                    @Model.GradesInfos[i].Marks.Values[k]
-                                    k++;
-                                }
-                            </td>
+                            @if (@Model.Journal.Values[i].Row.Values[j] != 0)
+                            {
+                                <td>@Model.Journal.Values[i].Row.Values[j]</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
                         }
-                        <td>@Model.GradesInfos[i].Total</td>
+                        <td>@Model.Journal.Values[i].Total</td>
                     </tr>
                 }
             }
         </tbody>
-    </table>*@
+    </table>
