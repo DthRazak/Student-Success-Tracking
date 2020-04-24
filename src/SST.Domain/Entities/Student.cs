@@ -10,7 +10,7 @@ namespace SST.Domain.Entities
 
         public string LastName { get; set; }
 
-        public string GroupRef { get; set; }
+        public int GroupRef { get; set; }
 
         public string UserRef { get; set; }
 
