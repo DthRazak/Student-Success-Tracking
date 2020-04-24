@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SST.Application.Common.Interfaces;
+using SST.Application.Groups.Queries.GetGroups;
 using SST.Application.Lectors.Commands.CreateLector;
 using SST.Application.Lectors.Commands.DeleteLector;
 using SST.Application.Lectors.Queries.GetLectors;
@@ -60,7 +61,14 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Students()
         {
-            var model = await _mediator.Send(new GetStudentsQuery());
+            var studentsList = await _mediator.Send(new GetStudentsQuery());
+            var groupList = await _mediator.Send(new GetGroupsQuery());
+
+            var model = new AdminStudentsModel
+            {
+                StudentsList = studentsList,
+                GroupsList = groupList
+            };
 
             return View(model);
         }
