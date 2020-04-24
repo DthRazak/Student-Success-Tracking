@@ -52,16 +52,44 @@
 	</div>
 	<br />
 	<br />
+	<br />
+	
 	<div class="row">
 		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<h4>Add new subject</h4>
 			<form asp-action="AddSubject" asp-controller="Admin" id="add-subject-form">
 				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
 				<div class="form-row">
-					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Subject</label>
 						<input type="text" class="form-control h-auto" name="Subject" placeholder="Enter the subject...">
 					</div>
-					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+				</div>
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD" />
+			</form>
+		</div>
+	</div>
+
+	<br />
+	<br />
+	<br />
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<h4>Link subject to the group</h4>
+			<form asp-action="LinkSubjectToGroup" asp-controller="Admin" id="link-subject-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+				<div class="form-row">
+					<div class="form-group col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Subject</label>
+						<select class="custom-select" id="SubjectSelect" name="SubSel">
+							<option>Системи штучного інтелекту</option>
+							<option>Методи оптимізації</option>
+							<option>Програмна інженерія</option>
+							<option>Методи комп’ютерних обчислень</option>
+						</select>
+					</div>
+					<div class="form-group col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Group</label>
 						<select class="custom-select" id="GroupSelect" name="GrSel">
 							<option>ПМІ-31</option>
@@ -70,7 +98,7 @@
 						</select>
 					</div>
 				</div>
-				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD NEW" />
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="LINK" />
 			</form>
 		</div>
 	</div>
