@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using SST.Application.Common.Mapping;
+﻿using SST.Application.Common.Mapping;
 using SST.Domain.Entities;
 
 namespace SST.Application.Groups.Queries.GetGroups
@@ -9,5 +8,7 @@ namespace SST.Application.Groups.Queries.GetGroups
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public string Faculty { get; set; }
     }
 }

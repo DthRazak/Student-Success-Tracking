@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SST.WebUI.ViewModels.AdminGroupsModel;
+@{
     Layout = "AdminLayout";
     ViewData["Title"] = "Groups Page";
 }
@@ -23,14 +24,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-center">1</td>
-							<td>ПМІ-32</td>
-							<td>Факультет прикладної математики та інформатики</td>
-							<td class="td-actions">
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
-							</td>
-						</tr>
+						@for (int i = 0; i < Model.GroupsList.Groups.Count; ++i)
+						{
+							<tr>
+								<td class="text-center">@(i + 1)</td>
+								<td>@Model.GroupsList.Groups[i].Name</td>
+								<td>@Model.GroupsList.Groups[i].Faculty</td>
+								<td class="td-actions">
+									<input class="btn btn-danger btn-just-icon btn-sm" type="button"
+										   id="admin-remove-group-@Model.GroupsList.Groups[i].Id" value="REMOVE" />
+								</td>
+							</tr>
+						}
 					</tbody>
 				</table>
 			</div>
@@ -45,13 +50,13 @@
 				<div class="form-row">
 					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mrg-b-0">
 						<div class="custom-control custom-checkbox mb-3 mrg-t-5">
-							<input type="checkbox" class="custom-control-input" id="PriorityCheck" name="GroupPriority">
+							<input type="checkbox" class="custom-control-input" id="PriorityCheck" name="IsMain" value="true" checked>
 							<label class="custom-control-label" for="PriorityCheck">Main group</label>
 						</div>
 					</div>
 					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Group</label>
-						<input type="text" class="form-control" name="Subject" placeholder="Enter the group...">
+						<input type="text" class="form-control" name="Name" placeholder="Enter the group...">
 					</div>
 					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Year</label>
@@ -59,11 +64,11 @@
 					</div>
 					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Faculty</label>
-						<select class="custom-select" id="FacultySelect" name="FacultySel">
-							<option>Факультет прикладної математики та інформатики</option>
-							<option>Механіко-математичний факультет</option>
-							<option>Фізичний факультет</option>
-							<option>Біологічний факультет</option>
+						<select class="custom-select" id="FacultySelect" name="Faculty">
+							@foreach (var faculty in Model.FacultyList.Faculties)
+							{
+								<option value="@faculty">@faculty</option>
+							}
 						</select>
 					</div>
 				</div>

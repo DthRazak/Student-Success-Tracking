@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SST.Application.Common.Interfaces;
+using SST.Application.Groups.Commands.CreateGroup;
+using SST.Application.Groups.Commands.DeleteGroup;
+using SST.Application.Groups.Queries.GetFaculties;
 using SST.Application.Groups.Queries.GetGroups;
 using SST.Application.Lectors.Commands.CreateLector;
 using SST.Application.Lectors.Commands.DeleteLector;
@@ -90,7 +93,16 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Groups()
         {
-            return View();
+            var groupsList = await _mediator.Send(new GetGroupsQuery());
+            var facultyList = await _mediator.Send(new GetFacultiesQuery());
+
+            var model = new AdminGroupsModel
+            {
+                GroupsList = groupsList,
+                FacultyList = facultyList
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -169,6 +181,21 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            try
+            {
+                await _mediator.Send(new DeleteGroupCommand { Id = id });
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> AddStudent([FromForm]CreateStudentCommand command)
         {
             if (ModelState.IsValid)
@@ -192,6 +219,28 @@ namespace SST.WebUI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddLector([FromForm]CreateLectorCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+            }
+            else
+            {
+                return UnprocessableEntity();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGroup([FromForm]CreateGroupCommand command)
         {
             if (ModelState.IsValid)
             {

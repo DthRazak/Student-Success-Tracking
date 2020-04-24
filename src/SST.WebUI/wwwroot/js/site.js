@@ -211,3 +211,40 @@ $("button[id=st-show-grades]").click(function () {
 $("input[id=GradesCheck]").click(function () {
     $("#classmates-grades").toggle(!this.checked);
 });
+
+$("input[id^=admin-remove-group-]").click(function () {
+    var inputTag = this;
+    var id = parseInt(inputTag.id.slice(19));
+    $.ajax({
+        type: "POST",
+        url: "/Admin/DeleteGroup",
+        data: `id=${id}`,
+        success: function () {
+            toastr.success('Group removed successfully.', 'Success', { timeOut: 3000 });
+            inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+$("#add-group-form").submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/Admin/AddGroup",
+        data: $("#add-group-form").serialize(),
+        success: function () {
+            toastr.success('Group added successfully.', 'Success', { timeOut: 3000 });
+            // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function (data) {
+            if (data.status === 422) {
+                toastr.error('All fields requaired', 'Error', { timeOut: 3000 });
+            } else {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        }
+    });
+});
