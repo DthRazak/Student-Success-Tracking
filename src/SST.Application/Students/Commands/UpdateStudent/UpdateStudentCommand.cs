@@ -1,5 +1,4 @@
-﻿
-using MediatR;
+﻿using MediatR;
 
 namespace SST.Application.Students.Commands.UpdateStudent
 {
@@ -11,7 +10,7 @@ namespace SST.Application.Students.Commands.UpdateStudent
 
         public string LastName { get; set; }
 
-        public string Group { get; set; }
+        public int? GroupRef { get; set; }
 
         public string UserRef { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿
-namespace SST.Domain.Entities
+﻿namespace SST.Domain.Entities
 {
     public class Grade
     {
@@ -7,10 +6,12 @@ namespace SST.Domain.Entities
 
         public int Mark { get; set; }
 
-        public int StudentSubjectRef { get; set; }
+        public int StudentRef { get; set; }
 
-        public StudentSubject StudentSubject { get; set; }
+        public int JournalColumnRef { get; set; }
 
-        public System.DateTime Date { get; set; }
+        public Student Student { get; set; }
+
+        public JournalColumn JournalColumn { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SST.Application.Grades.Queries.GetGradeInfoByStudentAndSubject;
+using SST.Application.Journal.Queries.GetJournalByStudentAndSubject;
 using SST.Application.Students.Queries.GetStudent;
 using SST.Application.Subjects.Queries.GetSubjectsByStudent;
 
@@ -67,7 +67,7 @@ namespace SST.WebUI.Controllers
         {
             var studentId = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
 
-            var model = await _mediator.Send(new GetGradeInfoByStudentAndSubjectQuery
+            var model = await _mediator.Send(new GetJournalByStudentAndSubjectQuery
                 { StudentId = studentId, SubjectId = subjectId });
 
             return PartialView("GradesPartial", model);

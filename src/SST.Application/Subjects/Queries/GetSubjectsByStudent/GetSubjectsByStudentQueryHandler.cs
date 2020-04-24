@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,8 +23,13 @@ namespace SST.Application.Subjects.Queries.GetSubjectsByStudent
 
         public async Task<SubjectsListVm> Handle(GetSubjectsByStudentQuery request, CancellationToken cancellationToken)
         {
-            var subjects = await _context.StudentSubjects
-               .Where(x => x.StudentRef == request.StudentId)
+            var student = await _context.Students
+                .FirstOrDefaultAsync(s => s.Id == request.StudentId, cancellationToken);
+
+            var subjects = await _context.GroupSubjects
+               .Include(gs => gs.Subject)
+                   .ThenInclude(s => s.Lector)
+               .Where(gs => gs.GroupRef == student.GroupRef)
                .ProjectTo<SubjectDto>(_mapper.ConfigurationProvider)
                .ToListAsync(cancellationToken);
 

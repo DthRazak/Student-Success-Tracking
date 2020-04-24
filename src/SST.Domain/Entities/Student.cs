@@ -10,12 +10,16 @@ namespace SST.Domain.Entities
 
         public string LastName { get; set; }
 
-        public string Group { get; set; }
+        public int? GroupRef { get; set; }
 
         public string UserRef { get; set; }
 
-        public User? User { get; set; }
+        public Group Group { get; set; }
 
-        public ICollection<StudentSubject> StudentSubjects { get; private set; }
+        public User User { get; set; }
+
+        public ICollection<Grade> Grades { get; set; }
+
+        public ICollection<SecondaryGroup> SecondaryGroups { get; set; }
     }
 }

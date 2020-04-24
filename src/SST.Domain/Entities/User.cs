@@ -1,5 +1,4 @@
-﻿
-namespace SST.Domain.Entities
+﻿namespace SST.Domain.Entities
 {
     public class User
     {
