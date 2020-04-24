@@ -23,6 +23,7 @@ namespace SST.Application.Students.Queries.GetStudents
         public async Task<StudentsListVm> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
         {
             var students = await _context.Students
+                .Include(s => s.Group)
                 .ProjectTo<StudentDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

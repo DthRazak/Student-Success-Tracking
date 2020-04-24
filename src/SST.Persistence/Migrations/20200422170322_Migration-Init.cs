@@ -3,16 +3,32 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SST.Persistence.Migrations
 {
-    public partial class initmigration : Migration
+    public partial class MigrationInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Faculty = table.Column<string>(nullable: false),
+                    Year = table.Column<int>(nullable: false),
+                    IsMain = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Email = table.Column<string>(nullable: false),
-                    PasswordHash = table.Column<string>(type: "char(32)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "varchar(256)", nullable: false),
                     IsAdmin = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -39,7 +55,7 @@ namespace SST.Persistence.Migrations
                         column: x => x.UserRef,
                         principalTable: "Users",
                         principalColumn: "Email",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +64,7 @@ namespace SST.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsApproved = table.Column<bool>(nullable: false),
+                    IsApproved = table.Column<bool>(nullable: true),
                     CreationDate = table.Column<DateTime>(nullable: false),
                     UserRef = table.Column<string>(nullable: false)
                 },
@@ -71,18 +87,24 @@ namespace SST.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    Group = table.Column<string>(nullable: false),
+                    GroupRef = table.Column<int>(nullable: true),
                     UserRef = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Students_Groups_GroupRef",
+                        column: x => x.GroupRef,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
                         name: "FK_Students_Users_UserRef",
                         column: x => x.UserRef,
                         principalTable: "Users",
                         principalColumn: "Email",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,27 +128,76 @@ namespace SST.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentSubjects",
+                name: "SecondaryGroups",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentRef = table.Column<int>(nullable: false),
+                    GroupRef = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SecondaryGroups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SecondaryGroups_Groups_GroupRef",
+                        column: x => x.GroupRef,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SecondaryGroups_Students_StudentRef",
+                        column: x => x.StudentRef,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupSubjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GroupRef = table.Column<int>(nullable: false),
                     SubjectRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentSubjects", x => x.Id);
+                    table.PrimaryKey("PK_GroupSubjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentSubjects_Students_StudentRef",
-                        column: x => x.StudentRef,
-                        principalTable: "Students",
-                        principalColumn: "Id");
+                        name: "FK_GroupSubjects_Groups_GroupRef",
+                        column: x => x.GroupRef,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StudentSubjects_Subjects_SubjectRef",
+                        name: "FK_GroupSubjects_Subjects_SubjectRef",
                         column: x => x.SubjectRef,
                         principalTable: "Subjects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JournalColumns",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Note = table.Column<string>(nullable: true),
+                    GroupSubjectRef = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JournalColumns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JournalColumns_GroupSubjects_GroupSubjectRef",
+                        column: x => x.GroupSubjectRef,
+                        principalTable: "GroupSubjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,23 +207,50 @@ namespace SST.Persistence.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Mark = table.Column<int>(nullable: false),
-                    StudentSubjectRef = table.Column<int>(nullable: false)
+                    StudentRef = table.Column<int>(nullable: false),
+                    JournalColumnRef = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Grades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Grades_StudentSubjects_StudentSubjectRef",
-                        column: x => x.StudentSubjectRef,
-                        principalTable: "StudentSubjects",
+                        name: "FK_Grades_JournalColumns_JournalColumnRef",
+                        column: x => x.JournalColumnRef,
+                        principalTable: "JournalColumns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Grades_Students_StudentRef",
+                        column: x => x.StudentRef,
+                        principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Grades_StudentSubjectRef",
+                name: "IX_Grades_JournalColumnRef",
                 table: "Grades",
-                column: "StudentSubjectRef");
+                column: "JournalColumnRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grades_StudentRef",
+                table: "Grades",
+                column: "StudentRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupSubjects_GroupRef",
+                table: "GroupSubjects",
+                column: "GroupRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupSubjects_SubjectRef",
+                table: "GroupSubjects",
+                column: "SubjectRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JournalColumns_GroupSubjectRef",
+                table: "JournalColumns",
+                column: "GroupSubjectRef");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lectors_UserRef",
@@ -168,21 +266,26 @@ namespace SST.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_SecondaryGroups_GroupRef",
+                table: "SecondaryGroups",
+                column: "GroupRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SecondaryGroups_StudentRef",
+                table: "SecondaryGroups",
+                column: "StudentRef");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_GroupRef",
+                table: "Students",
+                column: "GroupRef");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_UserRef",
                 table: "Students",
                 column: "UserRef",
                 unique: true,
                 filter: "[UserRef] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentSubjects_StudentRef",
-                table: "StudentSubjects",
-                column: "StudentRef");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentSubjects_SubjectRef",
-                table: "StudentSubjects",
-                column: "SubjectRef");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_LectorRef",
@@ -199,10 +302,19 @@ namespace SST.Persistence.Migrations
                 name: "Requests");
 
             migrationBuilder.DropTable(
-                name: "StudentSubjects");
+                name: "SecondaryGroups");
+
+            migrationBuilder.DropTable(
+                name: "JournalColumns");
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "GroupSubjects");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "Subjects");

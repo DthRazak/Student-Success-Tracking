@@ -10,8 +10,8 @@ using SST.Persistence;
 namespace SST.Persistence.Migrations
 {
     [DbContext(typeof(SSTDbContext))]
-    [Migration("20200403073839_migration-4")]
-    partial class migration4
+    [Migration("20200422170322_Migration-Init")]
+    partial class MigrationInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,17 +28,93 @@ namespace SST.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("JournalColumnRef")
+                        .HasColumnType("int");
+
                     b.Property<int>("Mark")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentSubjectRef")
+                    b.Property<int>("StudentRef")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentSubjectRef");
+                    b.HasIndex("JournalColumnRef");
+
+                    b.HasIndex("StudentRef");
 
                     b.ToTable("Grades");
+                });
+
+            modelBuilder.Entity("SST.Domain.Entities.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Faculty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("SST.Domain.Entities.GroupSubject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GroupRef")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectRef")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupRef");
+
+                    b.HasIndex("SubjectRef");
+
+                    b.ToTable("GroupSubjects");
+                });
+
+            modelBuilder.Entity("SST.Domain.Entities.JournalColumn", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GroupSubjectRef")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupSubjectRef");
+
+                    b.ToTable("JournalColumns");
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Lector", b =>
@@ -70,43 +146,6 @@ namespace SST.Persistence.Migrations
                         .HasFilter("[UserRef] IS NOT NULL");
 
                     b.ToTable("Lectors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AcademicStatus = "Доцент",
-                            FirstName = "Анатолій",
-                            LastName = "Музичук"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AcademicStatus = "Асистент",
-                            FirstName = "Андрій",
-                            LastName = "Глова"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AcademicStatus = "Професор",
-                            FirstName = "Юрій",
-                            LastName = "Щербина"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AcademicStatus = "Доцент",
-                            FirstName = "Віталій",
-                            LastName = "Горлач"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AcademicStatus = "Асистент",
-                            FirstName = "Любомир",
-                            LastName = "Галамага"
-                        });
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Request", b =>
@@ -132,15 +171,28 @@ namespace SST.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Requests");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreationDate = new DateTime(2020, 4, 3, 10, 38, 39, 129, DateTimeKind.Local).AddTicks(4168),
-                            IsApproved = true,
-                            UserRef = "admin@email.com"
-                        });
+            modelBuilder.Entity("SST.Domain.Entities.SecondaryGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GroupRef")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentRef")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupRef");
+
+                    b.HasIndex("StudentRef");
+
+                    b.ToTable("SecondaryGroups");
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Student", b =>
@@ -154,9 +206,8 @@ namespace SST.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Group")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("GroupRef")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -167,70 +218,13 @@ namespace SST.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GroupRef");
+
                     b.HasIndex("UserRef")
                         .IsUnique()
                         .HasFilter("[UserRef] IS NOT NULL");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FirstName = "Володимир",
-                            Group = "ПМІ-32",
-                            LastName = "Мільчановський"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FirstName = "Марта",
-                            Group = "ПМІ-32",
-                            LastName = "Шуяк"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FirstName = "Оксана",
-                            Group = "ПМІ-32",
-                            LastName = "Пилипович"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FirstName = "Доскач",
-                            Group = "ПМІ-31",
-                            LastName = "Денис"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FirstName = "Левкович",
-                            Group = "ПМІ-33",
-                            LastName = "Роман"
-                        });
-                });
-
-            modelBuilder.Entity("SST.Domain.Entities.StudentSubject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("StudentRef")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectRef")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentRef");
-
-                    b.HasIndex("SubjectRef");
-
-                    b.ToTable("StudentSubjects");
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Subject", b =>
@@ -269,21 +263,43 @@ namespace SST.Persistence.Migrations
                     b.HasKey("Email");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Email = "admin@email.com",
-                            IsAdmin = true,
-                            PasswordHash = "Yh+CEuxWzPTw0y2M9zgFEw1stxAwoa1mvyaoI2157nY="
-                        });
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Grade", b =>
                 {
-                    b.HasOne("SST.Domain.Entities.StudentSubject", "StudentSubject")
+                    b.HasOne("SST.Domain.Entities.JournalColumn", "JournalColumn")
                         .WithMany("Grades")
-                        .HasForeignKey("StudentSubjectRef")
+                        .HasForeignKey("JournalColumnRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SST.Domain.Entities.Student", "Student")
+                        .WithMany("Grades")
+                        .HasForeignKey("StudentRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SST.Domain.Entities.GroupSubject", b =>
+                {
+                    b.HasOne("SST.Domain.Entities.Group", "Group")
+                        .WithMany("GroupSubjects")
+                        .HasForeignKey("GroupRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SST.Domain.Entities.Subject", "Subject")
+                        .WithMany("GroupSubjects")
+                        .HasForeignKey("SubjectRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SST.Domain.Entities.JournalColumn", b =>
+                {
+                    b.HasOne("SST.Domain.Entities.GroupSubject", "GroupSubject")
+                        .WithMany("Journal")
+                        .HasForeignKey("GroupSubjectRef")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -305,27 +321,32 @@ namespace SST.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SST.Domain.Entities.SecondaryGroup", b =>
+                {
+                    b.HasOne("SST.Domain.Entities.Group", "Group")
+                        .WithMany("SecondaryGroups")
+                        .HasForeignKey("GroupRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SST.Domain.Entities.Student", "Student")
+                        .WithMany("SecondaryGroups")
+                        .HasForeignKey("StudentRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SST.Domain.Entities.Student", b =>
                 {
+                    b.HasOne("SST.Domain.Entities.Group", "Group")
+                        .WithMany("Students")
+                        .HasForeignKey("GroupRef")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("SST.Domain.Entities.User", "User")
                         .WithOne("Student")
                         .HasForeignKey("SST.Domain.Entities.Student", "UserRef")
                         .OnDelete(DeleteBehavior.SetNull);
-                });
-
-            modelBuilder.Entity("SST.Domain.Entities.StudentSubject", b =>
-                {
-                    b.HasOne("SST.Domain.Entities.Student", "Student")
-                        .WithMany("StudentSubjects")
-                        .HasForeignKey("StudentRef")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("SST.Domain.Entities.Subject", "Subject")
-                        .WithMany("StudentSubjects")
-                        .HasForeignKey("SubjectRef")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SST.Domain.Entities.Subject", b =>

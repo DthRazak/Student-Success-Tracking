@@ -44,14 +44,14 @@
 				<select id="GroupSelect" name="Group" class="select-wdth custom-select">
 					@foreach (var group in Model.GroupsList.Groups)
 					{
-						<option value="@group">@group</option>
+						<option value="@group.Id">@group.Name</option>
 					}
 				</select>
 			</div>
 			<div class="col-sm pd-0">
 				<p class="label-style mrgn-b-5" id="nameSelectLabel">Select Student</p>
 				<select id="fullNameSelect" name="StudentId" class="select-wdth custom-select">
-					@foreach (var student in Model.StudentsList.Students)
+					@if (Model.StudentsList != null) foreach (var student in Model.StudentsList.Students)
 					{
 						<option value="@student.Id">@student.FullName</option>
 					}

@@ -28,7 +28,7 @@ namespace SST.WebUI.tests.Controllers
             {
                 FirstName = "Ілон",
                 LastName = "Маск",
-                Group = "ПМІ-32"
+                //Group = "ПМІ-32"
             };
 
             var content = Utilities.GetRequestContent(command);

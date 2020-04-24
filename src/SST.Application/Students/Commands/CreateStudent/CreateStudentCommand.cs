@@ -1,5 +1,5 @@
-﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
 
 namespace SST.Application.Students.Commands.CreateStudent
 {
@@ -14,7 +14,7 @@ namespace SST.Application.Students.Commands.CreateStudent
         public string LastName { get; set; }
 
         [Required]
-        public string Group { get; set; }
+        public int GroupId { get; set; }
 
         public string UserRef { get; set; }
     }
