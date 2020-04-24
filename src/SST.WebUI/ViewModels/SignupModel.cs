@@ -1,4 +1,4 @@
-﻿using SST.Application.Students.Queries.GetGroups;
+﻿using SST.Application.Groups.Queries.GetGroups;
 using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
 using SST.WebUI.Forms;
 

@@ -23,7 +23,7 @@ namespace SST.Application.Students.Commands.CreateStudent
                 Id = request.Id,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Group = request.Group,
+                GroupRef = request.GroupId,
                 UserRef = request.UserRef
             };
 

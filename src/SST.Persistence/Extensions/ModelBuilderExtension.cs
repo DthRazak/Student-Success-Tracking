@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Hashing;
 using SST.Domain.Entities;
-using System;
 
 namespace SST.Persistence.Extensions
 {
@@ -13,18 +13,22 @@ namespace SST.Persistence.Extensions
             SeedRequest(modelBuilder);
             SeedStudent(modelBuilder);
             SeedLector(modelBuilder);
-            SeedGrade(modelBuilder);
             SeedSubject(modelBuilder);
-            SeedStudentSubject(modelBuilder); 
+            SeedGroup(modelBuilder);
+            SeedGroupSubject(modelBuilder);
+            SeedSecondaryGroup(modelBuilder);
+            SeedJournalColumn(modelBuilder);
+            SeedGrade(modelBuilder);
         }
 
+        // USER
         private static void SeedUser(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
                     Email = "admin@email.com",
-                    PasswordHash = "Yh+CEuxWzPTw0y2M9zgFEw1stxAwoa1mvyaoI2157nY=", //admin
+                    PasswordHash = new PasswordHasher().GetPasswordHash("admin"),
                     IsAdmin = true,
                 }
             );
@@ -38,6 +42,7 @@ namespace SST.Persistence.Extensions
             );
         }
 
+        // REQUEST
         private static void SeedRequest(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Request>().HasData(
@@ -61,6 +66,7 @@ namespace SST.Persistence.Extensions
             );
         }
 
+        // STUDENT
         private static void SeedStudent(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>().HasData(
@@ -69,14 +75,14 @@ namespace SST.Persistence.Extensions
                     Id = 1,
                     FirstName = "Володимир",
                     LastName = "Мільчановський",
-                    Group = "ПМІ-32"
+                    GroupRef = 2
                 },
                 new Student
                 {
                     Id = 2,
                     FirstName = "Марта",
                     LastName = "Шуяк",
-                    Group = "ПМІ-32",
+                    GroupRef = 2,
                     UserRef = "martashuyak@gmail.com",
                 },
                 new Student
@@ -84,26 +90,26 @@ namespace SST.Persistence.Extensions
                     Id = 3,
                     FirstName = "Оксана",
                     LastName = "Пилипович",
-                    Group = "ПМІ-32"
+                    GroupRef = 2
                 },
                 new Student
                 {
                     Id = 4,
-                    FirstName = "Доскач",
-                    LastName = "Денис",
-                    Group = "ПМІ-31"
+                    FirstName = "Денис",
+                    LastName = "Доскач",
+                    GroupRef = 1
                 },
                 new Student
                 {
                     Id = 5,
-                    FirstName = "Левкович",
-                    LastName = "Роман",
-                    Group = "ПМІ-33"
+                    FirstName = "Роман",
+                    LastName = "Левкович",
+                    GroupRef = 3
                 }
-
             );
         }
 
+        // LECTOR
         private static void SeedLector(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Lector>().HasData(
@@ -112,7 +118,7 @@ namespace SST.Persistence.Extensions
                     Id = 1,
                     FirstName = "Анатолій",
                     LastName = "Музичук",
-                    AcademicStatus = "Доцент" 
+                    AcademicStatus = "Доцент"
                 },
                 new Lector
                 {
@@ -141,10 +147,18 @@ namespace SST.Persistence.Extensions
                     FirstName = "Любомир",
                     LastName = "Галамага",
                     AcademicStatus = "Асистент"
+                },
+                new Lector
+                {
+                    Id = 6,
+                    FirstName = "Софія",
+                    LastName = "Грабовська",
+                    AcademicStatus = "Професор"
                 }
             );
         }
 
+        // GRADE
         private static void SeedGrade(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Grade>().HasData(
@@ -152,39 +166,41 @@ namespace SST.Persistence.Extensions
                 {
                     Id = 1,
                     Mark = 20,
-                    StudentSubjectRef = 1,
-                    Date = new DateTime(2020,03,20)
+                    StudentRef = 1,
+                    JournalColumnRef = 4
                 },
                 new Grade
                 {
                     Id = 2,
                     Mark = 15,
-                    StudentSubjectRef = 2,
-                    Date = new DateTime(2020, 03, 16)
+                    StudentRef = 2,
+                    JournalColumnRef = 3
                 },
                 new Grade
                 {
                     Id = 3,
                     Mark = 18,
-                    StudentSubjectRef = 3,
-                    Date = new DateTime(2020, 03, 10)
+                    StudentRef = 3,
+                    JournalColumnRef = 2
                 },
                 new Grade
                 {
                     Id = 4,
                     Mark = 14,
-                    StudentSubjectRef = 2,
-                    Date = new DateTime(2020, 03, 03)
+                    StudentRef = 2,
+                    JournalColumnRef = 1
                 },
                 new Grade
                 {
                     Id = 5,
                     Mark = 20,
-                    StudentSubjectRef = 3,
-                    Date = new DateTime(2020, 04, 02)
+                    StudentRef = 3,
+                    JournalColumnRef = 5
                 }
             );
         }
+
+        // SUBJECT
         private static void SeedSubject(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Subject>().HasData(
@@ -209,35 +225,149 @@ namespace SST.Persistence.Extensions
                 new Subject
                 {
                     Id = 4,
-                    Name = "Статистика",
+                    Name = "Теорія ймовірності та математична статистика",
                     LectorRef = 3
-                }
-            );  
-        }
-        private static void SeedStudentSubject(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<StudentSubject>().HasData(
-                new StudentSubject
-                {
-                    Id = 1,
-                    StudentRef = 2,
-                    SubjectRef = 2
                 },
-                new StudentSubject
+                new Subject
                 {
-                    Id = 2,
-                    StudentRef = 1,
-                    SubjectRef = 3
-                },
-                new StudentSubject
-                {
-                    Id = 3,
-                    StudentRef = 3,
-                    SubjectRef = 1
+                    Id = 5,
+                    Name = "Психологія примирення",
+                    LectorRef = 6
                 }
             );
         }
 
+        // GROUP SUBJECT
+        private static void SeedGroupSubject(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GroupSubject>().HasData(
+                new GroupSubject
+                {
+                    Id = 1,
+                    SubjectRef = 1,
+                    GroupRef = 1
+                },
+                new GroupSubject
+                {
+                    Id = 2,
+                    SubjectRef = 1,
+                    GroupRef = 2
+                },
+                new GroupSubject
+                {
+                    Id = 3,
+                    SubjectRef = 2,
+                    GroupRef = 3
+                },
+                new GroupSubject
+                {
+                    Id = 4,
+                    SubjectRef = 4,
+                    GroupRef = 3
+                },
+                new GroupSubject
+                {
+                    Id = 5,
+                    SubjectRef = 5,
+                    GroupRef = 5
+                }
+            );
+        }
 
+        // GROUP
+        private static void SeedGroup(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Group>().HasData(
+                new Group
+                {
+                    Id = 1,
+                    Name = "ПМІ-31",
+                    Faculty = "Факультет прикладної математики та інформатики",
+                    IsMain = true
+                },
+                new Group
+                {
+                    Id = 2,
+                    Name = "ПМІ-32",
+                    Faculty = "Факультет прикладної математики та інформатики",
+                    IsMain = true
+                },
+                new Group
+                {
+                    Id = 3,
+                    Name = "ПМІ-33",
+                    Faculty = "Факультет прикладної математики та інформатики",
+                    IsMain = true
+                },
+                new Group
+                {
+                    Id = 4,
+                    Name = "ЖРН-11с",
+                    Faculty = "Факультет журналістики",
+                    IsMain = true
+                },
+                new Group
+                {
+                   Id = 5,
+                   Name = "ФФП-42с",
+                   Faculty = "Філософський факультет",
+                   IsMain = true
+                }
+            );
+        }
+
+        // SECONDARY GROUP
+        private static void SeedSecondaryGroup(ModelBuilder modelBuilder)
+        {
+            /*modelBuilder.Entity<SecondaryGroup>().HasData(
+                new SecondaryGroup
+                {
+                    Id = 1,
+                    GroupRef = 2,
+                },
+                new SecondaryGroup
+                {
+                    Id = 2,
+                    GroupRef = 2,
+                }
+            );*/
+        }
+
+        // JOURNAL COLUMN
+        private static void SeedJournalColumn(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<JournalColumn>().HasData(
+                new JournalColumn
+                {
+                    Id = 1,
+                    Date = new DateTime(2020, 03, 03),
+                    GroupSubjectRef = 2
+                },
+                new JournalColumn
+                {
+                    Id = 2,
+                    Date = new DateTime(2020, 03, 10),
+                    GroupSubjectRef = 2
+                },
+                new JournalColumn
+                {
+                    Id = 3,
+                    Date = new DateTime(2020, 03, 16),
+                    GroupSubjectRef = 2
+                },
+                new JournalColumn
+                {
+                    Id = 4,
+                    Date = new DateTime(2020, 03, 20),
+                    GroupSubjectRef = 2
+                },
+                new JournalColumn
+                {
+                    Id = 5,
+                    Date = new DateTime(2020, 04, 02),
+                    GroupSubjectRef = 2
+                }
+            );
+        }
     }
 }
