@@ -40,7 +40,7 @@
 	<br />
 	<div class="row">
 		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
-			<form asp-action="AddGroup" asp-controller="Admin" id="add-subject-for-lector-form">
+			<form asp-action="AddGroup" asp-controller="Admin" id="add-group-form">
 				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
 				<div class="form-row">
 					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mrg-b-0">
@@ -59,7 +59,12 @@
 					</div>
 					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Faculty</label>
-						<input type="text" class="form-control" name="Faculty" placeholder="Enter the faculty...">
+						<select class="custom-select" id="FacultySelect" name="FacultySel">
+							<option>Факультет прикладної математики та інформатики</option>
+							<option>Механіко-математичний факультет</option>
+							<option>Фізичний факультет</option>
+							<option>Біологічний факультет</option>
+						</select>
 					</div>
 				</div>
 				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD NEW" />
