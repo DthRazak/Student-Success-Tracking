@@ -24,15 +24,14 @@ namespace SST.Application.Subjects.Queries.GetSubjectsByStudent
         public async Task<SubjectsListVm> Handle(GetSubjectsByStudentQuery request, CancellationToken cancellationToken)
         {
             var student = await _context.Students
-                .Include(s => s.Group)
-                .ThenInclude(g => g.GroupSubjects)
                 .FirstOrDefaultAsync(s => s.Id == request.StudentId, cancellationToken);
 
-            var subjects = new List<SubjectDto>();
-            foreach (var subject in student.Group.GroupSubjects)
-            {
-                subjects.Add(_mapper.Map<SubjectDto>(subject.Subject));
-            }
+            var subjects = await _context.GroupSubjects
+               .Include(gs => gs.Subject)
+                   .ThenInclude(s => s.Lector)
+               .Where(gs => gs.GroupRef == student.GroupRef)
+               .ProjectTo<SubjectDto>(_mapper.ConfigurationProvider)
+               .ToListAsync(cancellationToken);
 
             return new SubjectsListVm { Subjects = subjects };
         }
