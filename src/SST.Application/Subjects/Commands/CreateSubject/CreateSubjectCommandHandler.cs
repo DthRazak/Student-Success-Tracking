@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace SST.Application.Subjects.Commands.CreateSubject
 
         public async Task<int> Handle(CreateSubjectCommand request, CancellationToken cancellationToken)
         {
-            var existing = _context.Subjects
-                .FirstOrDefault(s => s.Name == request.Name && s.LectorRef == request.LectorId);
+            var existing = await _context.Subjects
+                .FirstOrDefaultAsync(s => s.Name == request.Name && s.LectorRef == request.LectorId, cancellationToken);
 
             if (existing != null)
             {

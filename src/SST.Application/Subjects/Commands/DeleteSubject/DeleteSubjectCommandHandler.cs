@@ -19,7 +19,7 @@ namespace SST.Application.Subjects.Commands.DeleteSubject
         public async Task<Unit> Handle(DeleteSubjectCommand request, CancellationToken cancellationToken)
         {
             var entity = await _context.Subjects
-                .FindAsync(request.Id);
+                .FindAsync(request.Id, cancellationToken);
 
             if (entity == null)
                 throw new ArgumentException($"Subject with Id({request.Id}) does not exists!");
