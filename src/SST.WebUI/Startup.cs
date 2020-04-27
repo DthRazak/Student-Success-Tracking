@@ -17,6 +17,7 @@ using System.Reflection;
 using SST.Application;
 using SST.WebUI.Services;
 using SST.Application.Common.Hashing;
+using SST.WebUI.Services.RazorToStringExample;
 
 namespace SST.WebUI
 {
@@ -63,10 +64,7 @@ namespace SST.WebUI
             });
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            //services.AddHostedService<SportsUpdateService>();
-            //services.AddHostedService<OddsUpdateService>();
-
-            //services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient<RazorViewToStringRenderer>();
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
