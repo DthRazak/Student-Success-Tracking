@@ -1,4 +1,4 @@
-﻿@model SST.Application.Students.Queries.GetStudents.StudentsListVm;
+﻿@model SST.WebUI.ViewModels.AdminStudentsModel;
 @{
 	Layout = "AdminLayout";
 	ViewData["Title"] = "Students Page";
@@ -10,6 +10,45 @@
 	<hr />
 	<br>
 	<br>
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr  class="tr-bg">
+							<th class="text-center">#</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Group</th>
+							<th>E-mail</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (int i = 0; i < Model.StudentsList.Students.Count; ++i)
+                        { 
+							<tr>
+								<td class="text-center">@(i+1)</td>
+								<td>@Model.StudentsList.Students[i].FirstName</td>
+								<td>@Model.StudentsList.Students[i].LastName</td>
+								<td>@Model.StudentsList.Students[i].Group</td>
+								<td>@Model.StudentsList.Students[i].Email</td>
+								<td class="td-actions">
+									<input class="btn btn-danger btn-just-icon btn-sm" type="button" 
+										   id="admin-remove-student-@Model.StudentsList.Students[i].Id" value="REMOVE" />
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+	<br />
 
 	<div class="row">
 		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
@@ -29,51 +68,17 @@
 				<div class="form-row">
 					<div class="form-group col-md-12">
 						<label class="label-style">Group</label>
-						<input type="text" class="form-control " name="Group" placeholder="Enter the group...">
+						<select class="custom-select" id="GroupSelectForStudent" name="GroupId">
+							@foreach (var group in Model.GroupsList.Groups)
+							{
+								<option value="@group.Id">@group.Name</option>
+							}
+						</select>
 					</div>
 				</div>
 				
 				<input class="btn btn-success" type="submit" id="add-student-btn" value="ADD NEW" />
 			</form>
-		</div>
-	</div>
-
-	<br />
-	<br />
-	<br />
-
-	<div class="row">
-		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
-			<div class="table-responsive">
-				<table class="table">
-					<thead>
-						<tr  class="tr-bg">
-							<th class="text-center">#</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Group</th>
-							<th>E-mail</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						@for (int i = 0; i < Model.Students.Count; ++i)
-                        { 
-							<tr>
-								<td class="text-center">@(i+1)</td>
-								<td>@Model.Students[i].FirstName</td>
-								<td>@Model.Students[i].LastName</td>
-								<td>@Model.Students[i].Group</td>
-								<td>@Model.Students[i].Email</td>
-								<td class="td-actions">
-									<input class="btn btn-danger btn-just-icon btn-sm" type="button" 
-										   id="admin-remove-student-@Model.Students[i].Id" value="REMOVE" />
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
 		</div>
 	</div>
 </div>

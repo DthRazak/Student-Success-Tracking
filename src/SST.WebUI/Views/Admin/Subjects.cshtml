@@ -1,0 +1,99 @@
+﻿@model SST.Application.Lectors.Queries.GetLectors.LectorsListVm;
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Subjects Page";
+}
+
+
+<div class="container emp-profile mrg-t-0">
+	<hr />
+	<center><h1>Subjects</h1></center>
+	<hr />
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto sel-div-sm">
+			<select class="custom-select" id="AdminLectorSelect" name="LectSel">
+				<option value="-1">---</option>
+				@foreach (var lector in Model.Lectors)
+				{
+					<option value="@lector.Id">@lector.FirstName @lector.LastName</option>
+				}
+			</select>
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<div class="table-responsive">
+				<table class="table" id="admin-lector-subjects-table">
+					<thead>
+						<tr class="tr-bg">
+							<th class="text-center">#</th>
+							<th>Subject</th>
+							<th>Group</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="text-center">-</td>
+							<td>---</td>
+							<td>---</td>
+							<td>---</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+	
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<h4>Add new subject</h4>
+			<form asp-action="AddSubject" asp-controller="Admin" id="add-subject-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+				<div class="form-row">
+					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Subject</label>
+						<input type="text" class="form-control h-auto" name="Name" placeholder="Enter the subject...">
+						<input type="number" name="LectorId" value="-1" style="display: none" id="add-subj-lector-id">
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD" />
+			</form>
+		</div>
+	</div>
+
+	<br />
+	<br />
+	<br />
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<h4>Link subject to the group</h4>
+			<form asp-action="LinkSubjectToGroup" asp-controller="Admin" id="link-subject-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+				<div class="form-row">
+					<div class="form-group col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Subject</label>
+						<select class="custom-select" id="SubjectSelect" name="SubSel">
+						</select>
+					</div>
+					<div class="form-group col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Group</label>
+						<select class="custom-select" id="GroupSelect" name="GrSel">
+						</select>
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="LINK" />
+			</form>
+		</div>
+	</div>
+</div>

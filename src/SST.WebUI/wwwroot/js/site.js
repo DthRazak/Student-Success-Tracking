@@ -211,3 +211,101 @@ $("button[id=st-show-grades]").click(function () {
 $("input[id=GradesCheck]").click(function () {
     $("#classmates-grades").toggle(!this.checked);
 });
+
+$("input[id^=admin-remove-group-]").click(function () {
+    var inputTag = this;
+    var id = parseInt(inputTag.id.slice(19));
+    $.ajax({
+        type: "POST",
+        url: "/Admin/DeleteGroup",
+        data: `id=${id}`,
+        success: function () {
+            toastr.success('Group removed successfully.', 'Success', { timeOut: 3000 });
+            inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+$("#add-group-form").submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/Admin/AddGroup",
+        data: $("#add-group-form").serialize(),
+        success: function () {
+            toastr.success('Group added successfully.', 'Success', { timeOut: 3000 });
+            // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function (data) {
+            if (data.status === 422) {
+                toastr.error('All fields requaired', 'Error', { timeOut: 3000 });
+            } else {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        }
+    });
+});
+
+var getSubjectsByLector = function (lectorId) {
+    $.ajax({
+        type: "GET",
+        url: "/Admin/GetSubjectsByLector",
+        data: 'lectorId=' + lectorId,
+        success: function (data) {
+            $("#admin-lector-subjects-table").replaceWith(data[0]);
+            $("#link-subject-form").replaceWith(data[1]);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+};
+
+$("#AdminLectorSelect").change(function () {
+    let lectorId = $("#AdminLectorSelect :selected").val();
+    $("#add-subj-lector-id").val(lectorId);
+    getSubjectsByLector(lectorId);
+});
+
+$("#add-subject-form").submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/Admin/AddSubject",
+        data: $("#add-subject-form").serialize(),
+        success: function () {
+            toastr.success('Subject added successfully.', 'Success', { timeOut: 3000 });
+            // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function (data) {
+            if (data.status === 422) {
+                toastr.error('All fields requaired', 'Error', { timeOut: 3000 });
+            } else {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        }
+    });
+});
+
+$("#link-subject-form").submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/Admin/LinkSubject",
+        data: $("#link-subject-form").serialize(),
+        success: function () {
+            toastr.success('Subject linked successfully.', 'Success', { timeOut: 3000 });
+            // inputTag.parentNode.parentNode.parentNode.removeChild(inputTag.parentNode.parentNode);
+        },
+        error: function (data) {
+            if (data.status === 422) {
+                toastr.error('All fields requaired', 'Error', { timeOut: 3000 });
+            } else {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        }
+    });
+});

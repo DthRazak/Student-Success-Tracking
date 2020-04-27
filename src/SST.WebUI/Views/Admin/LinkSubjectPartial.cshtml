@@ -1,0 +1,26 @@
+﻿@model SST.WebUI.ViewModels.AdminSubjectPatialModel;
+
+    <form asp-action="LinkSubjectToGroup" asp-controller="Admin" id="link-subject-form">
+        <div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+        <div class="form-row">
+            <div class="form-group col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+                <label class="label-style">Subject</label>
+                <select class="custom-select" id="SubjectSelect" name="SubjectId">
+                    @foreach (var subject in Model.SubjectsList.Subjects)
+                    {
+                        <option value="@subject.Id">@subject.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                <label class="label-style">Group</label>
+                <select class="custom-select" id="GroupSelect" name="GroupId">
+                    @foreach (var group in Model.GroupList.Groups)
+                    {
+                        <option value="@group.Id">@group.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <input class="btn btn-success" type="submit" id="add-lector-btn" value="LINK" />
+    </form>

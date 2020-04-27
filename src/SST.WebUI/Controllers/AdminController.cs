@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SST.Application.Common.Interfaces;
+using SST.Application.Groups.Commands.CreateGroup;
+using SST.Application.Groups.Commands.DeleteGroup;
+using SST.Application.Groups.Queries.GetFaculties;
+using SST.Application.Groups.Queries.GetGroups;
 using SST.Application.Lectors.Commands.CreateLector;
 using SST.Application.Lectors.Commands.DeleteLector;
 using SST.Application.Lectors.Queries.GetLectors;
@@ -12,8 +16,12 @@ using SST.Application.Requests.Queries.GetRequests;
 using SST.Application.Students.Commands.CreateStudent;
 using SST.Application.Students.Commands.DeleteStudent;
 using SST.Application.Students.Queries.GetStudents;
+using SST.Application.Subjects.Commands.CreateSubject;
+using SST.Application.Subjects.Commands.LinkSubjectToGroup;
+using SST.Application.Subjects.Queries.GetSubjectsByLector;
 using SST.Application.Users.Commands.CreateUser;
 using SST.Application.Users.Commands.DeleteUser;
+using SST.WebUI.Services.RazorToStringExample;
 using SST.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,11 +35,13 @@ namespace SST.WebUI.Controllers
     {
         private readonly ILogger<AdminController> _logger;
         private readonly IMediator _mediator;
+        private readonly RazorViewToStringRenderer _renderer;
 
-        public AdminController(ILogger<AdminController> logger, IMediator mediator)
+        public AdminController(ILogger<AdminController> logger, IMediator mediator, RazorViewToStringRenderer renderer)
         {
             _logger = logger;
             _mediator = mediator;
+            _renderer = renderer;
         }
 
         [HttpGet]
@@ -46,17 +56,28 @@ namespace SST.WebUI.Controllers
             var model = new RequestModel();
 
             if (DisplayAll.HasValue && DisplayAll.Value)
+            {
                 model.AllRequestsList = await _mediator.Send(new GetRequestsQuery());
+            }
             else
+            {
                 model.NotApprovedRequestsList = await _mediator.Send(new GetNotApprovedRequestsQuery());
-            
+            }
+
             return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Students()
         {
-            var model = await _mediator.Send(new GetStudentsQuery());
+            var studentsList = await _mediator.Send(new GetStudentsQuery());
+            var groupList = await _mediator.Send(new GetGroupsQuery());
+
+            var model = new AdminStudentsModel
+            {
+                StudentsList = studentsList,
+                GroupsList = groupList
+            };
 
             return View(model);
         }
@@ -67,6 +88,75 @@ namespace SST.WebUI.Controllers
             var model = await _mediator.Send(new GetLectorsQuery());
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Subjects()
+        {
+            var model = await _mediator.Send(new GetLectorsQuery());
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Groups()
+        {
+            var groupsList = await _mediator.Send(new GetGroupsQuery());
+            var facultyList = await _mediator.Send(new GetFacultiesQuery());
+
+            var model = new AdminGroupsModel
+            {
+                GroupsList = groupsList,
+                FacultyList = facultyList
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<List<string>> GetSubjectsByLector(int lectorId)
+        {
+            if (lectorId != -1)
+            {
+                var subjModel = await _mediator.Send(new GetSubjectsByLectorQuery { LectorId = lectorId });
+                var linkModel = new AdminSubjectPatialModel
+                {
+                    GroupList = await _mediator.Send(new GetGroupsQuery()),
+                    SubjectsList = subjModel
+                };
+
+                var list = new List<string>
+                {
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LectorSubjectsPartial.cshtml", subjModel),
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LinkSubjectPartial.cshtml", linkModel)
+                };
+
+                return list;
+            }
+            else
+            {
+                var subjModel = new SubjectsListVm
+                {
+                    Subjects = new List<SubjectDto>()
+                };
+                var groupModel = new GroupsListVm
+                {
+                    Groups = new List<GroupsDto>()
+                };
+                var linkModel = new AdminSubjectPatialModel
+                {
+                    GroupList = groupModel,
+                    SubjectsList = subjModel
+                };
+
+                var list = new List<string>
+                {
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LectorSubjectsPartial.cshtml", subjModel),
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LinkSubjectPartial.cshtml", linkModel)
+                };
+
+                return list;
+            }
         }
 
         [HttpPost]
@@ -145,6 +235,21 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            try
+            {
+                await _mediator.Send(new DeleteGroupCommand { Id = id });
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> AddStudent([FromForm]CreateStudentCommand command)
         {
             if (ModelState.IsValid)
@@ -168,6 +273,70 @@ namespace SST.WebUI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddLector([FromForm]CreateLectorCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+            }
+            else
+            {
+                return UnprocessableEntity();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGroup([FromForm]CreateGroupCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+            }
+            else
+            {
+                return UnprocessableEntity();
+            }
+
+            return NoContent();
+        }
+
+        public async Task<IActionResult> AddSubject([FromForm]CreateSubjectCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+            }
+            else
+            {
+                return UnprocessableEntity();
+            }
+
+            return NoContent();
+        }
+
+        public async Task<IActionResult> LinkSubject([FromForm]LinkSubjectToGroupCommand command)
         {
             if (ModelState.IsValid)
             {

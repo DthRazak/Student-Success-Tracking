@@ -1,0 +1,79 @@
+﻿@model SST.WebUI.ViewModels.AdminGroupsModel;
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Groups Page";
+}
+
+<div class="container emp-profile mrg-t-0">
+	<hr />
+	<center><h1>Groups</h1></center>
+	<hr />
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr class="tr-bg">
+							<th class="text-center">#</th>
+							<th>Group</th>
+							<th>Faculty</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (int i = 0; i < Model.GroupsList.Groups.Count; ++i)
+						{
+							<tr>
+								<td class="text-center">@(i + 1)</td>
+								<td>@Model.GroupsList.Groups[i].Name</td>
+								<td>@Model.GroupsList.Groups[i].Faculty</td>
+								<td class="td-actions">
+									<input class="btn btn-danger btn-just-icon btn-sm" type="button"
+										   id="admin-remove-group-@Model.GroupsList.Groups[i].Id" value="REMOVE" />
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<form asp-action="AddGroup" asp-controller="Admin" id="add-group-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+				<div class="form-row">
+					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mrg-b-0">
+						<div class="custom-control custom-checkbox mb-3 mrg-t-5">
+							<input type="checkbox" class="custom-control-input" id="PriorityCheck" name="IsMain" value="true" checked>
+							<label class="custom-control-label" for="PriorityCheck">Main group</label>
+						</div>
+					</div>
+					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Group</label>
+						<input type="text" class="form-control" name="Name" placeholder="Enter the group...">
+					</div>
+					<div class="form-group col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Year</label>
+						<input type="number" class="form-control" name="Year" placeholder="Enter the year...">
+					</div>
+					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<label class="label-style">Faculty</label>
+						<select class="custom-select" id="FacultySelect" name="Faculty">
+							@foreach (var faculty in Model.FacultyList.Faculties)
+							{
+								<option value="@faculty">@faculty</option>
+							}
+						</select>
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD NEW" />
+			</form>
+		</div>
+	</div>
+</div>
