@@ -1,0 +1,46 @@
+﻿@model SST.Application.Subjects.Queries.GetSubjectsByLector.SubjectsListVm;
+
+<table class="table" id="admin-lector-subjects-table">
+    <thead>
+        <tr class="tr-bg">
+            <th class="text-center">#</th>
+            <th>Subject</th>
+            <th>Group</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Subjects.Count; i++)
+        {
+            @for (int j = 0; j < Model.Subjects[i].Groups.Count; j++)
+            {
+                <tr>
+                    @if(j == 0)
+                    {
+                        <td class="text-center">@(i + 1)</td>
+                        <td>@Model.Subjects[i].Name</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                        <td></td>
+                    }
+                    <td>@Model.Subjects[i].Groups.Keys[j]</td>
+                    <td class="td-actions">
+                        <input class="btn btn-danger btn-just-icon btn-sm" type="button" 
+                               id="admin-unlink-group-subject-@Model.Subjects[i].Groups.Values[j]-@Model.Subjects[i].Id" value="REMOVE" />
+                    </td>
+                </tr>
+            }
+            @if(Model.Subjects[i].Groups.Count == 0)
+            {
+                <tr>
+                    <td class="text-center">@(i + 1)</td>
+                    <td>@Model.Subjects[i].Name</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

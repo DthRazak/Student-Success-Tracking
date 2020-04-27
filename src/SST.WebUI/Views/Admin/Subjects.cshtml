@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SST.Application.Lectors.Queries.GetLectors.LectorsListVm;
+@{
     Layout = "AdminLayout";
     ViewData["Title"] = "Subjects Page";
 }
@@ -13,11 +14,12 @@
 
 	<div class="row">
 		<div class="col-lg-11 col-md-11 ml-auto mr-auto sel-div-sm">
-			<select class="custom-select" id="LectorSelect" name="LectSel">
-				<option>Григорій Шинкаренко</option>
-				<option>Анатолій Музичук</option>
-				<option>Роман Олійник</option>
-				<option>Надія Колос</option>
+			<select class="custom-select" id="AdminLectorSelect" name="LectSel">
+				<option value="-1">---</option>
+				@foreach (var lector in Model.Lectors)
+				{
+					<option value="@lector.Id">@lector.FirstName @lector.LastName</option>
+				}
 			</select>
 		</div>
 	</div>
@@ -27,7 +29,7 @@
 	<div class="row">
 		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table" id="admin-lector-subjects-table">
 					<thead>
 						<tr class="tr-bg">
 							<th class="text-center">#</th>
@@ -38,12 +40,10 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="text-center">1</td>
-							<td>Системи штучного інтелекту</td>
-							<td>ПМІ-32</td>
-							<td class="td-actions">
-								<input class="btn btn-danger btn-just-icon btn-sm" type="button" value="REMOVE" />
-							</td>
+							<td class="text-center">-</td>
+							<td>---</td>
+							<td>---</td>
+							<td>---</td>
 						</tr>
 					</tbody>
 				</table>
@@ -62,7 +62,8 @@
 				<div class="form-row">
 					<div class="form-group col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Subject</label>
-						<input type="text" class="form-control h-auto" name="Subject" placeholder="Enter the subject...">
+						<input type="text" class="form-control h-auto" name="Name" placeholder="Enter the subject...">
+						<input type="number" name="LectorId" value="-1" style="display: none" id="add-subj-lector-id">
 					</div>
 				</div>
 				<input class="btn btn-success" type="submit" id="add-lector-btn" value="ADD" />
@@ -83,18 +84,11 @@
 					<div class="form-group col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Subject</label>
 						<select class="custom-select" id="SubjectSelect" name="SubSel">
-							<option>Системи штучного інтелекту</option>
-							<option>Методи оптимізації</option>
-							<option>Програмна інженерія</option>
-							<option>Методи комп’ютерних обчислень</option>
 						</select>
 					</div>
 					<div class="form-group col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
 						<label class="label-style">Group</label>
 						<select class="custom-select" id="GroupSelect" name="GrSel">
-							<option>ПМІ-31</option>
-							<option>ПМІ-32</option>
-							<option>ПМІ-33</option>
 						</select>
 					</div>
 				</div>

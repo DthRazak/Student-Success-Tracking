@@ -16,8 +16,12 @@ using SST.Application.Requests.Queries.GetRequests;
 using SST.Application.Students.Commands.CreateStudent;
 using SST.Application.Students.Commands.DeleteStudent;
 using SST.Application.Students.Queries.GetStudents;
+using SST.Application.Subjects.Commands.CreateSubject;
+using SST.Application.Subjects.Commands.LinkSubjectToGroup;
+using SST.Application.Subjects.Queries.GetSubjectsByLector;
 using SST.Application.Users.Commands.CreateUser;
 using SST.Application.Users.Commands.DeleteUser;
+using SST.WebUI.Services.RazorToStringExample;
 using SST.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -31,11 +35,13 @@ namespace SST.WebUI.Controllers
     {
         private readonly ILogger<AdminController> _logger;
         private readonly IMediator _mediator;
+        private readonly RazorViewToStringRenderer _renderer;
 
-        public AdminController(ILogger<AdminController> logger, IMediator mediator)
+        public AdminController(ILogger<AdminController> logger, IMediator mediator, RazorViewToStringRenderer renderer)
         {
             _logger = logger;
             _mediator = mediator;
+            _renderer = renderer;
         }
 
         [HttpGet]
@@ -87,7 +93,9 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Subjects()
         {
-            return View();
+            var model = await _mediator.Send(new GetLectorsQuery());
+
+            return View(model);
         }
 
         [HttpGet]
@@ -103,6 +111,52 @@ namespace SST.WebUI.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<List<string>> GetSubjectsByLector(int lectorId)
+        {
+            if (lectorId != -1)
+            {
+                var subjModel = await _mediator.Send(new GetSubjectsByLectorQuery { LectorId = lectorId });
+                var linkModel = new AdminSubjectPatialModel
+                {
+                    GroupList = await _mediator.Send(new GetGroupsQuery()),
+                    SubjectsList = subjModel
+                };
+
+                var list = new List<string>
+                {
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LectorSubjectsPartial.cshtml", subjModel),
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LinkSubjectPartial.cshtml", linkModel)
+                };
+
+                return list;
+            }
+            else
+            {
+                var subjModel = new SubjectsListVm
+                {
+                    Subjects = new List<SubjectDto>()
+                };
+                var groupModel = new GroupsListVm
+                {
+                    Groups = new List<GroupsDto>()
+                };
+                var linkModel = new AdminSubjectPatialModel
+                {
+                    GroupList = groupModel,
+                    SubjectsList = subjModel
+                };
+
+                var list = new List<string>
+                {
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LectorSubjectsPartial.cshtml", subjModel),
+                    await _renderer.RenderViewToStringAsync("~/Views/Admin/LinkSubjectPartial.cshtml", linkModel)
+                };
+
+                return list;
+            }
         }
 
         [HttpPost]
@@ -241,6 +295,48 @@ namespace SST.WebUI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddGroup([FromForm]CreateGroupCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+            }
+            else
+            {
+                return UnprocessableEntity();
+            }
+
+            return NoContent();
+        }
+
+        public async Task<IActionResult> AddSubject([FromForm]CreateSubjectCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _mediator.Send(command);
+                }
+                catch (ArgumentException ex)
+                {
+                    _logger.LogError(ex.Message);
+                }
+            }
+            else
+            {
+                return UnprocessableEntity();
+            }
+
+            return NoContent();
+        }
+
+        public async Task<IActionResult> LinkSubject([FromForm]LinkSubjectToGroupCommand command)
         {
             if (ModelState.IsValid)
             {
