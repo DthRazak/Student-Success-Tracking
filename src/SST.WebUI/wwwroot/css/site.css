@@ -504,4 +504,11 @@ body {
     margin-top: 5px;
 }
 
-/*Subjects*/
+/*---------Lector---------*/
+
+/*Gradebook*/
+
+.btn.btn-success.pd-l-r-1 {
+    padding-right: 1%;
+    padding-left: 1%;
+}
