@@ -512,3 +512,11 @@ body {
     padding-right: 1%;
     padding-left: 1%;
 }
+
+/*Info*/
+
+.div-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
