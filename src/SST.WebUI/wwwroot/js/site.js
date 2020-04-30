@@ -309,3 +309,8 @@ $("#link-subject-form").submit(function (e) {
         }
     });
 });
+
+$("#lect-show-grades").click(function () {
+    $("tr").find("td:last").before('<td contenteditable="true">—</td>');
+    $("tr").find("th:last").before('<th contenteditable="true"></th>');
+});
