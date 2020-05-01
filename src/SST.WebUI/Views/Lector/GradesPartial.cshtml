@@ -7,7 +7,7 @@
             <th></th>
             @foreach (var data in Model.Header)
             {
-                <th contenteditable="true">@data.Note</th>
+                <th contenteditable="true" id="note-col-@data.ColumnId" class="changeable">@data.Note</th>
             }
             <th id="note-th"></th>
         </tr>
@@ -17,7 +17,7 @@
             <th>Full name</th>
             @foreach (var data in Model.Header)
             {
-                <th contenteditable="true">@data.Date.ToShortDateString()</th>
+                <th contenteditable="true" id="date-col-@data.ColumnId" class="changeable">@data.Date.ToShortDateString()</th>
             }
             <th id="total-th">Total</th>
         </tr>
@@ -30,13 +30,20 @@
                 <td>@Model.Journal.Keys[i].FullName</td>
                 @for (int j = 0; j < Model.Journal.Values[i].Row.Values.Count; j++)
                 {
-                    @if (@Model.Journal.Values[i].Row.Values[j] != 0)
+                    @if (@Model.Journal.Values[i].Row.Values[j].Item2 != 0)
                     {
-                        <td contenteditable="true">@Model.Journal.Values[i].Row.Values[j]</td>
+                        <td contenteditable="true" id="row-col-@Model.Journal.Values[i].Row.Values[j].Item1" class="changeable">
+                            @Model.Journal.Values[i].Row.Values[j].Item2
+                            <div style="display: none" id="stid-@Model.Journal.Keys[i].Id"></div>
+                            <div style="display: none" id="colid-@Model.Header[j].ColumnId"></div>
+                        </td>
                     }
                     else
                     {
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true" id="row-col-@Model.Journal.Values[i].Row.Values[j].Item1" class="changeable">
+                            <div style="display: none" id="stid-@Model.Journal.Keys[i].Id"></div>
+                            <div style="display: none" id="colid-@Model.Header[j].ColumnId"></div>
+                        </td>
                     }
                 }
                 <td id="total-td">@Model.Journal.Values[i].Total</td>

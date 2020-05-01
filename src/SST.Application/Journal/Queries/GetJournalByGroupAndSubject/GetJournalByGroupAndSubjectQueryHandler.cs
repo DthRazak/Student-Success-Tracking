@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,6 +44,7 @@ namespace SST.Application.Journal.Queries.GetJournalByGroupAndSubject
             {
                 header.Add(new JournalHeaderDto
                 {
+                    ColumnId = column.Id,
                     Date = column.Date,
                     Note = column.Note
                 });
@@ -59,8 +61,8 @@ namespace SST.Application.Journal.Queries.GetJournalByGroupAndSubject
                 foreach (var column in journalColumns)
                 {
                     var grade = column.Grades.Where(g => g.StudentRef == st.Id).FirstOrDefault();
-                    row.Row[column.Date] = grade != null ? grade.Mark : 0;
-                    row.Total = row.Row.Values.Sum();
+                    row.Row[column.Date] = grade != null ? new Tuple<int, int>(grade.Id, grade.Mark) : new Tuple<int, int>(grade != null ? grade.Id : 0, 0);
+                    row.Total = row.Row.Values.Sum(x => x.Item2);
                 }
 
                 journal.Add(st, row);

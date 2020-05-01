@@ -17,14 +17,14 @@
             {
                 @if (Model.Journal.Keys[i].FullName == Model.StudentFullName)
                 {
-                    <tr id="my-grades">
+                    <tr class="my-grades">
                         <td class="text-center">@(i + 1)</td>
                         <td>@Model.Journal.Keys[i].FullName</td>
                         @for (int j = 0; j < Model.Journal.Values[i].Row.Values.Count; j++)
                         {
-                            @if (@Model.Journal.Values[i].Row.Values[j] != 0)
+                            @if (@Model.Journal.Values[i].Row.Values[j].Item2 != 0)
                             {
-                                <td>@Model.Journal.Values[i].Row.Values[j]</td>
+                                <td>@Model.Journal.Values[i].Row.Values[j].Item2</td>
                             }
                             else
                             {
@@ -36,14 +36,14 @@
                 }
                 else
                 {
-                    <tr id="classmates-grades">
+                    <tr class="classmates-grades">
                         <td class="text-center">@(i + 1)</td>
                         <td>@Model.Journal.Keys[i].FullName</td>
                         @for (int j = 0; j < Model.Journal.Values[i].Row.Values.Count; j++)
                         {
-                            @if (@Model.Journal.Values[i].Row.Values[j] != 0)
+                            @if (@Model.Journal.Values[i].Row.Values[j].Item2 != 0)
                             {
-                                <td>@Model.Journal.Values[i].Row.Values[j]</td>
+                                <td>@Model.Journal.Values[i].Row.Values[j].Item2</td>
                             }
                             else
                             {

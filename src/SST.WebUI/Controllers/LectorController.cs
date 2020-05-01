@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using SST.Application.Journal.Queries.GetJournalByGroupAndSubject;
 using SST.Application.Lectors.Commands.DeleteJournalColumnByLector;
 using SST.Application.Lectors.Commands.CreateJournalColumnByLector;
+using SST.Application.Lectors.Commands.UpdateJournalColumnByLector;
+using SST.Application.Lectors.Commands.UpdateGradeByLector;
+using SST.Application.Lectors.Commands.CreateGradeByLector;
 
 namespace SST.WebUI.Controllers
 {
@@ -83,6 +86,60 @@ namespace SST.WebUI.Controllers
                 _logger.LogError(ex.Message);
 
                 return UnprocessableEntity();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateJournalColumn(int colId, string note, string date)
+        {
+            var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
+
+            try
+            {
+                DateTime? dateTime = date != null ? (DateTime?)DateTime.Parse(date) : null;
+
+                await _mediator.Send(new UpdateJournalColumnByLectorCommand
+                { JournalColumnId = colId,  Date = dateTime, Note = note, LectorId = id });
+
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return UnprocessableEntity();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateGroupColumn(int gradeId, int mark, int colId, int stId)
+        {
+            var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
+
+            try
+            {
+                await _mediator.Send(new UpdateGradeByLectorCommand
+                { GradeId = gradeId, Mark = mark, LectorId = id });
+
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                try
+                {
+                    await _mediator.Send(new CreateGradeByLectorCommand
+                    { Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
+
+                    return Ok();
+                }
+                catch (Exception inEx)
+                {
+                    _logger.LogError(inEx.Message);
+
+                    return UnprocessableEntity();
+                }
             }
         }
     }
