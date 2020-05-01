@@ -20,6 +20,8 @@ namespace SST.Application.Lectors.Commands.CreateJournalColumnByLector
         public async Task<int> Handle(CreateJournalColumnByLectorCommand request, CancellationToken cancellationToken)
         {
             var groupSubjEnt = await _context.GroupSubjects
+                .Include(gs => gs.Subject)
+                    .ThenInclude(s => s.Lector)
                 .FirstOrDefaultAsync(x => x.Id == request.GroupSubjectId, cancellationToken);
 
             if (groupSubjEnt != null)

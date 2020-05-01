@@ -513,6 +513,14 @@ body {
     padding-left: 1%;
 }
 
+.hidden-select {
+    display: none;
+}
+
+.active-select {
+    display: initial;
+}
+
 /*Info*/
 
 .div-center {

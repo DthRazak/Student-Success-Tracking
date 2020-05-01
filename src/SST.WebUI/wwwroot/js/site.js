@@ -310,7 +310,64 @@ $("#link-subject-form").submit(function (e) {
     });
 });
 
-$("#lect-show-grades").click(function () {
-    $("tr").find("td:last").before('<td contenteditable="true">—</td>');
-    $("tr").find("th:last").before('<th contenteditable="true"></th>');
+$("#lector-add-column").click(function () {
+    $("tr").find("#total-td").before('<td>—</td>');
+    $("tr").find("#note-th").before('<th></th>');
+    $("tr").find("#total-th").before('<th><input type="date" id="new-jornal-col" onchange="dateChange();"></th>');
+    $('#lector-add-column').prop('disabled', true);
 });
+
+$("#LectorSubjectSelect").change(function () {
+    let subjectId = $("#LectorSubjectSelect :selected").val();
+    let oldSelect = $(".active-select");
+    let newSelect = $(`#LectorGroupSelect-${subjectId}`);
+
+    oldSelect.addClass("hidden-select");
+    newSelect.addClass("active-select");
+    newSelect.addClass("hidden-select");
+    oldSelect.removeClass("active-select");
+});
+
+$("button[id=lector-show-grades]").click(function () {
+    let subjectId = $("#LectorSubjectSelect :selected").val();
+    let groupId = $(".active-select :selected").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/Lector/DisplayGrages",
+        data: {
+            'subjectId': subjectId,
+            'groupId': groupId
+        },
+        success: function (data) {
+            $("table[id^=lector-grade-table-]").replaceWith(data);
+            $('#lector-add-column').prop('disabled', false);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+var dateChange = function () {
+    let col = $("#new-jornal-col");
+    let dt = col.val();
+    let date = `${dt.slice(8, 10)}.${dt.slice(5, 7)}.${dt.slice(0, 4)}`;
+    let journalId = parseInt($("table[id^=lector-grade-table-]").get(0).id.slice(19));
+
+    $.ajax({
+        type: "POST",
+        url: "/Lector/AddJournalColumn",
+        data: {
+            'journalId': journalId,
+            'date': date
+        },
+        success: function (data) {
+            $(col).parent().html(date);
+            $('#lector-add-column').prop('disabled', false);
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+};

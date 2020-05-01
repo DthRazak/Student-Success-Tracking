@@ -68,6 +68,7 @@ namespace SST.Application.Journal.Queries.GetJournalByGroupAndSubject
 
             var vm = new JournalVm
             {
+                JournalId = groupSubject.Id,
                 Header = header,
                 Journal = journal
             };
