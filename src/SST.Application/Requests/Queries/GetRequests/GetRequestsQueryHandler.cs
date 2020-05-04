@@ -24,6 +24,7 @@ namespace SST.Application.Requests.Queries.GetRequests
         {
             var requests = await _context.Requests
                 .Where(r => r.User.IsAdmin == false)
+                .OrderBy(r => r.CreationDate)
                 .ProjectTo<RequestDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

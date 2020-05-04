@@ -24,6 +24,7 @@ namespace SST.Application.Subjects.Queries.GetSubjects
         {
             var subjects = await _context.Subjects
                .Include(s => s.Lector)
+               .OrderBy(s => s.Name)
                .ProjectTo<SubjectDto>(_mapper.ConfigurationProvider)
                .ToListAsync(cancellationToken);
 
