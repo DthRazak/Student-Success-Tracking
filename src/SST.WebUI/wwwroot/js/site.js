@@ -209,7 +209,7 @@ $("button[id=st-show-grades]").click(function () {
 });
 
 $("input[id=GradesCheck]").click(function () {
-    $("#classmates-grades").toggle(!this.checked);
+    $(".classmates-grades").toggle(!this.checked);
 });
 
 $("input[id^=admin-remove-group-]").click(function () {
@@ -309,3 +309,132 @@ $("#link-subject-form").submit(function (e) {
         }
     });
 });
+
+$("#lector-add-column").click(function () {
+    //TODO: update without refresh
+    $("tr").find("#total-td").before('<td id="new-cell">—</td>');
+    $("tr").find("#note-th").before('<th id="new-note-cell"></th>');
+    $("tr").find("#total-th").before('<th><input type="date" id="new-jornal-col" onchange="dateChange();"></th>');
+    $('#lector-add-column').prop('disabled', true);
+});
+
+$("#LectorSubjectSelect").change(function () {
+    let subjectId = $("#LectorSubjectSelect :selected").val();
+    let oldSelect = $(".active-select");
+    let newSelect = $(`#LectorGroupSelect-${subjectId}`);
+
+    oldSelect.addClass("hidden-select");
+    newSelect.addClass("active-select");
+    newSelect.addClass("hidden-select");
+    oldSelect.removeClass("active-select");
+});
+
+$("button[id=lector-show-grades]").click(function () {
+    let subjectId = $("#LectorSubjectSelect :selected").val();
+    let groupId = $(".active-select :selected").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/Lector/DisplayGrages",
+        data: {
+            'subjectId': subjectId,
+            'groupId': groupId
+        },
+        success: function (data) {
+            $("table[id^=lector-grade-table-]").replaceWith(data);
+            $('#lector-add-column').prop('disabled', false);
+            $('.changeable').blur(function () {
+                updateColumn(this);
+            });
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+});
+
+var dateChange = function () {
+    let col = $("#new-jornal-col");
+    let dt = col.val();
+    let date = `${dt.slice(8, 10)}.${dt.slice(5, 7)}.${dt.slice(0, 4)}`;
+    let journalId = parseInt($("table[id^=lector-grade-table-]").get(0).id.slice(19));
+
+    $.ajax({
+        type: "POST",
+        url: "/Lector/AddJournalColumn",
+        data: {
+            'journalId': journalId,
+            'date': date
+        },
+        success: function (data) {
+            $(col).parent().html(date);
+            $('#lector-add-column').prop('disabled', false);
+            $('.changeable').blur(function () {
+                updateColumn(this);
+            });
+            //TODO: update without refresh
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+};
+
+var updateColumn = function (node) {
+    if (node.id.startsWith("note-col-")) {
+        let colId = parseInt(node.id.slice(9));
+        let note = node.textContent;
+        $.ajax({
+            type: "POST",
+            url: "/Lector/UpdateJournalColumn",
+            data: {
+                'colId': colId,
+                'note': note
+            },
+            success: function () {
+                toastr.success('Field changed.', 'Success', { timeOut: 1500 });
+            },
+            error: function () {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        });
+    } else if (node.id.startsWith("date-col-")) {
+        let colId = parseInt(node.id.slice(9));
+        let date = node.textContent;
+        $.ajax({
+            type: "POST",
+            url: "/Lector/UpdateJournalColumn",
+            data: {
+                'colId': colId,
+                'date': date
+            },
+            success: function () {
+                toastr.success('Field changed.', 'Success', { timeOut: 1500 });
+            },
+            error: function () {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        });
+    } else if (node.id.startsWith("row-col-")) {
+        let gradeId = parseInt(node.id.slice(8));
+        let mark = parseInt(node.textContent);
+        let colId = parseInt(node.lastElementChild.id.slice(6));
+        let stId = parseInt(node.firstElementChild.id.slice(5));
+        $.ajax({
+            type: "POST",
+            url: "/Lector/UpdateGroupColumn",
+            data: {
+                'gradeId': gradeId,
+                'mark': mark,
+                'colId': colId,
+                'stId': stId
+            },
+            success: function () {
+                toastr.success('Field changed.', 'Success', { timeOut: 1500 });
+            },
+            error: function () {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        });
+    }
+}

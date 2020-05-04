@@ -20,6 +20,9 @@ namespace SST.Application.Lectors.Commands.UpdateJournalColumnByLector
         public async Task<Unit> Handle(UpdateJournalColumnByLectorCommand request, CancellationToken cancellationToken)
         {
             var journalColEnt = await _context.JournalColumns
+                .Include(jc => jc.GroupSubject)
+                    .ThenInclude(gs => gs.Subject)
+                        .ThenInclude(s => s.Lector)
                 .FirstOrDefaultAsync(x => x.Id == request.JournalColumnId, cancellationToken);
 
             if (journalColEnt != null)

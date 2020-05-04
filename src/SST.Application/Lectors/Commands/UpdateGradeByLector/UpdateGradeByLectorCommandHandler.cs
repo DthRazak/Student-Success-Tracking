@@ -20,6 +20,10 @@ namespace SST.Application.Lectors.Commands.UpdateGradeByLector
         public async Task<Unit> Handle(UpdateGradeByLectorCommand request, CancellationToken cancellationToken)
         {
             var gradeEnt = await _context.Grades
+                .Include(g => g.JournalColumn)
+                    .ThenInclude(jc => jc.GroupSubject)
+                        .ThenInclude(gs => gs.Subject)
+                            .ThenInclude(s => s.Lector)
                 .FirstOrDefaultAsync(x => x.Id == request.GradeId, cancellationToken);
 
             if (gradeEnt != null)
@@ -42,7 +46,7 @@ namespace SST.Application.Lectors.Commands.UpdateGradeByLector
             }
             else
             {
-                throw new Exception($"Grade with id({request.GradeId}) doesn't exists");
+                throw new ArgumentException($"Grade with id({request.GradeId}) doesn't exists");
             }
         }
     }

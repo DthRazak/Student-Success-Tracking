@@ -8,29 +8,25 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
 
-namespace SST.Application.Journal.Queries.GetJournalByStudentAndSubject
+namespace SST.Application.Journal.Queries.GetJournalByGroupAndSubject
 {
-    public class GetJournalByStudentAndSubjectQueryHandler : IRequestHandler<GetJournalByStudentAndSubjectQuery, JournalVm>
+    public class GetJournalByGroupAndSubjectQueryHandler : IRequestHandler<GetJournalByGroupAndSubjectQuery, JournalVm>
     {
         private readonly ISSTDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetJournalByStudentAndSubjectQueryHandler(ISSTDbContext context, IMapper mapper)
+        public GetJournalByGroupAndSubjectQueryHandler(ISSTDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<JournalVm> Handle(GetJournalByStudentAndSubjectQuery request, CancellationToken cancellationToken)
+        public async Task<JournalVm> Handle(GetJournalByGroupAndSubjectQuery request, CancellationToken cancellationToken)
         {
-            var student = await _context.Students
-                .FirstOrDefaultAsync(s => s.Id == request.StudentId, cancellationToken);
-
-            var studentFullName = student.FirstName + " " + student.LastName;
             var groupSubject = await _context.GroupSubjects
                 .Include(gs => gs.Group)
                     .ThenInclude(g => g.Students)
-                .FirstAsync(s => s.SubjectRef == request.SubjectId && s.GroupRef == student.GroupRef, cancellationToken);
+                .FirstAsync(s => s.SubjectRef == request.SubjectId && s.GroupRef == request.GroupId, cancellationToken);
 
             var groupStudents = new List<StudentDto>();
             foreach (var st in groupSubject.Group.Students)
@@ -48,6 +44,7 @@ namespace SST.Application.Journal.Queries.GetJournalByStudentAndSubject
             {
                 header.Add(new JournalHeaderDto
                 {
+                    ColumnId = column.Id,
                     Date = column.Date,
                     Note = column.Note
                 });
@@ -73,7 +70,7 @@ namespace SST.Application.Journal.Queries.GetJournalByStudentAndSubject
 
             var vm = new JournalVm
             {
-                StudentFullName = studentFullName,
+                JournalId = groupSubject.Id,
                 Header = header,
                 Journal = journal
             };

@@ -5,6 +5,8 @@ namespace SST.Application.Journal.Queries
 {
     public class JournalHeaderDto : IComparable<JournalHeaderDto>
     {
+        public int ColumnId { get; set; }
+
         public DateTime Date { get; set; }
 
         public string Note { get; set; }
