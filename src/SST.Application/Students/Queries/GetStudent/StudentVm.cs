@@ -20,7 +20,7 @@ namespace SST.Application.Students.Queries.GetStudent
                   .ForMember(x => x.Email, y => y.MapFrom(z => z.UserRef))
                   .ForMember(x => x.Group, y => y.MapFrom(z => z.Group.Name))
                   .ForMember(x => x.Faculty, y => y.MapFrom(z => z.Group.Faculty))
-                  .ForMember(x => x.FullName, y => y.MapFrom(z => z.FirstName + " " + z.LastName));
+                  .ForMember(x => x.FullName, y => y.MapFrom(z => z.LastName + " " + z.FirstName));
         }
     }
 }

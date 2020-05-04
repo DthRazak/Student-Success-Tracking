@@ -26,7 +26,7 @@ namespace SST.Application.Journal.Queries.GetJournalByStudentAndSubject
             var student = await _context.Students
                 .FirstOrDefaultAsync(s => s.Id == request.StudentId, cancellationToken);
 
-            var studentFullName = student.FirstName + " " + student.LastName;
+            var studentFullName = student.LastName + " " + student.FirstName;
             var groupSubject = await _context.GroupSubjects
                 .Include(gs => gs.Group)
                     .ThenInclude(g => g.Students)

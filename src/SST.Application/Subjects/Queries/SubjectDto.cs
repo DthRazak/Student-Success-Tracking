@@ -15,11 +15,11 @@ namespace SST.Application.Subjects.Queries
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Subject, SubjectDto>()
-                .ForMember(x => x.LectorFullName, y => y.MapFrom(z => z.Lector.FirstName + " " + z.Lector.LastName));
+                .ForMember(x => x.LectorFullName, y => y.MapFrom(z => z.Lector.LastName + " " + z.Lector.FirstName));
             profile.CreateMap<GroupSubject, SubjectDto>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Subject.Id))
                 .ForMember(x => x.Name, y => y.MapFrom(z => z.Subject.Name))
-                .ForMember(x => x.LectorFullName, y => y.MapFrom(z => z.Subject.Lector.FirstName + " " + z.Subject.Lector.LastName));
+                .ForMember(x => x.LectorFullName, y => y.MapFrom(z => z.Subject.Lector.LastName + " " + z.Subject.Lector.FirstName));
         }
     }
 }
