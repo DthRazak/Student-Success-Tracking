@@ -52,7 +52,7 @@ namespace SST.Application.Tests.Mappings
 
             result.ShouldNotBeNull();
             result.ShouldBeOfType<StudentDto>();
-            result.FullName.ShouldBe("Володимир Мільчановський");
+            result.FullName.ShouldBe("Мільчановський Володимир");
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace SST.Application.Tests.Mappings
             result.ShouldBeOfType<SubjectDto>();
             result.Id.ShouldBe(1);
             result.Name.ShouldBe("Програмна інженерія");
-            result.LectorFullName.ShouldBe("Анатолій Музичук");
+            result.LectorFullName.ShouldBe("Музичук Анатолій");
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace SST.Application.Tests.Mappings
             //result.ShouldBeOfType<SubjectDto>();
             //result.Id.ShouldBe(3);
             //result.Name.ShouldBe("Програмна інженерія");
-            //result.LectorFullName.ShouldBe("Анатолій Музичук");
+            //result.LectorFullName.ShouldBe("Музичук Анатолій");
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace SST.Application.Tests.Mappings
             //var result = _mapper.Map<GradesInfoDto>(entity);
             //result.ShouldNotBeNull();
             //result.ShouldBeOfType<GradesInfoDto>();
-            //result.StudentFullName.ShouldBe("Віталій Пистун");
+            //result.StudentFullName.ShouldBe("Пистун Віталій");
             //result.Total.ShouldBe(0);
         }
     }

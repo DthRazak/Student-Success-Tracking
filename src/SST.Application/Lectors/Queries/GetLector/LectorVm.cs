@@ -16,7 +16,7 @@ namespace SST.Application.Lectors.Queries.GetLector
         {
             profile.CreateMap<Lector, LectorVm>()
                   .ForMember(x => x.Email, y => y.MapFrom(z => z.UserRef))
-                  .ForMember(x => x.FullName, y => y.MapFrom(z => z.FirstName + " " + z.LastName));
+                  .ForMember(x => x.FullName, y => y.MapFrom(z => z.LastName + " " + z.FirstName));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SST.Application.Students.Queries.GetStudentsByGroup
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Student, StudentDto>()
-                .ForMember(x => x.FullName, y => y.MapFrom(z => z.FirstName + " " + z.LastName));
+                .ForMember(x => x.FullName, y => y.MapFrom(z => z.LastName + " " + z.FirstName));
         }
     }
 }
