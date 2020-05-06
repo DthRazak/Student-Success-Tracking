@@ -8,6 +8,9 @@
     }
 }
 
+var tagToDelete = "";
+var colIdToDelete = "";
+
 var getStudentsByGroup = function (group) {
     $.ajax({
         type: "GET",
@@ -372,6 +375,7 @@ var newDateChange = function () {
             $('.changeable').blur(function () {
                 updateColumn(this);
             });
+            toastr.success('Column added, please refresh table to make it editable', 'Success', { timeOut: 1500 });
             //TODO: update without refresh
         },
         error: function () {
@@ -393,7 +397,7 @@ var dateUpdate = function (tagId) {
             'date': date
         },
         success: function () {
-            $(col).parent().attr("onclick", `onDateClick('${tagId}');`)
+            $(col).parent().attr("ondblclick", `onDateClick('${tagId}');`)
             $(col).parent().html(date);
             toastr.success('Date changed.', 'Success', { timeOut: 1500 });
         },
@@ -405,9 +409,42 @@ var dateUpdate = function (tagId) {
 
 var onDateClick = function (id) {
     let tag = $(`#${id}`);
-    tag.removeAttr("onclick");
+    tag.removeAttr("ondblclick");
     tag.html(`<input type="date" id="${tag[0].id}" onchange="dateUpdate('${tag[0].id}');">`);
 };
+
+var onRemoveClick = function (id) {
+    let tag = $(`#${id}`);
+    tagToDelete = tag;
+    colIdToDelete = parseInt(tag[0].id.slice(9));
+    $("#lector-remove-column").prop("disabled", false);
+};
+
+$(document).click(function (e) {
+    if (e.target !== tagToDelete[0]) {
+        if (e.target === $("#lector-remove-column")[0]) {
+            $.ajax({
+                type: "POST",
+                url: "/Lector/DeleteJournalColumn",
+                data: {
+                    'colId': colIdToDelete
+                },
+                success: function () {
+                    $(`th[id=note-col-${colIdToDelete}]`).remove();
+                    $(`th[id=date-col-${colIdToDelete}]`).remove();
+                    $(`div[id=colid-${colIdToDelete}]`).each(function () {
+                        $(this).parent().remove();
+                    });
+                    toastr.success('Column deleted.', 'Success', { timeOut: 1500 });
+                },
+                error: function () {
+                    toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+                }
+            });
+        }
+        $("#lector-remove-column").prop("disabled", true);
+    }
+});
 
 var updateColumn = function (node) {
     if (node.id.startsWith("note-col-")) {
