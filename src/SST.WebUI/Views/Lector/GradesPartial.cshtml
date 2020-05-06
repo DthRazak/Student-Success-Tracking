@@ -7,7 +7,7 @@
             <th></th>
             @foreach (var data in Model.Header)
             {
-                <th contenteditable="true" id="note-col-@data.ColumnId" class="changeable">@data.Note</th>
+                <th contenteditable="true" id="note-col-@data.ColumnId" class="changeable" onclick="onRemoveClick(`note-col-@data.ColumnId`)">@data.Note</th>
             }
             <th id="note-th"></th>
         </tr>
@@ -17,7 +17,7 @@
             <th>Full name</th>
             @foreach (var data in Model.Header)
             {
-                <th contenteditable="true" id="date-col-@data.ColumnId" class="changeable">@data.Date.ToShortDateString()</th>
+                <th id="date-col-@data.ColumnId" tabindex="0" class="changeable" onclick="onRemoveClick(`date-col-@data.ColumnId`)" ondblclick="onDateClick(`date-col-@data.ColumnId`);">@data.Date.ToShortDateString()</th>
             }
             <th id="total-th">Total</th>
         </tr>

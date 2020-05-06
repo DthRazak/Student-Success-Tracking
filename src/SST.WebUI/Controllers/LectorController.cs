@@ -112,6 +112,26 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> DeleteJournalColumn(int colId)
+        {
+            var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
+
+            try
+            {
+                await _mediator.Send(new DeleteJournalColumnByLectorCommand
+                { JournalColumnId = colId, LectorId = id });
+
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return UnprocessableEntity();
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> UpdateGroupColumn(int gradeId, int mark, int colId, int stId)
         {
             var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);

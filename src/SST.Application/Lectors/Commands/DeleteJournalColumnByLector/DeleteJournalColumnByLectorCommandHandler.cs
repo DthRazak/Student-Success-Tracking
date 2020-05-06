@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SST.Application.Common.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using SST.Domain.Entities;
 using System;
 using System.Threading;
@@ -19,7 +20,9 @@ namespace SST.Application.Lectors.Commands.DeleteJournalColumnByLector
         public async Task<Unit> Handle(DeleteJournalColumnByLectorCommand request, CancellationToken cancellationToken)
         {
             var journalColEnt = await _context.JournalColumns
-                .FindAsync(request.JournalColumnId);
+                .Include(jc => jc.GroupSubject)
+                    .ThenInclude(gs => gs.Subject)
+                .FirstOrDefaultAsync(x => x.Id == request.JournalColumnId, cancellationToken);
 
             if (journalColEnt != null)
             {
