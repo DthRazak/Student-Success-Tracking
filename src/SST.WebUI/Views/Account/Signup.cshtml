@@ -20,47 +20,55 @@
 		</div>
 	</div>
 
-	<form asp-action="SignupAsStudent" asp-controller="Account" asp-anti-forgery="true" method="post" id="signupForm">
-		<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
-		<div class="form-group mrgn-20">
-			<label class="label-style">Input Email</label>
-			<input type="email" name="Email" class="form-control" />
+    <form asp-action="SignupAsStudent" asp-controller="Account" asp-anti-forgery="true" method="post" id="signupForm">
+        <div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+        <div class="form-group mrgn-20">
+            <label class="label-style">Input Email</label>
+            <input type="email" name="Email" class="form-control" />
 
-		</div>
-		<div class="form-group mrgn-20">
-			<label class="label-style">Input Password</label>
-			<input type="password" name="Password" class="form-control" />
+        </div>
+        <div class="form-group mrgn-20">
+            <label class="label-style">Input Password</label>
+            <input type="password" name="Password" class="form-control" />
 
-		</div>
-		<div class="form-group mrgn-20">
-			<label class="label-style">Confirm Password</label>
-			<input type="password" name="ConfirmPassword" class="form-control" />
+        </div>
+        <div class="form-group mrgn-20">
+            <label class="label-style">Confirm Password</label>
+            <input type="password" name="ConfirmPassword" class="form-control" />
 
-		</div>
-
-		<div class="row mrgn-20">
-			<div class="col-sm pd-0 select-col" id="groupDiv">
-				<p class="label-style mrgn-b-5">Select Group</p>
-				<select id="GroupSelect" name="Group" class="select-wdth custom-select">
-					@foreach (var group in Model.GroupsList.Groups)
-					{
-						<option value="@group.Id">@group.Name</option>
-					}
-				</select>
-			</div>
-			<div class="col-sm pd-0">
-				<p class="label-style mrgn-b-5" id="nameSelectLabel">Select Student</p>
-				<select id="fullNameSelect" name="StudentId" class="select-wdth custom-select">
-					@if (Model.StudentsList != null) foreach (var student in Model.StudentsList.Students)
-					{
-						<option value="@student.Id">@student.FullName</option>
-					}
-				</select>
-			</div>
-		</div>
-		<br />
-		<input type="submit" value="SIGN UP" class="btn submit" />
-		<br />
-	</form>
+        </div>
+        <div class="row mrgn-20">
+            <div class="col-sm pd-0" id="facultyDiv">
+                <p class="label-style mrgn-b-5">Select Faculty</p>
+                <select id="FacultySelectSignUp" name="FacultySignUp" class="select-wdth custom-select">
+                    <option value="">...</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row mrgn-20">
+            <div class="col-sm pd-0 select-col" id="groupDiv">
+                <p class="label-style mrgn-b-5">Select Group</p>
+                <select id="GroupSelect" name="Group" class="select-wdth custom-select">
+                    @foreach (var group in Model.GroupsList.Groups)
+                    {
+                        <option value="@group.Id">@group.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm pd-0">
+                <p class="label-style mrgn-b-5" id="nameSelectLabel">Select Student</p>
+                <select id="fullNameSelect" name="StudentId" class="select-wdth custom-select">
+                    @if (Model.StudentsList != null) foreach (var student in Model.StudentsList.Students)
+                        {
+                            <option value="@student.Id">@student.FullName</option>
+                        }
+                </select>
+            </div>
+        </div>
+        <br />
+        <input type="submit" value="SIGN UP" class="btn submit" />
+        <br />
+    </form>
 
 </div>

@@ -169,5 +169,19 @@ namespace SST.WebUI.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AccessDenied()
+        {
+            Response.StatusCode = 403;
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> NotFound()
+        {
+            Response.StatusCode = 404;
+            return View();
+        }
     }
 }
