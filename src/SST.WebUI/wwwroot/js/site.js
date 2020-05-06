@@ -373,7 +373,7 @@ var newDateChange = function () {
             $(col).parent().html(date);
             $('#lector-add-column').prop('disabled', false);
             $('.changeable').blur(function () {
-                updateColumn(this);
+                updateColumn($(this));
             });
             toastr.success('Column added, please refresh table to make it editable', 'Success', { timeOut: 1500 });
             //TODO: update without refresh
@@ -467,8 +467,8 @@ var updateColumn = function (node) {
     } else if (node.id.startsWith("row-col-")) {
         let gradeId = parseInt(node.id.slice(8));
         let mark = parseInt(node.textContent);
-        let colId = parseInt(node.lastElementChild.id.slice(6));
-        let stId = parseInt(node.firstElementChild.id.slice(5));
+        let colId = parseInt($(node).find("div[id^=colid-]")[0].id.slice(6));
+        let stId = parseInt($(node).find("div[id^=stid-]")[0].id.slice(5));
         $.ajax({
             type: "POST",
             url: "/Lector/UpdateGroupColumn",

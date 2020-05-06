@@ -15,6 +15,9 @@ using SST.Application.Lectors.Commands.CreateJournalColumnByLector;
 using SST.Application.Lectors.Commands.UpdateJournalColumnByLector;
 using SST.Application.Lectors.Commands.UpdateGradeByLector;
 using SST.Application.Lectors.Commands.CreateGradeByLector;
+using SST.Application.Students.Queries.GetStudent;
+using SST.WebUI.Hubs;
+using SST.Application.Subjects.Queries.GetSubjectNameByColumnJournal;
 
 namespace SST.WebUI.Controllers
 {
@@ -23,11 +26,13 @@ namespace SST.WebUI.Controllers
     {
         private readonly ILogger<LectorController> _logger;
         private readonly IMediator _mediator;
+        private readonly NotificationHub _notificationHub;
 
-        public LectorController(ILogger<LectorController> logger, IMediator mediator)
+        public LectorController(ILogger<LectorController> logger, IMediator mediator, NotificationHub notificationHub)
         {
             _logger = logger;
             _mediator = mediator;
+            _notificationHub = notificationHub;
         }
 
         [HttpGet]
@@ -141,6 +146,8 @@ namespace SST.WebUI.Controllers
                 await _mediator.Send(new UpdateGradeByLectorCommand
                 { GradeId = gradeId, Mark = mark, LectorId = id });
 
+                await NotifyStudentAboutNewMark(stId, mark, colId);
+
                 return Ok();
             }
             catch (ArgumentException ex)
@@ -152,6 +159,8 @@ namespace SST.WebUI.Controllers
                     await _mediator.Send(new CreateGradeByLectorCommand
                     { Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
 
+                    await NotifyStudentAboutNewMark(stId, mark, colId);
+
                     return Ok();
                 }
                 catch (Exception inEx)
@@ -160,6 +169,17 @@ namespace SST.WebUI.Controllers
 
                     return UnprocessableEntity();
                 }
+            }
+        }
+
+        private async Task NotifyStudentAboutNewMark(int studentId, int mark, int colId)
+        {
+            var student = await _mediator.Send(new GetStudentQuery { StudentId = studentId });
+            var subject = await _mediator.Send(new GetSubjectNameByColumnJournalQuery { JournalColumnId = colId });
+
+            if (student.Email != null)
+            {
+                await _notificationHub.NotifySudent(student.Email, subject.Name, mark);
             }
         }
     }
