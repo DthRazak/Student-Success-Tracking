@@ -17,7 +17,7 @@
             <th>Full name</th>
             @foreach (var data in Model.Header)
             {
-                <th contenteditable="true" id="date-col-@data.ColumnId" class="changeable">@data.Date.ToShortDateString()</th>
+                <th contenteditable="true" id="date-col-@data.ColumnId" class="changeable" onclick="onDateClick(`date-col-@data.ColumnId`);">@data.Date.ToShortDateString()</th>
             }
             <th id="total-th">Total</th>
         </tr>

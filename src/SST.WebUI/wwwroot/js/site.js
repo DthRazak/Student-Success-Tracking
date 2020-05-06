@@ -314,7 +314,7 @@ $("#lector-add-column").click(function () {
     //TODO: update without refresh
     $("tr").find("#total-td").before('<td id="new-cell">—</td>');
     $("tr").find("#note-th").before('<th id="new-note-cell"></th>');
-    $("tr").find("#total-th").before('<th><input type="date" id="new-jornal-col" onchange="dateChange();"></th>');
+    $("tr").find("#total-th").before('<th><input type="date" id="new-jornal-col" onchange="newDateChange();"></th>');
     $('#lector-add-column').prop('disabled', true);
 });
 
@@ -353,7 +353,7 @@ $("button[id=lector-show-grades]").click(function () {
     });
 });
 
-var dateChange = function () {
+var newDateChange = function () {
     let col = $("#new-jornal-col");
     let dt = col.val();
     let date = `${dt.slice(8, 10)}.${dt.slice(5, 7)}.${dt.slice(0, 4)}`;
@@ -380,6 +380,35 @@ var dateChange = function () {
     });
 };
 
+var dateUpdate = function (tagId) {
+    let col = $(`input[id=${tagId}]`);
+    let dt = col.val();
+    let colId = parseInt(col[0].id.slice(9));
+    let date = `${dt.slice(8, 10)}.${dt.slice(5, 7)}.${dt.slice(0, 4)}`;
+    $.ajax({
+        type: "POST",
+        url: "/Lector/UpdateJournalColumn",
+        data: {
+            'colId': colId,
+            'date': date
+        },
+        success: function () {
+            $(col).parent().attr("onclick", `onDateClick('${tagId}');`)
+            $(col).parent().html(date);
+            toastr.success('Date changed.', 'Success', { timeOut: 1500 });
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+};
+
+var onDateClick = function (id) {
+    let tag = $(`#${id}`);
+    tag.removeAttr("onclick");
+    tag.html(`<input type="date" id="${tag[0].id}" onchange="dateUpdate('${tag[0].id}');">`);
+};
+
 var updateColumn = function (node) {
     if (node.id.startsWith("note-col-")) {
         let colId = parseInt(node.id.slice(9));
@@ -390,23 +419,6 @@ var updateColumn = function (node) {
             data: {
                 'colId': colId,
                 'note': note
-            },
-            success: function () {
-                toastr.success('Field changed.', 'Success', { timeOut: 1500 });
-            },
-            error: function () {
-                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
-            }
-        });
-    } else if (node.id.startsWith("date-col-")) {
-        let colId = parseInt(node.id.slice(9));
-        let date = node.textContent;
-        $.ajax({
-            type: "POST",
-            url: "/Lector/UpdateJournalColumn",
-            data: {
-                'colId': colId,
-                'date': date
             },
             success: function () {
                 toastr.success('Field changed.', 'Success', { timeOut: 1500 });
