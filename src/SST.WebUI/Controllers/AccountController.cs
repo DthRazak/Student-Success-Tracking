@@ -57,6 +57,19 @@ namespace SST.WebUI.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Home()
+        {
+            if (User.HasClaim(x => x.Type == ClaimTypes.Role))
+            {
+                return RedirectToAction("Info", User.Claims.Single(c => c.Type == ClaimTypes.Role).Value);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
         [HttpPost]
  //       [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginForm form)
@@ -168,20 +181,6 @@ namespace SST.WebUI.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> AccessDenied()
-        {
-            Response.StatusCode = 403;
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> NotFound()
-        {
-            Response.StatusCode = 404;
-            return View();
         }
     }
 }
