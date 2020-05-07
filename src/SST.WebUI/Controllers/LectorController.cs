@@ -143,7 +143,7 @@ namespace SST.WebUI.Controllers
             try
             {
                 await _mediator.Send(new CreateOrUpdateGradeByLectorCommand
-                { GradeId = gradeId, Mark = mark, LectorId = id });
+                { GradeId = gradeId, Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
 
                 await NotifyStudentAboutNewMark(stId, mark, colId);
 
@@ -153,21 +153,7 @@ namespace SST.WebUI.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                try
-                {
-                    await _mediator.Send(new CreateOrUpdateGradeByLectorCommand
-                    { Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
-
-                    await NotifyStudentAboutNewMark(stId, mark, colId);
-
-                    return Ok();
-                }
-                catch (Exception inEx)
-                {
-                    _logger.LogError(inEx.Message);
-
-                    return UnprocessableEntity();
-                }
+                return UnprocessableEntity();
             }
         }
 
