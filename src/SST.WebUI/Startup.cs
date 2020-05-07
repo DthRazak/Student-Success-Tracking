@@ -18,6 +18,9 @@ using SST.Application;
 using SST.WebUI.Services;
 using SST.Application.Common.Hashing;
 using SST.WebUI.Services.RazorToStringExample;
+using SST.WebUI.Hubs;
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.SignalR;
 
 namespace SST.WebUI
 {
@@ -64,8 +67,12 @@ namespace SST.WebUI
                         context.User.IsInRole("Lector")));
             });
 
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddSignalR();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            //services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddControllersWithViews();
             services.AddTransient<RazorViewToStringRenderer>();
+            services.AddSingleton<NotificationHub>();
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -109,13 +116,29 @@ namespace SST.WebUI
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseMvc(routes =>
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Account}/{action=Home}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<NotificationHub>(
+                    "/notify");
+                    //options =>
+                    //{
+                    //    options.LongPolling.PollTimeout = TimeSpan.FromSeconds(10);
+                    //    options.Transports = HttpTransportType.LongPolling;
+                    //});
             });
         }
     }

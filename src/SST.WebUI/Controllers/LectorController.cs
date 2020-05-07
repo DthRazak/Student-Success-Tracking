@@ -13,8 +13,10 @@ using SST.Application.Journal.Queries.GetJournalByGroupAndSubject;
 using SST.Application.Lectors.Commands.DeleteJournalColumnByLector;
 using SST.Application.Lectors.Commands.CreateJournalColumnByLector;
 using SST.Application.Lectors.Commands.UpdateJournalColumnByLector;
-using SST.Application.Lectors.Commands.UpdateGradeByLector;
-using SST.Application.Lectors.Commands.CreateGradeByLector;
+using SST.Application.Lectors.Commands.CreateOrUpdateGradeByLector;
+using SST.Application.Students.Queries.GetStudent;
+using SST.WebUI.Hubs;
+using SST.Application.Subjects.Queries.GetSubjectNameByColumnJournal;
 
 namespace SST.WebUI.Controllers
 {
@@ -23,11 +25,13 @@ namespace SST.WebUI.Controllers
     {
         private readonly ILogger<LectorController> _logger;
         private readonly IMediator _mediator;
+        private readonly NotificationHub _notificationHub;
 
-        public LectorController(ILogger<LectorController> logger, IMediator mediator)
+        public LectorController(ILogger<LectorController> logger, IMediator mediator, NotificationHub notificationHub)
         {
             _logger = logger;
             _mediator = mediator;
+            _notificationHub = notificationHub;
         }
 
         [HttpGet]
@@ -112,14 +116,14 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateGroupColumn(int gradeId, int mark, int colId, int stId)
+        public async Task<IActionResult> DeleteJournalColumn(int colId)
         {
             var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
 
             try
             {
-                await _mediator.Send(new UpdateGradeByLectorCommand
-                { GradeId = gradeId, Mark = mark, LectorId = id });
+                await _mediator.Send(new DeleteJournalColumnByLectorCommand
+                { JournalColumnId = colId, LectorId = id });
 
                 return Ok();
             }
@@ -127,19 +131,40 @@ namespace SST.WebUI.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                try
-                {
-                    await _mediator.Send(new CreateGradeByLectorCommand
-                    { Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
+                return UnprocessableEntity();
+            }
+        }
 
-                    return Ok();
-                }
-                catch (Exception inEx)
-                {
-                    _logger.LogError(inEx.Message);
+        [HttpPost]
+        public async Task<IActionResult> UpdateGroupColumn(int gradeId, int mark, int colId, int stId)
+        {
+            var id = int.Parse(User.Claims.First(x => x.Type == "SST-ID").Value);
 
-                    return UnprocessableEntity();
-                }
+            try
+            {
+                await _mediator.Send(new CreateOrUpdateGradeByLectorCommand
+                { GradeId = gradeId, Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
+
+                await NotifyStudentAboutNewMark(stId, mark, colId);
+
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return UnprocessableEntity();
+            }
+        }
+
+        private async Task NotifyStudentAboutNewMark(int studentId, int mark, int colId)
+        {
+            var student = await _mediator.Send(new GetStudentQuery { StudentId = studentId });
+            var subject = await _mediator.Send(new GetSubjectNameByColumnJournalQuery { JournalColumnId = colId });
+
+            if (student.Email != null)
+            {
+                await _notificationHub.NotifySudent(student.Email, subject.Name, mark);
             }
         }
     }

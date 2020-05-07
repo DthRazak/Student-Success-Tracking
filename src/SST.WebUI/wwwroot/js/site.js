@@ -1,4 +1,4 @@
-﻿$.urlParam = function (name) {
+$.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results == null) {
         return null;
@@ -21,6 +21,10 @@ var getGroupsByFaculty = function (faculty) {
         }
     });
 };
+
+var tagToDelete = "";
+var colIdToDelete = "";
+
 
 var getStudentsByGroup = function (group) {
     $.ajax({
@@ -323,7 +327,7 @@ $("#lector-add-column").click(function () {
     //TODO: update without refresh
     $("tr").find("#total-td").before('<td id="new-cell">—</td>');
     $("tr").find("#note-th").before('<th id="new-note-cell"></th>');
-    $("tr").find("#total-th").before('<th><input type="date" id="new-jornal-col" onchange="dateChange();"></th>');
+    $("tr").find("#total-th").before('<th><input type="date" id="new-jornal-col" onchange="newDateChange();"></th>');
     $('#lector-add-column').prop('disabled', true);
 });
 
@@ -362,7 +366,7 @@ $("button[id=lector-show-grades]").click(function () {
     });
 });
 
-var dateChange = function () {
+var newDateChange = function () {
     let col = $("#new-jornal-col");
     let dt = col.val();
     let date = `${dt.slice(8, 10)}.${dt.slice(5, 7)}.${dt.slice(0, 4)}`;
@@ -379,8 +383,9 @@ var dateChange = function () {
             $(col).parent().html(date);
             $('#lector-add-column').prop('disabled', false);
             $('.changeable').blur(function () {
-                updateColumn(this);
+                updateColumn($(this));
             });
+            toastr.success('Column added, please refresh table to make it editable', 'Success', { timeOut: 1500 });
             //TODO: update without refresh
         },
         error: function () {
@@ -388,6 +393,68 @@ var dateChange = function () {
         }
     });
 };
+
+var dateUpdate = function (tagId) {
+    let col = $(`input[id=${tagId}]`);
+    let dt = col.val();
+    let colId = parseInt(col[0].id.slice(9));
+    let date = `${dt.slice(8, 10)}.${dt.slice(5, 7)}.${dt.slice(0, 4)}`;
+    $.ajax({
+        type: "POST",
+        url: "/Lector/UpdateJournalColumn",
+        data: {
+            'colId': colId,
+            'date': date
+        },
+        success: function () {
+            $(col).parent().attr("ondblclick", `onDateClick('${tagId}');`)
+            $(col).parent().html(date);
+            toastr.success('Date changed.', 'Success', { timeOut: 1500 });
+        },
+        error: function () {
+            toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+        }
+    });
+};
+
+var onDateClick = function (id) {
+    let tag = $(`#${id}`);
+    tag.removeAttr("ondblclick");
+    tag.html(`<input type="date" id="${tag[0].id}" onchange="dateUpdate('${tag[0].id}');">`);
+};
+
+var onRemoveClick = function (id) {
+    let tag = $(`#${id}`);
+    tagToDelete = tag;
+    colIdToDelete = parseInt(tag[0].id.slice(9));
+    $("#lector-remove-column").prop("disabled", false);
+};
+
+$(document).click(function (e) {
+    if (e.target !== tagToDelete[0]) {
+        if (e.target === $("#lector-remove-column")[0]) {
+            $.ajax({
+                type: "POST",
+                url: "/Lector/DeleteJournalColumn",
+                data: {
+                    'colId': colIdToDelete
+                },
+                success: function () {
+                    $(`th[id=note-col-${colIdToDelete}]`).remove();
+                    $(`th[id=date-col-${colIdToDelete}]`).remove();
+                    $(`div[id=colid-${colIdToDelete}]`).each(function () {
+                        $(this).parent().remove();
+                    });
+                    toastr.success('Column deleted.', 'Success', { timeOut: 1500 });
+                },
+                error: function () {
+                    toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+                }
+            });
+        }
+        $("#lector-remove-column").prop("disabled", true);
+    }
+});
 
 var updateColumn = function (node) {
     if (node.id.startsWith("note-col-")) {
@@ -407,28 +474,11 @@ var updateColumn = function (node) {
                 toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
             }
         });
-    } else if (node.id.startsWith("date-col-")) {
-        let colId = parseInt(node.id.slice(9));
-        let date = node.textContent;
-        $.ajax({
-            type: "POST",
-            url: "/Lector/UpdateJournalColumn",
-            data: {
-                'colId': colId,
-                'date': date
-            },
-            success: function () {
-                toastr.success('Field changed.', 'Success', { timeOut: 1500 });
-            },
-            error: function () {
-                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
-            }
-        });
     } else if (node.id.startsWith("row-col-")) {
         let gradeId = parseInt(node.id.slice(8));
         let mark = parseInt(node.textContent);
-        let colId = parseInt(node.lastElementChild.id.slice(6));
-        let stId = parseInt(node.firstElementChild.id.slice(5));
+        let colId = parseInt($(node).find("div[id^=colid-]")[0].id.slice(6));
+        let stId = parseInt($(node).find("div[id^=stid-]")[0].id.slice(5));
         $.ajax({
             type: "POST",
             url: "/Lector/UpdateGroupColumn",
