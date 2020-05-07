@@ -120,18 +120,11 @@ namespace SST.WebUI
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Home}/{id?}");
                 endpoints.MapHub<NotificationHub>(
                     "/notify");
                     //options =>
