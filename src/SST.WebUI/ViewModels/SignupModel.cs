@@ -1,14 +1,11 @@
-﻿using SST.Application.Groups.Queries.GetGroups;
-using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
+﻿using SST.Application.Groups.Queries.GetFaculties;
 using SST.WebUI.Forms;
 
 namespace SST.WebUI.ViewModels
 {
     public class SignupModel
     {
-        public GroupsListVm GroupsList { get; set; }
-
-        public StudentsListVm StudentsList { get; set; }
+        public FacultyListVm FacultyList { get; set; }
 
         public StudentSignupForm StudentSignupForm { get; set; }
 

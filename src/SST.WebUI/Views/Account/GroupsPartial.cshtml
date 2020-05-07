@@ -1,0 +1,6 @@
+﻿@model SST.Application.Groups.Queries.GetGroupsByFaculty.GroupsListVm;
+
+@foreach (var group in Model.Groups)
+{
+    <option value="@group.Id">@group.Name</option>
+}

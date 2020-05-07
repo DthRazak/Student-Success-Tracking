@@ -8,21 +8,27 @@
     }
 }
 
+var getGroupsByFaculty = function (faculty) {
+    $.ajax({
+        type: "GET",
+        url: "/Account/GetGroupsByFaculty",
+        data: 'faculty=' + faculty,
+        success: function (data) {
+            $("select[id=GroupSelect]").html(data);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+};
+
 var getStudentsByGroup = function (group) {
     $.ajax({
         type: "GET",
         url: "/Account/GetStudentsByGroup",
         data: 'group=' + group,
         success: function (data) {
-            var selTag = document.getElementById("fullNameSelect");
-            selTag.textContent = '';
-            var d = $.parseJSON(data);
-            for (let i = 0; i < d.Students.length; ++i) {
-                var op = document.createElement('option');
-                op.value = d.Students[i]["Id"];
-                op.textContent = d.Students[i]["FullName"];
-                selTag.appendChild(op)
-            }
+            $("select[id=fullNameSelect]").html(data);
         },
         error: function (data) {
             console.log(data);
@@ -35,21 +41,19 @@ var getLectors = function () {
         type: "GET",
         url: "/Account/GetLectors",
         success: function (data) {
-            var selTag = document.getElementById("fullNameSelect");
-            selTag.textContent = '';
-            var d = $.parseJSON(data);
-            for (let i = 0; i < d.Lectors.length; ++i) {
-                var op = document.createElement('option');
-                op.value = d.Lectors[i]["Id"];
-                op.textContent = d.Lectors[i]["FullName"];
-                selTag.appendChild(op)
-            }
+            $("select[id=fullNameSelect]").html(data);
         },
         error: function (data) {
             console.log(data);
         }
     });
 };
+
+$("#FacultySelectSignUp").change(function () {
+    let faculty = document.getElementById("FacultySelectSignUp").value;
+    getGroupsByFaculty(faculty);
+    $("select[id=fullNameSelect]").html("");
+});
 
 $("#GroupSelect").change(function () {
     let group = document.getElementById("GroupSelect").value;
@@ -60,11 +64,16 @@ $('.form-check-input').change(function () {
     var selected_value = $("input[name='inlineRadioOptions']:checked").val();
     if (selected_value == "option1") {
         $("#groupDiv").show();
+        $("#facultyDiv").show();
+        $("select[id=GroupSelect]").html("");
+        $("#fullNameSelect").html("");
         $("#nameSelectLabel").text("Select Student");
         $("#fullNameSelect").attr("name", "StudentId");
         $("#signupForm").attr("action", "/Account/SignupAsStudent");
+        $("#FacultySelectSignUp").val("---");
     } else {
         $("#groupDiv").hide();
+        $("#facultyDiv").hide();
         $("#nameSelectLabel").text("Select Lector");
         $("#fullNameSelect").attr("name", "LectorId");
         $("#signupForm").attr("action", "/Account/SignupAsLector");

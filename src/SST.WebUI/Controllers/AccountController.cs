@@ -15,6 +15,9 @@ using System.Text.Json;
 using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
 using SST.Application.Lectors.Queries.GetNotLinkedLectors;
 using SST.Application.Common.Interfaces;
+using SST.Application.Groups.Queries.GetFaculties;
+using SST.Application.Groups.Queries.GetGroupsByFaculty;
+using System.Collections.Generic;
 
 namespace SST.WebUI.Controllers
 {
@@ -34,19 +37,13 @@ namespace SST.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Signup()
         {
-            var groupList = await _mediator.Send(new GetGroupsQuery());
+            var facultyList = await _mediator.Send(new GetFacultiesQuery());
             var model = new SignupModel
             {
-                GroupsList = groupList,
+                FacultyList = facultyList,
                 StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = new LectorSignupForm()
             };
-            var firstGroup = groupList.Groups.FirstOrDefault();
-            if (firstGroup != null)
-            {
-                model.StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = firstGroup.Id });
-            }
 
             return View(model);
         }
@@ -113,19 +110,13 @@ namespace SST.WebUI.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var groupList = await _mediator.Send(new GetGroupsQuery());
+            var facultyList = await _mediator.Send(new GetFacultiesQuery());
             var model = new SignupModel
             {
-                GroupsList = groupList,
+                FacultyList = facultyList,
                 StudentSignupForm = new StudentSignupForm(),
-                LectorSignupForm = form
+                LectorSignupForm = new LectorSignupForm()
             };
-            var firstGroup = groupList.Groups.FirstOrDefault();
-            if (firstGroup != null)
-            {
-                model.StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = firstGroup.Id });
-            }
 
             return View("Signup", model);
         }
@@ -148,33 +139,81 @@ namespace SST.WebUI.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var groupList = await _mediator.Send(new GetGroupsQuery());
+            var facultyList = await _mediator.Send(new GetFacultiesQuery());
             var model = new SignupModel
             {
-                GroupsList = groupList,
-                StudentSignupForm = form,
+                FacultyList = facultyList,
+                StudentSignupForm = new StudentSignupForm(),
                 LectorSignupForm = new LectorSignupForm()
             };
-            var firstGroup = groupList.Groups.FirstOrDefault();
-            if (firstGroup != null)
-            {
-                model.StudentsList = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery
-                { Group = firstGroup.Id });
-            }
 
             return View("Signup", model);
         }
 
         [HttpGet]
-        public async Task<string> GetStudentsByGroup(int group)
+        public async Task<IActionResult> GetStudentsByGroup(int group)
         {
-            return JsonSerializer.Serialize(await _mediator.Send(new GetNotLinkedStudentsByGroupQuery { Group = group}));
+            try
+            {
+                var model = await _mediator.Send(new GetNotLinkedStudentsByGroupQuery { Group = group });
+
+                return PartialView("StudentsPartial", model);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                var model = new StudentsListVm
+                {
+                    Students = new List<StudentDto>()
+                };
+
+                return PartialView("StudentsPartial", model);
+            }
         }
 
         [HttpGet]
-        public async Task<string> GetLectors()
+        public async Task<IActionResult> GetGroupsByFaculty(string faculty)
         {
-            return JsonSerializer.Serialize(await _mediator.Send(new GetNotLinkedLectorsQuery()));
+            try
+            {
+                var model = await _mediator.Send(new GetGroupsByFacultyQuery { Faculty = faculty });
+
+                return PartialView("GroupsPartial", model);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                var model = new Application.Groups.Queries.GetGroupsByFaculty.GroupsListVm()
+                {
+                    Groups = new List<Application.Groups.Queries.GetGroupsByFaculty.GroupsDto>()
+                };
+
+                return PartialView("GroupsPartial", model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLectors()
+        {
+            try
+            {
+                var model = await _mediator.Send(new GetNotLinkedLectorsQuery());
+
+                return PartialView("LectorsPartial", model);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                var model = new LectorListVm
+                {
+                    Lectors = new List<LectorDto>()
+                };
+
+                return PartialView("LectorsPartial", model);
+            }
         }
 
         public async Task<IActionResult> Logout()
