@@ -13,8 +13,7 @@ using SST.Application.Journal.Queries.GetJournalByGroupAndSubject;
 using SST.Application.Lectors.Commands.DeleteJournalColumnByLector;
 using SST.Application.Lectors.Commands.CreateJournalColumnByLector;
 using SST.Application.Lectors.Commands.UpdateJournalColumnByLector;
-using SST.Application.Lectors.Commands.UpdateGradeByLector;
-using SST.Application.Lectors.Commands.CreateGradeByLector;
+using SST.Application.Lectors.Commands.CreateOrUpdateGradeByLector;
 using SST.Application.Students.Queries.GetStudent;
 using SST.WebUI.Hubs;
 using SST.Application.Subjects.Queries.GetSubjectNameByColumnJournal;
@@ -143,8 +142,8 @@ namespace SST.WebUI.Controllers
 
             try
             {
-                await _mediator.Send(new UpdateGradeByLectorCommand
-                { GradeId = gradeId, Mark = mark, LectorId = id });
+                await _mediator.Send(new CreateOrUpdateGradeByLectorCommand
+                { GradeId = gradeId, Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
 
                 await NotifyStudentAboutNewMark(stId, mark, colId);
 
@@ -154,21 +153,7 @@ namespace SST.WebUI.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                try
-                {
-                    await _mediator.Send(new CreateGradeByLectorCommand
-                    { Mark = mark, LectorId = id, JournalColumnId = colId, StudentId = stId });
-
-                    await NotifyStudentAboutNewMark(stId, mark, colId);
-
-                    return Ok();
-                }
-                catch (Exception inEx)
-                {
-                    _logger.LogError(inEx.Message);
-
-                    return UnprocessableEntity();
-                }
+                return UnprocessableEntity();
             }
         }
 
