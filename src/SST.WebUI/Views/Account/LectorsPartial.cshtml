@@ -1,0 +1,6 @@
+﻿@model SST.Application.Lectors.Queries.GetNotLinkedLectors.LectorListVm;
+
+@foreach (var lector in Model.Lectors)
+{
+    <option value="@lector.Id">@lector.FullName</option>
+}

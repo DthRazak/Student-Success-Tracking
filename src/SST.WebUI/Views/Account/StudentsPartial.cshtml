@@ -1,0 +1,6 @@
+﻿@model SST.Application.Students.Queries.GetNotLinkedStudentsByGroup.StudentsListVm
+
+@foreach (var student in Model.Students)
+{
+    <option value="@student.Id">@student.FullName</option>
+}
