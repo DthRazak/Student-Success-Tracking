@@ -546,6 +546,13 @@ body {
 
 /*Info*/
 
+
+@media screen and (max-width: 991px) {
+    .mrg-t-resize {
+        margin-top: 40px;
+    }
+}
+
 .bg-w {
     background-color: white;
     text-align:center;

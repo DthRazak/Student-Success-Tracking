@@ -58,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
+			<div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 mrg-t-resize">
 				<div class="row mrg-0">
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<label class="lab-st"><b>Faculty</b></label>
@@ -73,5 +73,68 @@
 		<hr />
 		<br />
 	</div>
+
+	<br />
+	<br />
+	<br />
+
+	<hr />
+    <div class="col-lg-11 col-md-11 ml-auto mr-auto">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <button class="btn btn-info btn-show change-btn-w f-size" id="">CHANGE PASSWORD</button>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <button class="btn btn-info btn-show em-btn change-btn-w mrg-t-10 f-size" id="">CHANGE E-MAIL</button>
+            </div>
+        </div>
+    </div>
+	<hr />
+	<br />
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<form asp-action="ChangePassword" asp-controller="Student" id="student-change-password-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label class="label-style">Last Password</label>
+                        <input type="text" class="form-control" name="LastPassword" placeholder="Enter the last password...">
+                    </div>
+                </div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label class="label-style">New Password</label>
+						<input type="text" class="form-control" name="NewPassword" placeholder="Enter the new password...">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label class="label-style">Repeat New Password</label>
+						<input type="text" class="form-control" name="RepeatNewPassword" placeholder="Repeat the new password...">
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="change-password-btn" value="CHANGE" />
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<form asp-action="ChangeEmail" asp-controller="Student" id="student-change-email-form">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label class="label-style">New E-mail</label>
+						<input type="text" class="form-control" name="NewEmail" placeholder="Enter the new e-mail...">
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="change-email-btn" value="CHANGE" />
+			</form>
+		</div>
+	</div>
+
 </div>
 
