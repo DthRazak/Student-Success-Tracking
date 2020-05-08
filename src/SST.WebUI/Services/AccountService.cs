@@ -4,6 +4,7 @@ using SST.Application.Lectors.Commands.LinkLectorToUser;
 using SST.Application.Requests.Commands.CreateRequest;
 using SST.Application.Students.Commands.LinkStudentToUser;
 using SST.Application.Users.Commands.CreateUser;
+using SST.Application.Users.Commands.UpdateUser;
 using SST.Application.Users.Queries.GetUser;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,24 @@ namespace SST.WebUI.Services
             else
             {
                 throw new ArgumentException("Wrong email or password");
+            }
+        }
+
+        public async Task ChangePassword(string user, string oldPassword, string password)
+        {
+            var entity = await _mediator.Send(new GetUserQuery() { Email = user });
+
+            if (entity.PasswordHash == _passwordHasher.GetPasswordHash(oldPassword))
+            {
+                await _mediator.Send(new UpdateUserCommand()
+                {
+                    Email = user,
+                    PasswordHash = _passwordHasher.GetPasswordHash(password)
+                });
+            }
+            else
+            {
+                throw new ArgumentException($"Wrong old password!");
             }
         }
     }

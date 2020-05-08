@@ -221,5 +221,30 @@ namespace SST.WebUI.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
+
+        public async Task<IActionResult> ChangePassword(ChangePasswordForm form)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _accountService.ChangePassword(User.Identity.Name, form.OldPassword, form.Password);
+                }
+                catch (ArgumentException ex)
+                {
+                    return UnprocessableEntity(ex.Message);
+                }
+            }
+            else
+            {
+                var messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+
+                return UnprocessableEntity(messages);
+            }
+
+            return NoContent();
+        }
     }
 }
