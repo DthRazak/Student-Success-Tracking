@@ -497,3 +497,27 @@ var updateColumn = function (node) {
         });
     }
 }
+
+$("#change-password-btn").click(function () {
+    $("#change-password-form").toggle();
+});
+
+$("#change-password-form").submit(function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/Account/ChangePassword",
+        data: $("#change-password-form").serialize(),
+        success: function () {
+            toastr.success('Password changed successfully.', 'Success', { timeOut: 3000 });
+            $("#change-password-form").hide();
+        },
+        error: function (data) {
+            if (data.status === 422) {
+                toastr.error(data.responseText, 'Error', { timeOut: 3000 });
+            } else {
+                toastr.error('Some error occurred.', 'Error', { timeOut: 3000 });
+            }
+        }
+    });
+});
