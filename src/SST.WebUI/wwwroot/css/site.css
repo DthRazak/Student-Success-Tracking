@@ -1,15 +1,27 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿
+/*------------Main------------*/
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+html {
+    font-size: 14px;
 }
 
-/* Provide sufficient contrast against white background */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
@@ -24,20 +36,10 @@ a {
   border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
@@ -46,30 +48,7 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
-}
-
+/*------------Account------------*/
 
 /*Login*/
 
@@ -89,18 +68,12 @@ body {
     }
 
 .form-bg {
-    /*background-color: white;*/
-    /*box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 10px 0px;*/
     border: 0px;
 }
 
 .form-control {
     height: 30px;
 }
-
-/*.page-bg {
-    background: #d1d1d1;
-}*/
 
 .mrg-b-0 {
     margin-bottom: 0px;
@@ -113,16 +86,8 @@ body {
 @media (min-width: 768px) {
     .navbar-fixed-side {
         position: fixed;
-        /*overflow: auto;*/
     }
 }
-
-/*@media (min-width: 768px) and (max-width: 1100px) {
-    .w-70 {
-        width: 15%;
-    }
-}*/
-
 
 .pd-b-500 {
     padding-bottom: 500%;
@@ -134,31 +99,13 @@ body {
     }
 }
 
-/*@media (max-width: 768px) {
-    .navbar-fixed-side {
-        width: 100%;
-        position: fixed;
-        overflow: auto;
-    }
-}*/
-
 .mrg-t-15 {
     margin-top: 15px;
-}
-
-.footer-bg {
-    background-color: white;
 }
 
 .l-0 {
    left: 0px;
 }
-
-/*.cover {
-    /*background: no-repeat center center;
-    background-size: cover;
-    overflow: hidden;
-}*/
 
 .heading-style{
     text-align: center;
@@ -296,9 +243,9 @@ body {
     }
 }
 
+/*------------Error------------*/
 
 /*AccessDenied*/
-
 
 #access-denied .access-denied {
     position: absolute;
@@ -391,6 +338,8 @@ body {
     padding-left: 4rem;
     transition: 0.4s;
 }
+
+/*------------Admin------------*/
 
 /*Admin info*/
 
@@ -506,33 +455,13 @@ body {
 .btn.btn-show {
     font-size: 16px;
     min-width: 41px;
-    /* width: 41px; */
     padding: 0;
     margin: 0;
     overflow: hidden;
     position: relative;
 }
 
-/*Sidebar*/
-
-.wrapper {
-    display: flex;
-    width: 100%;
-}
-
-#sidebar {
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 999;
-    background: #7386D5;
-    color: #fff;
-    transition: all 0.3s;
-}
-
-/*----------Student pages-----------*/
+/*------------Student------------*/
 
 /*Subjects*/
 
@@ -545,7 +474,6 @@ body {
 }
 
 /*Info*/
-
 
 @media screen and (max-width: 991px) {
     .mrg-t-resize {
@@ -639,7 +567,7 @@ body {
     margin-top: 5px;
 }
 
-/*---------Lector---------*/
+/*------------Lector------------*/
 
 /*Gradebook*/
 
