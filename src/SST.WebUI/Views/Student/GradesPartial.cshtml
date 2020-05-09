@@ -3,11 +3,21 @@
     <table class="table" id="st-grade-table">
         <thead>
             <tr class="tr-bg">
+                <th class="text-center">Notes</th>
+                <th></th>
+                @foreach (var data in Model.Header)
+                {
+                    <th>@data.Note</th>
+                }
+                <th></th>
+            </tr>
+
+            <tr class="tr-bg">
                 <th class="text-center">#</th>
                 <th>Full name</th>
                 @foreach (var data in Model.Header)
                 {
-                    <th data-toggle="tooltip" data-placement="top" title="@data.Note">@data.Date.ToShortDateString()</th>
+                    <th>@data.Date.ToShortDateString()</th>
                 }
                 <th>Total</th>
             </tr>
