@@ -7,14 +7,14 @@ namespace SST.Application.Journal.Queries
     {
         public JournalRowDto(IList<DateTime> dateTimes)
         {
-            Row = new SortedList<DateTime, int>();
+            Row = new SortedList<DateTime, Tuple<int, int>>();
             foreach (var date in dateTimes)
             {
-                Row.Add(date, 0);
+                Row.Add(date, new Tuple<int, int>(0, 0));
             }
         }
 
-        public SortedList<DateTime, int> Row { get; set; }
+        public SortedList<DateTime, Tuple<int, int>> Row { get; set; }
 
         public int Total { get; set; }
     }

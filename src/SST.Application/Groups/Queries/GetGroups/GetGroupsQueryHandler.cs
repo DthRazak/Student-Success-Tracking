@@ -23,6 +23,8 @@ namespace SST.Application.Groups.Queries.GetGroups
         public async Task<GroupsListVm> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
         {
             var groups = await _context.Groups
+               .OrderBy(g => g.Faculty)
+               .ThenBy(g => g.Name)
                .ProjectTo<GroupsDto>(_mapper.ConfigurationProvider)
                .ToListAsync(cancellationToken);
 

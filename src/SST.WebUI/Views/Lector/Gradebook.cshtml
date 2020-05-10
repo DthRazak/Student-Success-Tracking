@@ -1,0 +1,96 @@
+﻿@model SST.Application.Subjects.Queries.GetSubjectsByLector.SubjectsListVm;
+@{
+	Layout = "LectorLayout";
+	ViewData["Title"] = "Gradebook Page";
+}
+
+	<div class="container emp-profile mrg-t-0">
+		<hr />
+		<center><h1>Gradebook</h1></center>
+		<hr />
+		<br>
+		<br>
+
+		<div class="row mrg-side-4">
+			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 sel-div-sm">
+				<select class="custom-select" id="LectorSubjectSelect" name="Subject">
+					@foreach (var subject in Model.Subjects)
+					{
+						<option value="@subject.Id">@subject.Name</option>
+					}
+				</select>
+			</div>
+			<div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 sel-div-sm">
+				@for (int i = 0; i < Model.Subjects.Count; ++i)
+				{
+					@if (i == 0)
+					{
+						<select class="custom-select active-select" id="LectorGroupSelect-@Model.Subjects[0].Id" name="Group">
+							@foreach (var group in Model.Subjects[i].Groups)
+							{
+								<option value="@group.Value">@group.Key</option>
+							}
+						</select>
+					}
+					else
+					{
+						<select class="custom-select hidden-select" id="LectorGroupSelect-@Model.Subjects[i].Id" name="Group">
+							@foreach (var group in Model.Subjects[i].Groups)
+							{
+								<option value="@group.Value">@group.Key</option>
+							}
+						</select>
+					}
+				}
+			</div>
+			<div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12 sh-div-sm">
+				<button class="btn btn-info btn-show pd-l-r-7 gr-btn-show mrg-t-5" id="lector-show-grades">SHOW</button>
+			</div>
+		</div>
+
+		<br />
+		<br />
+		<br />
+		<div class="row">
+			<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+				<button class="btn btn-success btn-show pd-l-r-1 gr-btn-show mrg-t-5" id="lector-add-column" disabled>ADD COLUMN</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+				<button class="btn btn-danger btn-show pd-l-r-1 gr-btn-show mrg-t-5" id="lector-remove-column" disabled onclick="console.log('clk');">REMOVE COLUMN</button>
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+				<div class="table-responsive">
+					<table class="table" id="lector-grade-table-">
+						<thead>
+							<tr class="tr-bg">
+								<th class="text-center">Notes</th>
+								<th></th>
+								<th></th>
+								<th id="note-th"></th>
+							</tr>
+
+							<tr class="tr-bg">
+								<th class="text-center">#</th>
+								<th>Full name</th>
+								<th>Date</th>
+								<th id="total-th">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-center">1</td>
+								<td>---</td>
+								<td>---</td>
+								<td id="total-td">---</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>

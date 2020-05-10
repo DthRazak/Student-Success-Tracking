@@ -1,0 +1,114 @@
+﻿@model SST.Application.Lectors.Queries.GetLector.LectorVm;
+@{
+	Layout = "LectorLayout";
+	ViewData["Title"] = "Info Page";
+}
+
+    <div class="container emp-profile mrg-t-0">
+        <hr />
+        <center><h1>Info</h1></center>
+        <hr />
+        <br>
+        <br>
+
+        <div class="tr-bg">
+            <br />
+            <hr />
+            <div class="row mrg-0">
+
+                <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="profile-img">
+                        <img src="~/img/profile_img.png" alt="" />
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 mrg-t-40">
+                    <div class="row mrg-0">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                            <label class="lab-st"><b>Full name</b></label>
+                        </div>
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 bg-w">
+                            <p class="p-st">@Model.FullName</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 mrg-t-40">
+                    <div class="row mrg-0">
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                            <label class="lab-st"><b>E-mail</b></label>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-8 col-sm-8 col-12 bg-w">
+                            <p class="p-st">@Model.Email</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="hr-st" />
+            <br />
+            <div class="row mrg-0">
+                <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12">
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="row mrg-0">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                            <label class="lab-st"><b>Academic status</b></label>
+                        </div>
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 bg-w div-center">
+                            <p class="p-st">@Model.AcademicStatus</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
+                </div>
+            </div>
+            <br />
+            <hr />
+            <br />
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <hr />
+        <div class="col-lg-11 col-md-11 ml-auto mr-auto">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <button class="btn btn-info btn-show change-btn-w f-size" id="change-password-btn">CHANGE PASSWORD</button>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <br />
+
+        <div class="row">
+            <div class="col-lg-11 col-md-11 ml-auto mr-auto">
+                <form id="change-password-form" style="display: none">
+                    <div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="label-style">Last Password</label>
+                            <input type="password" class="form-control" name="OldPassword" placeholder="Enter the last password...">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="label-style">New Password</label>
+                            <input type="password" class="form-control" name="Password" placeholder="Enter the new password...">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label class="label-style">Repeat New Password</label>
+                            <input type="password" class="form-control" name="ConfirmPassword" placeholder="Repeat the new password...">
+                        </div>
+                    </div>
+                    <input class="btn btn-success" type="submit" id="change-password-btn" value="CHANGE" />
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+

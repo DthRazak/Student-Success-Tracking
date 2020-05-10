@@ -17,7 +17,7 @@
 
 			<div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="profile-img">
-					<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/user.png" alt="" />
+					<img src="~/img/profile_img.png" alt="" />
 				</div>
 			</div>
 			<div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 col-12 mrg-t-40">
@@ -26,7 +26,7 @@
 						<label class="lab-st"><b>E-mail</b></label>
 					</div>
 					<div class="col-xl-9 col-lg-9 col-md-8 col-sm-8 col-12 bg-w">
-						<p class="p-st">admin@email.com</p>
+						<p class="p-st">@User.Identity.Name</p>
 					</div>
 				</div>
 			</div>
@@ -35,5 +35,49 @@
 		<hr class="hr-st"/>
 		<br />
 	</div>
+
+	<br />
+	<br />
+	<br />
+
+	<hr />
+    <div class="col-lg-11 col-md-11 ml-auto mr-auto">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <button class="btn btn-info btn-show change-btn-w f-size" id="change-password-btn">CHANGE PASSWORD</button>
+            </div>
+        </div>
+    </div>
+	<hr />
+	<br />
+
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<form id="change-password-form" style="display: none">
+				<div asp-validation-summary="All" class="mrgn-18 form-error"></div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label class="label-style">Last Password</label>
+                        <input type="password" class="form-control" name="OldPassword" placeholder="Enter the last password...">
+                    </div>
+                </div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label class="label-style">New Password</label>
+						<input type="password" class="form-control" name="Password" placeholder="Enter the new password...">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label class="label-style">Repeat New Password</label>
+						<input type="password" class="form-control" name="ConfirmPassword" placeholder="Repeat the new password...">
+					</div>
+				</div>
+				<input class="btn btn-success" type="submit" id="change-password-btn" value="CHANGE" />
+			</form>
+		</div>
+	</div>
+
 </div>
 

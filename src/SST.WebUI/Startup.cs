@@ -18,6 +18,9 @@ using SST.Application;
 using SST.WebUI.Services;
 using SST.Application.Common.Hashing;
 using SST.WebUI.Services.RazorToStringExample;
+using SST.WebUI.Hubs;
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.SignalR;
 
 namespace SST.WebUI
 {
@@ -48,6 +51,7 @@ namespace SST.WebUI
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
                     options.LoginPath = new PathString("/Account/Login");
+                    options.AccessDeniedPath = new PathString("/Error/403");
                 });
 
             services.AddAuthorization(options => 
@@ -63,8 +67,12 @@ namespace SST.WebUI
                         context.User.IsInRole("Lector")));
             });
 
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddSignalR();
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            //services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddControllersWithViews();
             services.AddTransient<RazorViewToStringRenderer>();
+            services.AddSingleton<NotificationHub>();
 
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -95,10 +103,12 @@ namespace SST.WebUI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
                 app.UseHsts();
             }
 
@@ -106,13 +116,22 @@ namespace SST.WebUI
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Home}/{id?}");
+                endpoints.MapHub<NotificationHub>(
+                    "/notify");
+                    //options =>
+                    //{
+                    //    options.LongPolling.PollTimeout = TimeSpan.FromSeconds(10);
+                    //    options.Transports = HttpTransportType.LongPolling;
+                    //});
             });
         }
     }

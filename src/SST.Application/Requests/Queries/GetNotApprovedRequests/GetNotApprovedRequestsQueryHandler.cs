@@ -24,6 +24,7 @@ namespace SST.Application.Requests.Queries.GetNotApprovedRequests
         {
             var requests = await _context.Requests
                 .Where(r => r.IsApproved == null)
+                .OrderBy(r => r.CreationDate)
                 .ProjectTo<RequestDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

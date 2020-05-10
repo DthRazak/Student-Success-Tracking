@@ -1,0 +1,61 @@
+﻿@model SST.Application.Subjects.Queries.GetSubjectsByLector.SubjectsListVm;
+@{
+	Layout = "LectorLayout";
+	ViewData["Title"] = "Subjects Page";
+}
+
+
+<div class="container emp-profile mrg-t-0">
+	<hr />
+	<center><h1>Subjects</h1></center>
+	<hr />
+	<br>
+	<br>
+	<div class="row">
+		<div class="col-lg-11 col-md-11 ml-auto mr-auto">
+			<div class="table-responsive">
+				<table class="table" id="lector-subjects-table">
+					<thead>
+						<tr class="tr-bg">
+							<th class="text-center">#</th>
+							<th>Subject</th>
+							<th>Group</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (int i = 0; i < Model.Subjects.Count; i++)
+						{
+							@for (int j = 0; j < Model.Subjects[i].Groups.Count; j++)
+							{
+								<tr>
+									@if (j == 0)
+									{
+										<td class="text-center">@(i + 1)</td>
+										<td>@Model.Subjects[i].Name</td>
+									}
+									else
+									{
+										<td></td>
+										<td></td>
+									}
+									<td>@Model.Subjects[i].Groups.Keys[j]</td>
+								</tr>
+							}
+							@if (Model.Subjects[i].Groups.Count == 0)
+							{
+								<tr>
+									<td class="text-center">@(i + 1)</td>
+									<td>@Model.Subjects[i].Name</td>
+									<td></td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+</div>

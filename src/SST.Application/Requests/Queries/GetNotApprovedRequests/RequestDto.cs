@@ -23,9 +23,9 @@ namespace SST.Application.Requests.Queries.GetNotApprovedRequests
                 .ForMember(x => x.Type, y => y.MapFrom(z => z.User.Lector != null ? "Lector" : "Student"))
                 .ForMember(x => x.FullName, y => y.MapFrom(z =>
                     (z.User.Lector != null) ?
-                        z.User.Lector.FirstName + " " + z.User.Lector.LastName
+                        z.User.Lector.LastName + " " + z.User.Lector.FirstName
                     :
-                        z.User.Student.FirstName + " " + z.User.Student.LastName
+                        z.User.Student.LastName + " " + z.User.Student.FirstName
                     ));
         }
     }

@@ -1,0 +1,53 @@
+﻿@model SST.Application.Journal.Queries.JournalVm;
+
+<table class="table" id="lector-grade-table-@Model.JournalId">
+    <thead>
+        <tr class="tr-bg">
+            <th class="text-center">Notes</th>
+            <th></th>
+            @foreach (var data in Model.Header)
+            {
+                <th contenteditable="true" id="note-col-@data.ColumnId" class="changeable" onclick="onRemoveClick(`note-col-@data.ColumnId`)">@data.Note</th>
+            }
+            <th id="note-th"></th>
+        </tr>
+
+        <tr class="tr-bg">
+            <th class="text-center">#</th>
+            <th>Full name</th>
+            @foreach (var data in Model.Header)
+            {
+                <th id="date-col-@data.ColumnId" tabindex="0" class="changeable" onclick="onRemoveClick(`date-col-@data.ColumnId`)" ondblclick="onDateClick(`date-col-@data.ColumnId`);">@data.Date.ToShortDateString()</th>
+            }
+            <th id="total-th">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Journal.Count; i++)
+        { 
+            <tr>
+                <td class="text-center">@(i + 1)</td>
+                <td>@Model.Journal.Keys[i].FullName</td>
+                @for (int j = 0; j < Model.Journal.Values[i].Row.Values.Count; j++)
+                {
+                    @if (@Model.Journal.Values[i].Row.Values[j].Item2 != 0)
+                    {
+                        <td contenteditable="true" id="row-col-@Model.Journal.Values[i].Row.Values[j].Item1" class="changeable">
+                            @Model.Journal.Values[i].Row.Values[j].Item2
+                            <div style="display: none" id="stid-@Model.Journal.Keys[i].Id"></div>
+                            <div style="display: none" id="colid-@Model.Header[j].ColumnId"></div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td contenteditable="true" id="row-col-@Model.Journal.Values[i].Row.Values[j].Item1" class="changeable">
+                            <div style="display: none" id="stid-@Model.Journal.Keys[i].Id"></div>
+                            <div style="display: none" id="colid-@Model.Header[j].ColumnId"></div>
+                        </td>
+                    }
+                }
+                <td id="total-td">@Model.Journal.Values[i].Total</td>
+            </tr>
+        }
+        </tbody>
+</table>

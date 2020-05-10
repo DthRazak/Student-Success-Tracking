@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Error 403";
+}
+
+
+<div class="container py-5">
+    <div id="access-denied">
+        <div class="access-denied">
+            <div class="ac-d-403"></div>
+            <h1>403</h1>
+            <h2>Oops! Access Denied...</h2>
+            <p>
+                Sorry, you do not have permission to view this page.
+                <br />Please, Log In to see the page.
+            </p>
+            <a asp-action="Login" asp-controller="Account" class="btn btn-info access-den"> Log In</a>
+            <a asp-action="Home" asp-controller="Account" class="btn btn-info access-den"> Back Home</a>
+        </div>
+	</div>
+</div>

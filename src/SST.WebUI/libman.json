@@ -1,10 +1,28 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": [
-    {
-      "library": "toastr.js@2.1.4",
-      "destination": "wwwroot/lib/toastr.js/"
-    }
-  ]
+    "libraries": [
+        {
+            "library": "toastr.js@2.1.4",
+            "destination": "wwwroot/lib/toastr.js/"
+        },
+        {
+            "provider": "unpkg",
+            "library": "@microsoft/signalr@latest",
+            "destination": "wwwroot/lib/js/signalr/",
+            "files": [
+                "dist/browser/signalr.min.js"
+            ]
+        },
+        {
+            "provider": "unpkg",
+            "library": "bootstrap@4.4.1",
+            "destination": "wwwroot/lib/bootstrap/"
+        },
+        {
+            "provider": "unpkg",
+            "library": "jquery@3.5.1",
+            "destination": "wwwroot/lib/jquery/"
+        }
+    ]
 }
