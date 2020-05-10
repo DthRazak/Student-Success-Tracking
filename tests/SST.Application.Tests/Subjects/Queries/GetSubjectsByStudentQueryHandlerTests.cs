@@ -31,7 +31,7 @@ namespace SST.Application.Tests.Subjects.Queries
         public async Task GetSubjectsByStudentTest()
         {
             var sut = new GetSubjectsByStudentQueryHandler(_context, _mapper);
-            var result = await sut.Handle(new GetSubjectsByStudentQuery { }, CancellationToken.None);
+            var result = await sut.Handle(new GetSubjectsByStudentQuery { StudentId = 1 }, CancellationToken.None);
 
             result.ShouldBeOfType<SubjectsListVm>();
         }

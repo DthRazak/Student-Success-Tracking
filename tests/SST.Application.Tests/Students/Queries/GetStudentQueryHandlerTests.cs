@@ -31,7 +31,7 @@ namespace SST.Application.Tests.Students.Queries
         {
             var sut = new GetStudentQueryHandler(_context, _mapper);
 
-            var result = await sut.Handle(new GetStudentQuery { }, CancellationToken.None);
+            var result = await sut.Handle(new GetStudentQuery { StudentId = 1 }, CancellationToken.None);
 
             result.ShouldBeOfType<StudentVm>();
         }

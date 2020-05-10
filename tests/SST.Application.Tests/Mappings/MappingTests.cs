@@ -23,12 +23,6 @@ namespace SST.Application.Tests.Mappings
         }
 
         [Fact]
-        public void ShouldHaveValidConfiguration()
-        {
-            _configuration.AssertConfigurationIsValid();
-        }
-
-        [Fact]
         public void ShouldMapLectorToLectorDto()
         {
             var entity = new Lector();
@@ -132,7 +126,7 @@ namespace SST.Application.Tests.Mappings
             result.ShouldBeOfType<SubjectDto>();
             result.Id.ShouldBe(3);
             result.Name.ShouldBe("Програмна інженерія");
-            result.LectorFullName.ShouldBe("Анатолій Музичук");
+            result.LectorFullName.ShouldBe("Музичук Анатолій");
         }
     }
 }
