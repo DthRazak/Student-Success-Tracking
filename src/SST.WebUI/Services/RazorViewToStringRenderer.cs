@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -7,11 +12,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Builder;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SST.WebUI.Services.RazorToStringExample
 {
@@ -19,7 +19,7 @@ namespace SST.WebUI.Services.RazorToStringExample
     /// Render a ASP.NET Core Razor view to a string.
     /// Can run from a console app, doesn't need an HttpContext.
     /// Adapted and fixed version from:
-    /// https://github.com/aspnet/Entropy/blob/93ee2cf54eb700c4bf8ad3251f627c8f1a07fb17/samples/Mvc.RenderViewToString/RazorViewToStringRenderer.cs
+    /// https://github.com/aspnet/Entropy/blob/93ee2cf54eb700c4bf8ad3251f627c8f1a07fb17/samples/Mvc.RenderViewToString/RazorViewToStringRenderer.cs.
     /// </summary>
     public class RazorViewToStringRenderer
     {
@@ -38,12 +38,12 @@ namespace SST.WebUI.Services.RazorToStringExample
         }
 
         /// <summary>
-        /// Render a view and model, and return the output as a string
+        /// Render a view and model, and return the output as a string.
         /// </summary>
-        /// <typeparam name="TModel">The type of the model</typeparam>
-        /// <param name="viewName">The view to render, with any directories and without the extension. e.g. Home/Index</param>
-        /// <param name="model">The model object</param>
-        /// <returns>The string output of the view; typically html</returns>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <param name="viewName">The view to render, with any directories and without the extension. e.g. Home/Index.</param>
+        /// <param name="model">The model object.</param>
+        /// <returns>The string output of the view; typically html.</returns>
         public async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
         {
             var actionContext = GetActionContext();
@@ -121,11 +121,12 @@ namespace SST.WebUI.Services.RazorToStringExample
         }
 
         /// <summary>
-        /// Not actually used, but needed to get past the validation checks in routes.MapRoute
+        /// Not actually used, but needed to get past the validation checks in routes.MapRoute.
         /// </summary>
         private class DefaultHandler : IRouter
         {
             public VirtualPathData GetVirtualPath(VirtualPathContext context) => null;
+
             public Task RouteAsync(RouteContext context) => Task.CompletedTask;
         }
     }

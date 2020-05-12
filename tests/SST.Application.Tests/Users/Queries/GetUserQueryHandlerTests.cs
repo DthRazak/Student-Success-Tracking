@@ -1,11 +1,11 @@
-﻿using SST.Persistence;
-using Shouldly;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 using AutoMapper;
+using Shouldly;
 using SST.Application.Tests.Common;
 using SST.Application.Users.Queries.GetUser;
+using SST.Persistence;
+using Xunit;
 
 namespace SST.Application.Tests.Users.Queries
 {

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SST.Persistence;
-using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 using AutoMapper;
-using SST.Application.Tests.Common;
+using Shouldly;
 using SST.Application.Lectors.Queries.GetNotLinkedLectors;
+using SST.Application.Tests.Common;
+using SST.Persistence;
+using Xunit;
 
 namespace SST.Application.Tests.Lectors.Queries
 {
@@ -22,7 +22,6 @@ namespace SST.Application.Tests.Lectors.Queries
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
-
         }
 
         [Fact]
@@ -34,8 +33,6 @@ namespace SST.Application.Tests.Lectors.Queries
             var result = await sut.Handle(new GetNotLinkedLectorsQuery { }, CancellationToken.None);
 
             result.ShouldBeOfType<LectorListVm>();
-
         }
-
     }
 }

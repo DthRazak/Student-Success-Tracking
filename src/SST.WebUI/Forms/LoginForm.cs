@@ -1,5 +1,4 @@
-﻿
-namespace SST.WebUI.Forms
+﻿namespace SST.WebUI.Forms
 {
     public class LoginForm
     {

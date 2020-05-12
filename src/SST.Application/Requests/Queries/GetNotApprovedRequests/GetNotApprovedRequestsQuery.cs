@@ -7,4 +7,3 @@ namespace SST.Application.Requests.Queries.GetNotApprovedRequests
     {
     }
 }
-

@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using Shouldly;
 using SST.Application.Common.Interfaces;
 using SST.Application.Lectors.Queries.GetLectors;
 using SST.Application.Tests.Common;
 using SST.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SST.Application.Tests.Lectors.Queries

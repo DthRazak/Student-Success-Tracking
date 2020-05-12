@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SST.Persistence;
-using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 using AutoMapper;
-using SST.Application.Tests.Common;
+using Shouldly;
 using SST.Application.Groups.Queries.GetGroups;
+using SST.Application.Tests.Common;
+using SST.Persistence;
+using Xunit;
 
 namespace SST.Application.Tests.Students.Queries
 {
@@ -20,22 +20,17 @@ namespace SST.Application.Tests.Students.Queries
         public GetGroupsQueryHandlerTests(QueryTestFixture fixture)
         {
             _context = fixture.Context;
-            
         }
 
         [Fact]
 
         public async Task GetGroupsTest()
         {
-            //var sut = new GetGroupsQueryHandler(_context);
+            // var sut = new GetGroupsQueryHandler(_context);
 
-            //var result = await sut.Handle(new GetGroupsQuery {  }, CancellationToken.None);
+            // var result = await sut.Handle(new GetGroupsQuery {  }, CancellationToken.None);
 
-            //result.ShouldBeOfType<GroupsListVm>();
-
-
-
+            // result.ShouldBeOfType<GroupsListVm>();
         }
-
     }
 }

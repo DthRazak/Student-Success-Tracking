@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Students.Commands.CreateStudent
 {

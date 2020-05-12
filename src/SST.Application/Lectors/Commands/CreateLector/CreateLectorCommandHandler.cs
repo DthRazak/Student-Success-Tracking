@@ -1,13 +1,13 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Lectors.Commands.CreateLector
 {
-    class CreateLectorCommandHandler : IRequestHandler<CreateLectorCommand, int>
+    public class CreateLectorCommandHandler : IRequestHandler<CreateLectorCommand, int>
     {
         private readonly ISSTDbContext _context;
 

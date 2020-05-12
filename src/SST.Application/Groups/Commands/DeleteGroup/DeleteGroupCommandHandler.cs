@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Groups.Commands.DeleteGroup
 {
@@ -22,7 +22,9 @@ namespace SST.Application.Groups.Commands.DeleteGroup
                 .FindAsync(request.Id);
 
             if (entity == null)
+            {
                 throw new ArgumentException($"Group with Id({request.Id}) does not exists!");
+            }
 
             _context.Groups.Remove(entity);
 

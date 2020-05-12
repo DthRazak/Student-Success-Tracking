@@ -21,7 +21,7 @@ namespace SST.Application.Users.Queries.GetUser
             profile.CreateMap<User, UserVm>()
                 .ForMember(x => x.IsApproved, y => y.MapFrom(z => z.Request.IsApproved))
                 .ForMember(x => x.Role, y => y.MapFrom(z => z.IsAdmin ? "Admin" : z.Lector != null ? "Lector" : "Student"))
-                .ForMember(x => x.SSTID, y => y.MapFrom(z => 
+                .ForMember(x => x.SSTID, y => y.MapFrom(z =>
                     (!z.IsAdmin && z.Lector != null) ?
                         z.Lector.Id
                     : (!z.IsAdmin && z.Student != null) ?

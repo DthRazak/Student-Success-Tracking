@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Requests.Commands.CreateRequest
 {
@@ -20,7 +20,6 @@ namespace SST.Application.Requests.Commands.CreateRequest
         {
             var entity = new Request
             {
-               
                 CreationDate = DateTime.Now,
                 UserRef = request.UserRef
             };

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -8,16 +10,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SST.Application.Groups.Queries.GetGroups;
-using SST.WebUI.Forms;
-using SST.WebUI.ViewModels;
-using System.Text.Json;
-using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
-using SST.Application.Lectors.Queries.GetNotLinkedLectors;
 using SST.Application.Common.Interfaces;
 using SST.Application.Groups.Queries.GetFaculties;
+using SST.Application.Groups.Queries.GetGroups;
 using SST.Application.Groups.Queries.GetGroupsByFaculty;
-using System.Collections.Generic;
+using SST.Application.Lectors.Queries.GetNotLinkedLectors;
+using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
+using SST.WebUI.Forms;
+using SST.WebUI.ViewModels;
 
 namespace SST.WebUI.Controllers
 {
@@ -68,7 +68,8 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
- //       [ValidateAntiForgeryToken]
+
+        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginForm form)
         {
             if (ModelState.IsValid)
@@ -81,7 +82,7 @@ namespace SST.WebUI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", ex.Message);
+                    ModelState.AddModelError(string.Empty, ex.Message);
                     return View(form);
                 }
 
@@ -89,11 +90,13 @@ namespace SST.WebUI.Controllers
 
                 return RedirectToAction("Info", claimsPrinciple.Claims.Single(c => c.Type == ClaimTypes.Role).Value);
             }
+
             return View(form);
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+
+        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignupAsLector(LectorSignupForm form)
         {
             if (ModelState.IsValid)
@@ -104,7 +107,7 @@ namespace SST.WebUI.Controllers
                 }
                 catch (ArgumentException ex)
                 {
-                    ModelState.AddModelError("", ex.Message);
+                    ModelState.AddModelError(string.Empty, ex.Message);
                 }
 
                 return RedirectToAction("Login", "Account");
@@ -122,7 +125,8 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+
+        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignupAsStudent(StudentSignupForm form)
         {
             if (ModelState.IsValid)
@@ -133,7 +137,7 @@ namespace SST.WebUI.Controllers
                 }
                 catch (ArgumentException ex)
                 {
-                    ModelState.AddModelError("", ex.Message);
+                    ModelState.AddModelError(string.Empty, ex.Message);
                 }
 
                 return RedirectToAction("Login", "Account");

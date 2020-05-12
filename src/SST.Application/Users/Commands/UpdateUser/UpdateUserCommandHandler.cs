@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Users.Commands.UpdateUser
 {
@@ -22,12 +22,19 @@ namespace SST.Application.Users.Commands.UpdateUser
                 .FindAsync(request.Email);
 
             if (entity == null)
+            {
                 throw new ArgumentException($"User with Email({request.Email}) does not exists!");
+            }
 
             if (request.PasswordHash != null)
+            {
                 entity.PasswordHash = request.PasswordHash;
+            }
+
             if (request.IsAdmin != null)
+            {
                 entity.IsAdmin = (bool)request.IsAdmin;
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
 

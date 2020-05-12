@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using Shouldly;
 using SST.Application.Common.Interfaces;
 using SST.Application.Students.Queries.GetNotLinkedStudentsByGroup;
 using SST.Application.Tests.Common;
 using SST.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SST.Application.Tests.Students.Queries

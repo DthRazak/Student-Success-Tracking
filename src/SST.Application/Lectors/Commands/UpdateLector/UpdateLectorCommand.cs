@@ -2,7 +2,7 @@
 
 namespace SST.Application.Lectors.Commands.UpdateLector
 {
-    class UpdateLectorCommand : IRequest
+    public class UpdateLectorCommand : IRequest
     {
         public int Id { get; set; }
 

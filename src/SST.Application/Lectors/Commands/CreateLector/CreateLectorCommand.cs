@@ -1,5 +1,5 @@
-﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using MediatR;
 
 namespace SST.Application.Lectors.Commands.CreateLector
 {

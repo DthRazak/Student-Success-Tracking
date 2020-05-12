@@ -1,6 +1,6 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using MediatR;
-using System.Reflection;
 
 namespace SST.Application
 {
@@ -12,7 +12,7 @@ namespace SST.Application
                 typeof(IMediator).GetTypeInfo().Assembly)
                 .AsImplementedInterfaces();
 
-            //builder.RegisterAssemblyTypes(typeof().GetTypeInfo().Assembly)
+            // builder.RegisterAssemblyTypes(typeof().GetTypeInfo().Assembly)
         }
     }
 }

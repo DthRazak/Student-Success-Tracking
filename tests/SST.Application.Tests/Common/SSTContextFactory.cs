@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using SST.Persistence;
-using System;
 
 namespace SST.Application.Tests.Common
 {

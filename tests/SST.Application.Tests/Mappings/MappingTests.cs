@@ -3,8 +3,6 @@ using Shouldly;
 using SST.Application.Lectors.Queries.GetNotLinkedLectors;
 using SST.Application.Students.Queries.GetStudentsByGroup;
 using SST.Application.Subjects.Queries;
-using SST.Application.Groups.Queries;
-//using SST.Application.Grades.Queries.GetGradeInfoByGroupAndSubject;
 using SST.Application.Users.Queries.GetUser;
 using SST.Domain.Entities;
 using Xunit;
@@ -40,7 +38,6 @@ namespace SST.Application.Tests.Mappings
             {
                 FirstName = "Володимир",
                 LastName = "Мільчановський",
-                //Group = "ПМІ-32"
             };
 
             var result = _mapper.Map<StudentDto>(entity);
@@ -68,7 +65,7 @@ namespace SST.Application.Tests.Mappings
             result.ShouldBeOfType<UserVm>();
             result.Role.ShouldBe("Student");
         }
-        
+
         [Fact]
         public void ShouldMapSubjectToSubjectDto()
         {

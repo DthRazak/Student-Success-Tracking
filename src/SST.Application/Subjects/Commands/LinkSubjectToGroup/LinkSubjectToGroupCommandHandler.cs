@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SST.Application.Subjects.Commands.LinkSubjectToGroup
 {

@@ -6,4 +6,3 @@ namespace SST.Application.Groups.Queries.GetFaculties
     {
     }
 }
-

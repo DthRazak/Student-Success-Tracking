@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Subjects.Commands.DeleteSubject
 {
@@ -22,7 +22,9 @@ namespace SST.Application.Subjects.Commands.DeleteSubject
                 .FindAsync(request.Id, cancellationToken);
 
             if (entity == null)
+            {
                 throw new ArgumentException($"Subject with Id({request.Id}) does not exists!");
+            }
 
             _context.Subjects.Remove(entity);
 

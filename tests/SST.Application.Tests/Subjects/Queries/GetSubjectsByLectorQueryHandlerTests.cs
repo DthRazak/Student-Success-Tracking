@@ -1,16 +1,16 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Xunit;
-using SST.Application.Common.Interfaces;
-using SST.Application.Tests.Common;
-using System.Threading.Tasks;
-using SST.Application.Groups.Queries.GetFaculties;
 using System.Threading;
-using SST.Application.Subjects.Queries.GetSubjectsByLector;
+using System.Threading.Tasks;
+using AutoMapper;
 using Shouldly;
+using SST.Application.Common.Interfaces;
+using SST.Application.Groups.Queries.GetFaculties;
+using SST.Application.Subjects.Queries.GetSubjectsByLector;
+using SST.Application.Tests.Common;
 using SST.Persistence;
+using Xunit;
 
 namespace SST.Application.Tests.Subjects.Queries
 {
@@ -24,7 +24,6 @@ namespace SST.Application.Tests.Subjects.Queries
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
-
         }
 
         [Fact]

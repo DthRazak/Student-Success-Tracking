@@ -4,6 +4,6 @@ namespace SST.Application.Students.Queries.GetStudents
 {
     public class StudentsListVm
     {
-        public IList<StudentDto> Students{ get; set; }
+        public IList<StudentDto> Students { get; set; }
     }
 }
