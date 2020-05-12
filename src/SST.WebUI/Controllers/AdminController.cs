@@ -45,7 +45,7 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Info()
+        public IActionResult Info()
         {
             return View();
         }

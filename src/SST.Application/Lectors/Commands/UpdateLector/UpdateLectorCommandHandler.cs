@@ -7,7 +7,7 @@ using SST.Domain.Entities;
 
 namespace SST.Application.Lectors.Commands.UpdateLector
 {
-    internal class UpdateLectorCommandHandler : IRequestHandler<UpdateLectorCommand, Unit>
+    public class UpdateLectorCommandHandler : IRequestHandler<UpdateLectorCommand, Unit>
     {
         private readonly ISSTDbContext _context;
 

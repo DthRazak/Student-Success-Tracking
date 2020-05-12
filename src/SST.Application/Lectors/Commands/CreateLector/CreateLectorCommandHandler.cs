@@ -7,7 +7,7 @@ using SST.Domain.Entities;
 
 namespace SST.Application.Lectors.Commands.CreateLector
 {
-    internal class CreateLectorCommandHandler : IRequestHandler<CreateLectorCommand, int>
+    public class CreateLectorCommandHandler : IRequestHandler<CreateLectorCommand, int>
     {
         private readonly ISSTDbContext _context;
 

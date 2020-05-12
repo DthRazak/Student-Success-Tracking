@@ -44,7 +44,7 @@ namespace SST.WebUI
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
+                .AddCookie(options =>
                 {
                     options.LoginPath = new PathString("/Account/Login");
                     options.AccessDeniedPath = new PathString("/Error/403");
@@ -65,7 +65,6 @@ namespace SST.WebUI
 
             services.AddSignalR();
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
-            // services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddControllersWithViews();
             services.AddTransient<RazorViewToStringRenderer>();
             services.AddSingleton<NotificationHub>();
@@ -84,7 +83,6 @@ namespace SST.WebUI
             builder.RegisterType<SSTDbContext>().As<ISSTDbContext>().SingleInstance();
             builder.RegisterType<AccountService>().As<IAccountService>();
             builder.RegisterType<PasswordHasher>().As<IPasswordHasher>();
-            // builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
 
             builder.RegisterModule<Application.DependencyModule>();
 
@@ -94,9 +92,9 @@ namespace SST.WebUI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName == "Development")
             {
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
@@ -123,11 +121,12 @@ namespace SST.WebUI
                     pattern: "{controller=Account}/{action=Home}/{id?}");
                 endpoints.MapHub<NotificationHub>(
                     "/notify");
-                    //options =>
-                    //{
+
+                    // options =>
+                    // {
                     //    options.LongPolling.PollTimeout = TimeSpan.FromSeconds(10);
                     //    options.Transports = HttpTransportType.LongPolling;
-                    //});
+                    // });
             });
         }
     }

@@ -11,10 +11,12 @@ namespace SST.Application.Tests.Common
         [Fact]
         public void ShouldCreateSortedList()
         {
-            var list = new List<Tuple<string, string>>();
-            list.Add(new Tuple<string, string>("Third", "!"));
-            list.Add(new Tuple<string, string>("Second", "World"));
-            list.Add(new Tuple<string, string>("First", "Hello"));
+            var list = new List<Tuple<string, string>>
+            {
+                new Tuple<string, string>("Third", "!"),
+                new Tuple<string, string>("Second", "World"),
+                new Tuple<string, string>("First", "Hello")
+            };
 
             var sortedList = list.ToSortedList(x => x.Item1, x => x.Item2);
 
