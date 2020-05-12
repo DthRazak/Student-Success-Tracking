@@ -1,4 +1,8 @@
-﻿using MediatR;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,10 +27,6 @@ using SST.Application.Users.Commands.CreateUser;
 using SST.Application.Users.Commands.DeleteUser;
 using SST.WebUI.Services.RazorToStringExample;
 using SST.WebUI.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SST.WebUI.Controllers
 {
@@ -51,11 +51,11 @@ namespace SST.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Requests(bool? DisplayAll)
+        public async Task<IActionResult> Requests(bool? displayAll)
         {
             var model = new RequestModel();
 
-            if (DisplayAll.HasValue && DisplayAll.Value)
+            if (displayAll.HasValue && displayAll.Value)
             {
                 model.AllRequestsList = await _mediator.Send(new GetRequestsQuery());
             }

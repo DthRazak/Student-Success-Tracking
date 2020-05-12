@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Students.Commands.UpdateStudent
 {
@@ -27,13 +27,24 @@ namespace SST.Application.Students.Commands.UpdateStudent
             }
 
             if (request.FirstName != null)
+            {
                 entity.FirstName = request.FirstName;
+            }
+
             if (request.LastName != null)
+            {
                 entity.LastName = request.LastName;
+            }
+
             if (request.GroupRef != null)
+            {
                 entity.GroupRef = request.GroupRef.Value;
+            }
+
             if (request.UserRef != null)
+            {
                 entity.UserRef = request.UserRef;
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
 

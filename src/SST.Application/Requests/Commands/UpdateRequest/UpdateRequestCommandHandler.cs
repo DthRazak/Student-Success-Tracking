@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Requests.Commands.UpdateRequest
 {
@@ -22,14 +22,24 @@ namespace SST.Application.Requests.Commands.UpdateRequest
                 .FindAsync(request.Id);
 
             if (entity == null)
+            {
                 throw new ArgumentException($"Request with Id({request.Id}) does not exists!");
+            }
 
             if (request.IsApproved != null)
+            {
                 entity.IsApproved = (bool)request.IsApproved;
+            }
+
             if (request.CreationDate != null)
+            {
                 entity.CreationDate = (DateTime)request.CreationDate;
+            }
+
             if (request.UserRef != null)
+            {
                 entity.UserRef = request.UserRef;
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
 

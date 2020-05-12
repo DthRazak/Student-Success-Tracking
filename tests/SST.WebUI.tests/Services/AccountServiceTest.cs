@@ -1,9 +1,9 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
 using SST.Persistence;
 using SST.WebUI.Tests.Common;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 

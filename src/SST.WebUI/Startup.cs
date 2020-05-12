@@ -1,26 +1,22 @@
 using System;
 using System.IO;
 using Autofac;
-using MediatR;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SST.Application;
+using SST.Application.Common.Hashing;
 using SST.Application.Common.Interfaces;
 using SST.Persistence;
-using System.Reflection;
-using SST.Application;
-using SST.WebUI.Services;
-using SST.Application.Common.Hashing;
-using SST.WebUI.Services.RazorToStringExample;
 using SST.WebUI.Hubs;
-using Microsoft.AspNetCore.Http.Connections;
-using Microsoft.AspNetCore.SignalR;
+using SST.WebUI.Services;
+using SST.WebUI.Services.RazorToStringExample;
 
 namespace SST.WebUI
 {
@@ -54,7 +50,7 @@ namespace SST.WebUI
                     options.AccessDeniedPath = new PathString("/Error/403");
                 });
 
-            services.AddAuthorization(options => 
+            services.AddAuthorization(options =>
             {
                 options.AddPolicy("Admin", policy =>
                     policy.RequireAssertion(context =>
@@ -69,7 +65,7 @@ namespace SST.WebUI
 
             services.AddSignalR();
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
-            //services.AddMvc(option => option.EnableEndpointRouting = false);
+            // services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddControllersWithViews();
             services.AddTransient<RazorViewToStringRenderer>();
             services.AddSingleton<NotificationHub>();
@@ -88,7 +84,7 @@ namespace SST.WebUI
             builder.RegisterType<SSTDbContext>().As<ISSTDbContext>().SingleInstance();
             builder.RegisterType<AccountService>().As<IAccountService>();
             builder.RegisterType<PasswordHasher>().As<IPasswordHasher>();
-            //builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
+            // builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
 
             builder.RegisterModule<Application.DependencyModule>();
 

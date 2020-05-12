@@ -1,4 +1,8 @@
-﻿using MediatR;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using MediatR;
 using SST.Application.Common.Interfaces;
 using SST.Application.Lectors.Commands.LinkLectorToUser;
 using SST.Application.Requests.Commands.CreateRequest;
@@ -6,10 +10,6 @@ using SST.Application.Students.Commands.LinkStudentToUser;
 using SST.Application.Users.Commands.CreateUser;
 using SST.Application.Users.Commands.UpdateUser;
 using SST.Application.Users.Queries.GetUser;
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace SST.WebUI.Services
 {
@@ -30,7 +30,7 @@ namespace SST.WebUI.Services
 
             if (model == null)
             {
-                _mediator.Send(new CreateUserCommand 
+                _mediator.Send(new CreateUserCommand
                     { Email = email, PasswordHash = _passwordHasher.GetPasswordHash(password) }).Wait();
                 await _mediator.Send(new CreateRequestCommand { UserRef = email });
                 await _mediator.Send(new LinkStudentToUserCommand { Id = studentId, UserRef = email });
@@ -40,14 +40,14 @@ namespace SST.WebUI.Services
                 throw new ArgumentException("Account already exists");
             }
         }
-        
+
         public async Task CreateLectorAccount(string email, string password, int lectorId)
         {
             var model = await _mediator.Send(new GetUserQuery { Email = email });
 
             if (model == null)
             {
-                _mediator.Send(new CreateUserCommand 
+                _mediator.Send(new CreateUserCommand
                     { Email = email, PasswordHash = _passwordHasher.GetPasswordHash(password) }).Wait();
                 await _mediator.Send(new CreateRequestCommand { UserRef = email });
                 await _mediator.Send(new LinkLectorToUserCommand { Id = lectorId, UserRef = email });
@@ -77,8 +77,11 @@ namespace SST.WebUI.Services
                         claims.Add(new Claim("SST-ID", model.SSTID.ToString()));
                     }
 
-                    var claimsIdentity = new ClaimsIdentity(claims, "ApplicationCookie", 
-                        ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    var claimsIdentity = new ClaimsIdentity(
+                        claims,
+                        "ApplicationCookie",
+                        ClaimsIdentity.DefaultNameClaimType,
+                        ClaimsIdentity.DefaultRoleClaimType);
 
                     return new ClaimsPrincipal(claimsIdentity);
                 }

@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Lectors.Commands.DeleteLector
 {
@@ -22,7 +22,9 @@ namespace SST.Application.Lectors.Commands.DeleteLector
                 .FindAsync(request.Id);
 
             if (entity == null)
+            {
                 throw new ArgumentException($"Lector with Id({request.Id}) does not exists!");
+            }
 
             _context.Lectors.Remove(entity);
 

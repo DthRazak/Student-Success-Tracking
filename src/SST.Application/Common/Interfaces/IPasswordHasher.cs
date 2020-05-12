@@ -1,5 +1,4 @@
-﻿
-namespace SST.Application.Common.Interfaces
+﻿namespace SST.Application.Common.Interfaces
 {
     public interface IPasswordHasher
     {

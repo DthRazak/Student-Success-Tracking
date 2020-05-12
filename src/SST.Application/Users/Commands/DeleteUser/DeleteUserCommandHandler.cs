@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SST.Application.Common.Interfaces;
-using SST.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SST.Application.Common.Interfaces;
+using SST.Domain.Entities;
 
 namespace SST.Application.Users.Commands.DeleteUser
 {
@@ -22,7 +22,9 @@ namespace SST.Application.Users.Commands.DeleteUser
                 .FindAsync(request.Email);
 
             if (entity == null)
+            {
                 throw new ArgumentException($"User with Email({request.Email}) does not exists!");
+            }
 
             _context.Users.Remove(entity);
 

@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using System;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using SST.Application.Common.Interfaces;
-using System;
 
 namespace SST.Application.Common.Hashing
 {
-    public class PasswordHasher: IPasswordHasher
+    public class PasswordHasher : IPasswordHasher
     {
         private readonly string salt;
 
-        public readonly int iterationCount;
+        private readonly int iterationCount;
 
-        public readonly int bytesNumber;
+        private readonly int bytesNumber;
 
         public PasswordHasher()
         {
@@ -18,6 +18,10 @@ namespace SST.Application.Common.Hashing
             iterationCount = 10000;
             bytesNumber = 32;
         }
+
+        public int IterationCount => iterationCount;
+
+        public int BytesNumber => bytesNumber;
 
         public string GetPasswordHash(string password)
         {
@@ -27,8 +31,8 @@ namespace SST.Application.Common.Hashing
                 password: password,
                 salt: saltBytes,
                 prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: iterationCount,
-                numBytesRequested: bytesNumber));
+                iterationCount: IterationCount,
+                numBytesRequested: BytesNumber));
 
             return hashed;
         }

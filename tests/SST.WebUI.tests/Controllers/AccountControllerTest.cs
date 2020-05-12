@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SST.WebUI.Tests.Common;
 using Xunit;
 
-namespace SST.WebUI.tests.Controllers
+namespace SST.WebUI.Tests.Controllers
 {
     public class AccountControllerTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -27,7 +27,6 @@ namespace SST.WebUI.tests.Controllers
             response.EnsureSuccessStatusCode();
         }
 
-
         [Fact]
         public async Task GetStudentsByGroupTest()
         {
@@ -37,7 +36,6 @@ namespace SST.WebUI.tests.Controllers
 
             response.EnsureSuccessStatusCode();
         }
-
 
         [Fact]
         public async Task SignupAsLectorTest()
@@ -50,15 +48,13 @@ namespace SST.WebUI.tests.Controllers
                 new KeyValuePair<string, string>("Password", "Password"),
                 new KeyValuePair<string, string>("ConfirmPassword", "Password"),
                 new KeyValuePair<string, string>("LectorId", "1"),
-            });
+});
 
             var response = await client.PostAsync("/Account/SignupAsLector", content);
             response.EnsureSuccessStatusCode();
-
         }
 
         // Students/Info not found
-
         [Fact]
         public async Task LoginTest()
         {
@@ -68,7 +64,7 @@ namespace SST.WebUI.tests.Controllers
 {
                 new KeyValuePair<string, string>("Email", "admin@email.com"),
                 new KeyValuePair<string, string>("Password", "admin"),
-            });
+});
 
             var response = await client.PostAsync("/Account/Login", content);
             response.EnsureSuccessStatusCode();
@@ -85,12 +81,11 @@ namespace SST.WebUI.tests.Controllers
                 new KeyValuePair<string, string>("Password", "Password"),
                 new KeyValuePair<string, string>("ConfirmPassword", "Password"),
                 new KeyValuePair<string, string>("StudentId", "2"),
-            });
+});
 
             var response = await client.PostAsync("/Account/SignupAsStudent", content);
             response.EnsureSuccessStatusCode();
         }
-
 
         [Fact]
         public async Task SignupTest()
@@ -102,8 +97,6 @@ namespace SST.WebUI.tests.Controllers
             response.EnsureSuccessStatusCode();
         }
 
-
-
         [Fact]
         public async Task GetLoginTest()
         {
@@ -114,7 +107,6 @@ namespace SST.WebUI.tests.Controllers
             response.EnsureSuccessStatusCode();
         }
 
-
         [Fact]
         public async Task LogoutTest()
         {
@@ -124,6 +116,5 @@ namespace SST.WebUI.tests.Controllers
 
             response.EnsureSuccessStatusCode();
         }
-
     }
 }

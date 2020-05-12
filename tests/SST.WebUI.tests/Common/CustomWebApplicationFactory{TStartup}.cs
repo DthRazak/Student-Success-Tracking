@@ -1,20 +1,21 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using SST.Persistence;
-using System;
-using Microsoft.Extensions.Logging;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using SST.WebUI.tests.Common;
-using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using SST.Persistence;
+using SST.WebUI.Tests.Common;
 
 namespace SST.WebUI.Tests.Common
 {
-    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
+    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup>
+        where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -58,12 +59,16 @@ namespace SST.WebUI.Tests.Common
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, "An error occurred seeding the " +
-                            "database with test messages. Error: {Message}", ex.Message);
+                        logger.LogError(
+                            ex,
+                            "An error occurred seeding the "
+                            + "database with test messages. Error: {Message}",
+                            ex.Message);
                     }
                 }
             });
         }
+
         public HttpClient GetAnonymousClient()
         {
             return CreateClient();
@@ -85,7 +90,7 @@ namespace SST.WebUI.Tests.Common
             });
 
             client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Test"); ;
+                    new AuthenticationHeaderValue("Test");
 
             return client;
         }

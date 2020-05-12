@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SST.Application.Users.Commands.CreateUser
 {

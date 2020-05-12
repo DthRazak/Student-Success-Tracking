@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
 using SST.Domain.Entities;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SST.Application.Lectors.Commands.UpdateJournalColumnByLector
 {
@@ -33,11 +33,19 @@ namespace SST.Application.Lectors.Commands.UpdateJournalColumnByLector
                 }
 
                 if (request.Date != null)
+                {
                     journalColEnt.Date = (DateTime)request.Date;
+                }
+
                 if (request.Note != null)
+                {
                     journalColEnt.Note = (string)request.Note;
+                }
+
                 if (request.GroupSubjectId != null)
+                {
                     journalColEnt.GroupSubjectRef = (int)request.GroupSubjectId;
+                }
 
                 await _context.SaveChangesAsync(cancellationToken);
 

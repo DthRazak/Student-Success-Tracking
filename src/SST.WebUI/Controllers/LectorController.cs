@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SST.Application.Subjects.Queries.GetSubjectsByLector;
-using SST.Application.Lectors.Queries.GetLector;
-using Microsoft.AspNetCore.Mvc;
 using SST.Application.Journal.Queries.GetJournalByGroupAndSubject;
-using SST.Application.Lectors.Commands.DeleteJournalColumnByLector;
 using SST.Application.Lectors.Commands.CreateJournalColumnByLector;
-using SST.Application.Lectors.Commands.UpdateJournalColumnByLector;
 using SST.Application.Lectors.Commands.CreateOrUpdateGradeByLector;
+using SST.Application.Lectors.Commands.DeleteJournalColumnByLector;
+using SST.Application.Lectors.Commands.UpdateJournalColumnByLector;
+using SST.Application.Lectors.Queries.GetLector;
 using SST.Application.Students.Queries.GetStudent;
-using SST.WebUI.Hubs;
 using SST.Application.Subjects.Queries.GetSubjectNameByColumnJournal;
+using SST.Application.Subjects.Queries.GetSubjectsByLector;
+using SST.WebUI.Hubs;
 
 namespace SST.WebUI.Controllers
 {

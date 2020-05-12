@@ -1,15 +1,14 @@
-﻿using AutoMapper;
-
-using SST.Application.Tests.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Xunit;
 using System.Threading;
-using SST.Application.Students.Queries.GetStudents;
-using Shouldly;
 using System.Threading.Tasks;
+using AutoMapper;
+using Shouldly;
+using SST.Application.Students.Queries.GetStudents;
+using SST.Application.Tests.Common;
 using SST.Persistence;
+using Xunit;
 
 namespace SST.Application.Tests.Students.Queries
 {

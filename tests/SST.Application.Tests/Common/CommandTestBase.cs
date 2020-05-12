@@ -1,5 +1,5 @@
-﻿using SST.Persistence;
-using System;
+﻿using System;
+using SST.Persistence;
 
 namespace SST.Application.Tests.Common
 {

@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SST.Application.Common.Interfaces;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SST.Application.Students.Commands.UnlinkStudent
 {
